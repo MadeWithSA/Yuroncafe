@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yuron Cafe — Акции и Карточка лояльности</title>
+  <title>Yuron Cafe — Акции и Штампы</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,10 +16,9 @@
       --text-muted: #6e5d57;
       --accent-terracotta: #d95338;
       --accent-yellow: #f2a93b;
-      --accent-green: #2d6a4f;
+      --accent-green: #3a5a40;
       --border-color: #e5dace;
       --shadow-retro: 4px 4px 0px #2b1e1a;
-      --shadow-soft: 0 10px 25px rgba(43, 30, 26, 0.06);
       --font-heading: 'Playfair Display', Georgia, serif;
       --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
     }
@@ -43,87 +42,85 @@
     .cart-btn { background: var(--accent-yellow); border: 2px solid var(--text-espresso); padding: 8px 16px; border-radius: 25px; font-weight: 700; cursor: pointer; box-shadow: var(--shadow-retro); display: flex; align-items: center; gap: 8px; }
     .cart-badge { background: var(--accent-terracotta); color: #fff; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; }
 
-    /* Loyalty Card Section */
-    .page-header { text-align: center; padding: 50px 5% 30px; }
-    .page-header h1 { font-family: var(--font-heading); font-size: 3rem; color: var(--text-espresso); }
-    .page-header p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 10px auto 0; }
+    /* Main Container */
+    .offers-container { max-width: 1100px; margin: 40px auto 80px; padding: 0 5%; }
+    .page-title { font-family: var(--font-heading); font-size: 2.8rem; text-align: center; margin-bottom: 8px; }
+    .page-subtitle { text-align: center; color: var(--text-muted); font-size: 1.1rem; margin-bottom: 40px; }
 
-    .card-container { max-width: 650px; margin: 0 auto 60px; padding: 0 5%; }
+    /* Loyalty Card Section (Исправлено) */
+    .card-wrapper { max-width: 520px; margin: 0 auto 60px; position: relative; }
+    
     .loyalty-card {
-      background: #fff8f0;
+      background: #ffffff;
       border: 3px solid var(--text-espresso);
       border-radius: 24px;
-      padding: 32px;
-      box-shadow: 8px 8px 0px var(--accent-yellow), 8px 8px 0px 3px var(--text-espresso);
+      padding: 32px 28px;
+      box-shadow: 8px 8px 0px var(--accent-yellow);
       position: relative;
+      overflow: hidden;
     }
-    .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 2px dashed var(--border-color); padding-bottom: 16px; }
-    .card-head h2 { font-family: var(--font-heading); font-size: 1.8rem; color: var(--accent-terracotta); }
-    .stamps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
-    
-    .stamp-slot {
+
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; border-bottom: 2px dashed var(--border-color); padding-bottom: 16px; }
+    .card-brand { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: var(--accent-terracotta); }
+    .card-sub { font-size: 0.85rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* 4 в ряд, строго внутри контейнера */
+    .stamps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .stamp-item {
       aspect-ratio: 1;
-      border: 2px dashed var(--text-espresso);
       border-radius: 50%;
+      border: 2px dashed var(--text-espresso);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: #fff;
       font-weight: 800;
       font-size: 1.1rem;
+      background: #fff;
       color: var(--text-muted);
+      transition: all 0.3s ease;
       position: relative;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    .stamp-slot.stamped {
+    .stamp-item.active {
       background: var(--accent-terracotta);
+      border: 2px solid var(--text-espresso);
       color: #fff;
-      border-style: solid;
-      border-color: var(--text-espresso);
-      transform: scale(1.05) rotate(-5deg);
-      box-shadow: 3px 3px 0px var(--text-espresso);
+      box-shadow: 2px 2px 0px var(--text-espresso);
     }
 
-    .stamp-slot.free-slot {
-      border-color: var(--accent-yellow);
-      background: #fffdf0;
+    .stamp-item.free-reward {
+      border: 2px dashed var(--accent-yellow);
+      color: var(--accent-terracotta);
+      font-size: 0.7rem;
+      text-align: center;
+      font-weight: 800;
+      line-height: 1.1;
     }
 
-    .stamp-slot.free-slot.stamped {
+    .stamp-item.free-reward.active {
       background: var(--accent-yellow);
       color: var(--text-espresso);
-    }
-
-    .card-footer-controls { text-align: center; }
-    .btn-action { background: var(--accent-terracotta); color: #fff; border: 2px solid var(--text-espresso); padding: 12px 24px; border-radius: 25px; font-weight: 700; cursor: pointer; box-shadow: var(--shadow-retro); font-size: 0.95rem; margin: 4px; }
-    .btn-action:hover { background: #c2432a; }
-    .btn-action.reset-btn { background: #fff; color: var(--text-espresso); }
-
-    /* Free Reward Modal Banner */
-    .reward-box {
-      display: none;
-      background: var(--accent-green);
-      color: #fff;
-      padding: 20px;
-      border-radius: 16px;
       border: 2px solid var(--text-espresso);
-      text-align: center;
-      margin-top: 20px;
-      box-shadow: var(--shadow-retro);
+      font-size: 1.5rem;
     }
-    .reward-box.active { display: block; }
-    .reward-code { font-size: 1.8rem; font-weight: 800; letter-spacing: 2px; background: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 8px; margin: 10px 0; display: inline-block; }
 
-    /* Special Offers Grid */
-    .offers-section { max-width: 1200px; margin: 0 auto 80px; padding: 0 5%; }
-    .section-title { font-family: var(--font-heading); font-size: 2.2rem; text-align: center; margin-bottom: 36px; }
-    .offers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; }
-    .offer-card { background: #fff; border: 2px solid var(--text-espresso); border-radius: 20px; padding: 24px; box-shadow: var(--shadow-retro); display: flex; flex-direction: column; justify-content: space-between; }
-    .offer-badge { background: var(--accent-yellow); display: inline-block; padding: 4px 12px; border-radius: 12px; border: 1px solid var(--text-espresso); font-weight: 800; font-size: 0.75rem; margin-bottom: 12px; }
-    .offer-title { font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 8px; }
-    .offer-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 16px; }
+    .card-controls { display: flex; gap: 12px; justify-content: center; }
+    .btn-stamp { background: var(--accent-terracotta); color: #fff; border: 2px solid var(--text-espresso); padding: 10px 20px; border-radius: 20px; font-weight: 700; cursor: pointer; box-shadow: 2px 2px 0px var(--text-espresso); }
+    .btn-reset { background: #fff; color: var(--text-espresso); border: 2px solid var(--text-espresso); padding: 10px 20px; border-radius: 20px; font-weight: 700; cursor: pointer; box-shadow: 2px 2px 0px var(--text-espresso); }
+
+    /* Extra Promos Grid */
+    .promos-title { font-family: var(--font-heading); font-size: 2rem; margin-bottom: 24px; text-align: center; }
+    .promos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .promo-card { background: #fff; border: 2px solid var(--text-espresso); border-radius: 18px; padding: 24px; box-shadow: var(--shadow-retro); }
+    .promo-tag { background: var(--accent-yellow); font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 12px; border: 1px solid var(--text-espresso); display: inline-block; margin-bottom: 12px; }
+    .promo-h3 { font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 8px; }
+    .promo-p { font-size: 0.9rem; color: var(--text-muted); }
 
     /* Footer */
     footer { background: var(--text-espresso); color: var(--bg-cream); padding: 50px 5% 20px; margin-top: 80px; }
@@ -141,8 +138,9 @@
     .cart-items { flex: 1; overflow-y: auto; }
     .cart-item { display: flex; justify-content: space-between; align-items: center; background: #fff; border: 1px solid var(--text-espresso); padding: 12px; border-radius: 12px; margin-bottom: 12px; }
 
-    @media (max-width: 600px) {
-      .stamps-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    @media (max-width: 480px) {
+      .stamps-grid { gap: 10px; }
+      .loyalty-card { padding: 20px 16px; }
       .nav-links { display: none; }
     }
   </style>
@@ -177,84 +175,56 @@
     </div>
   </nav>
 
-  <!-- Page Header -->
-  <div class="page-header">
-    <h1 data-i18n="loyalty_header">Карточка Лояльности Yuron</h1>
-    <p data-i18n="loyalty_sub">Каждая покупка кофе или выпечки дает 1 штамп. Соберите 8 штампов и получите любой напиток или десерт бесплатно!</p>
-  </div>
+  <main class="offers-container">
+    <h1 class="page-title" data-i18n="loyalty_title">Карточка Лояльности Yuron</h1>
+    <p class="page-subtitle" data-i18n="loyalty_sub">Каждая покупка кофе или выпечки дает 1 штамп. Соберите 8 штампов и получите любой напиток или десерт бесплатно!</p>
 
-  <!-- Interactive Loyalty Card -->
-  <div class="card-container">
-    <div class="loyalty-card">
-      <div class="card-head">
-        <div>
-          <h2>YURON STAMP CARD</h2>
-          <small style="color:var(--text-muted);" data-i18n="card_subtitle">Накапливайте и получайте бонусы</small>
+    <!-- Corrected Loyalty Card -->
+    <div class="card-wrapper">
+      <div class="loyalty-card">
+        <div class="card-top">
+          <div>
+            <div class="card-brand">YURON STAMP CARD</div>
+            <div class="card-sub" data-i18n="card_sub">Накапливайте и получайте бонусы</div>
+          </div>
+          <span style="font-size:1.8rem;">☕</span>
         </div>
-        <div style="font-size:2rem;">☕</div>
-      </div>
 
-      <div class="stamps-grid" id="stampsGrid">
-        <!-- 8 Stamp slots generated by JS -->
-      </div>
+        <div class="stamps-grid" id="stampsGrid">
+          <!-- Rendered via JavaScript -->
+        </div>
 
-      <div class="card-footer-controls">
-        <button class="btn-action" onclick="addDemoStamp()" data-i18n="btn_add_stamp">+ Добавить штамп (Демо)</button>
-        <button class="btn-action reset-btn" onclick="resetStamps()" data-i18n="btn_reset">Сбросить</button>
-      </div>
-
-      <div class="reward-box" id="rewardBox">
-        <h3>🎉 Поздравляем! Ваш 8-й кофе БЕСПЛАТНО!</h3>
-        <p>Покажите этот промокод бариста в любом Yuron Cafe:</p>
-        <div class="reward-code" id="voucherCode">YURON-FREE-88</div>
-        <p style="font-size:0.85rem; opacity:0.9;">Действителен в течение 30 дней</p>
+        <div class="card-controls">
+          <button class="btn-stamp" onclick="addStamp()" data-i18n="btn_add_stamp">+ Добавить штамп (Демо)</button>
+          <button class="btn-reset" onclick="resetStamps()" data-i18n="btn_reset">Сбросить</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Hot Offers Section -->
-  <section class="offers-section">
-    <h2 class="section-title" data-i18n="hot_offers_title">Текущие спецпредложения</h2>
-    <div class="offers-grid">
+    <!-- Special Offers Grid -->
+    <h2 class="promos-title" data-i18n="promos_title">Текущие спецпредложения</h2>
+    <div class="promos-grid">
       
-      <div class="offer-card">
-        <div>
-          <span class="offer-badge" data-i18n="badge_morning">Утреннее комбо</span>
-          <h3 class="offer-title">Капучино + Круассан</h3>
-          <p class="offer-desc">С 08:00 до 11:00 со скидкой 20%. Отличное начало продуктивного дня в Ташкенте!</p>
-        </div>
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:1.3rem; font-weight:800; color:var(--accent-terracotta);">45 000 UZS <s style="font-size:0.9rem; color:var(--text-muted); font-weight:normal;">58 000 UZS</s></span>
-          <button class="btn-action" onclick="addToCart('Комбо: Капучино + Круассан', 45000)">В корзину</button>
-        </div>
+      <div class="promo-card">
+        <span class="promo-tag" data-i18n="tag_morning">Утренний сет</span>
+        <h3 class="promo-h3" data-i18n="p1_title">Капучино + Круассан</h3>
+        <p class="promo-p" data-i18n="p1_desc">С 08:00 до 11:00 согревающий классический капучино и свежий миндальный круассан всего за 45 000 UZS.</p>
       </div>
 
-      <div class="offer-card">
-        <div>
-          <span class="offer-badge" style="background:var(--accent-green); color:#fff;" data-i18n="badge_lunch">Ланч сет</span>
-          <h3 class="offer-title">Салат + Сендвич + Напиток</h3>
-          <p class="offer-desc">Сытный обеденный перерыв с 12:00 до 15:00 по специальной фиксированной цене.</p>
-        </div>
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:1.3rem; font-weight:800; color:var(--accent-terracotta);">85 000 UZS</span>
-          <button class="btn-action" onclick="addToCart('Ланч сет Yuron', 85000)">В корзину</button>
-        </div>
+      <div class="promo-card">
+        <span class="promo-tag" data-i18n="tag_combo">Комбо на двоих</span>
+        <h3 class="promo-h3" data-i18n="p2_title">2 Кофе + 2 Сэндвича</h3>
+        <p class="promo-p" data-i18n="p2_desc">Идеально для встречи с другом! Любые 2 напитка и 2 сытных сэндвича со скидкой 15%.</p>
       </div>
 
-      <div class="offer-card">
-        <div>
-          <span class="offer-badge" data-i18n="badge_weekend">Семейный уикенд</span>
-          <h3 class="offer-title">Скидка -15% на всю выпечку</h3>
-          <p class="offer-desc">Каждое воскресенье при заказе от 3 видов выпечки с собой.</p>
-        </div>
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:1.1rem; font-weight:700;">Воскресенье</span>
-          <a href="product.html" class="btn-action" style="text-align:center;">В меню</a>
-        </div>
+      <div class="promo-card">
+        <span class="promo-tag" data-i18n="tag_eco">Своя Кружка</span>
+        <h3 class="promo-h3" data-i18n="p3_title">Скидка 10% в свой тамблер</h3>
+        <p class="promo-p" data-i18n="p3_desc">Заботимся об экологии вместе! Приносите свою термокружку и получайте скидку 10% на любой напиток.</p>
       </div>
 
     </div>
-  </section>
+  </main>
 
   <!-- Cart Drawer Component -->
   <div class="cart-overlay" id="cartOverlay"></div>
@@ -269,7 +239,7 @@
         <span data-i18n="total">Итого:</span>
         <span id="cartTotal">0 UZS</span>
       </div>
-      <button class="btn-action" style="width:100%; border-radius:30px;" onclick="checkout()" data-i18n="btn_checkout">Оформить заказ</button>
+      <button class="btn-stamp" style="width:100%; border-radius:30px; background:var(--accent-terracotta);" onclick="checkout()" data-i18n="btn_checkout">Оформить заказ</button>
     </div>
   </div>
 
@@ -305,25 +275,31 @@
     const i18n = {
       ru: {
         nav_home: "Главная", nav_menu: "Меню", nav_offers: "Акции & Штампы", nav_about: "О нас & Локации", nav_profile: "Профиль",
-        cart: "Корзина", loyalty_header: "Карточка Лояльности Yuron",
+        cart: "Корзина", loyalty_title: "Карточка Лояльности Yuron",
         loyalty_sub: "Каждая покупка кофе или выпечки дает 1 штамп. Соберите 8 штампов и получите любой напиток или десерт бесплатно!",
-        card_subtitle: "Накапливайте и получайте бонусы", btn_add_stamp: "+ Добавить штамп (Демо)", btn_reset: "Сбросить",
-        hot_offers_title: "Текущие спецпредложения", badge_morning: "Утреннее комбо", badge_lunch: "Ланч сет", badge_weekend: "Семейный уикенд",
+        card_sub: "Накапливайте и получайте бонусы", btn_add_stamp: "+ Добавить штамп (Демо)", btn_reset: "Сбросить",
+        promos_title: "Текущие спецпредложения", tag_morning: "Утренний сет", p1_title: "Капучино + Круассан",
+        p1_desc: "С 08:00 до 11:00 согревающий классический капучино и свежий миндальный круассан всего за 45 000 UZS.",
+        tag_combo: "Комбо на двоих", p2_title: "2 Кофе + 2 Сэндвича", p2_desc: "Идеально для встречи с другом! Любые 2 напитка и 2 сытных сэндвича со скидкой 15%.",
+        tag_eco: "Своя Кружка", p3_title: "Скидка 10% в свой тамблер", p3_desc: "Заботимся об экологии вместе! Приносите свою термокружку и получайте скидку 10% на любой напиток.",
         cart_title: "Ваша корзина", total: "Итого:", btn_checkout: "Оформить заказ"
       },
       uz: {
         nav_home: "Bosh sahifa", nav_menu: "Menyu", nav_offers: "Aktsiyalar & Shtamplar", nav_about: "Biz haqimizda & Joylashuv", nav_profile: "Profil",
-        cart: "Savat", loyalty_header: "Yuron Sadoqat Kartasi",
-        loyalty_sub: "Har bir kofe yoki pishiriq xaridi 1 shtamp beradi. 8 ta shtamp yiging va bepul ichimlikka ega bo'ling!",
-        card_subtitle: "Bonuslarni to'plang va oling", btn_add_stamp: "+ Shtamp qo'shish (Demo)", btn_reset: "Tashlash",
-        hot_offers_title: "Mavjud maxsus takliflar", badge_morning: "Ertalabki kombo", badge_lunch: "Lanch set", badge_weekend: "Oila dam olish kuni",
+        cart: "Savat", loyalty_title: "Yuron Sadoqat Kartasi",
+        loyalty_sub: "Har bir kofe yoki pishiriq uchun 1 shtamp beriladi. 8 ta shtamp yig'ing va istalgan ichimlikni bepul oling!",
+        card_sub: "Yig'ing va bonuslarga ega bo'ling", btn_add_stamp: "+ Shtamp qo'shish (Demo)", btn_reset: "Qayta tushirish",
+        promos_title: "Mavjud maxsus takliflar", tag_morning: "Ertalabki set", p1_title: "Kappuchino + Kruassan",
+        p1_desc: "Soat 08:00 dan 11:00 gacha klassik kappuchino va yangi bodomli kruassan 45 000 UZS.",
+        tag_combo: "Ikki kishilik kombo", p2_title: "2 Kofe + 2 Sendvich", p2_desc: "Do'stlar bilan uchrashuv uchun! Istalgan 2 ta ichimlik va 2 ta sendvich 15% chegirma bilan.",
+        tag_eco: "O'z krujkangiz", p3_title: "Termosga 10% chegirma", p3_desc: "Ekologiyani birgalikda asraymiz! O'z idishingiz bilan keling va 10% chegirma oling.",
         cart_title: "Sizning savatingiz", total: "Jami:", btn_checkout: "Buyurtma berish"
       }
     };
 
     let currentLang = localStorage.getItem('yuron_lang') || 'ru';
     let cart = JSON.parse(localStorage.getItem('yuron_cart')) || [];
-    let stamps = parseInt(localStorage.getItem('yuron_stamps') || '3'); // default 3 stamps for demo
+    let stamps = parseInt(localStorage.getItem('yuron_stamps') || '3');
 
     function updateLanguage() {
       document.getElementById('langToggle').innerText = currentLang === 'ru' ? 'UZ' : 'RU';
@@ -339,38 +315,35 @@
       updateLanguage();
     });
 
-    // Stamp Card Logic
+    // Stamps Rendering
     function renderStamps() {
       const grid = document.getElementById('stampsGrid');
       grid.innerHTML = '';
-      for (let i = 1; i <= 8; i++) {
-        const isStamped = i <= stamps;
-        const isFree = i === 8;
-        const div = document.createElement('div');
-        div.className = `stamp-slot ${isStamped ? 'stamped' : ''} ${isFree ? 'free-slot' : ''}`;
-        div.innerHTML = isStamped 
-          ? (isFree ? '🎁 FREE' : '☕') 
-          : (isFree ? 'БЕСПЛАТНО' : i);
-        grid.appendChild(div);
-      }
 
-      const rewardBox = document.getElementById('rewardBox');
-      if (stamps >= 8) {
-        rewardBox.classList.add('active');
-        const randomCode = 'YURON-FREE-' + Math.floor(1000 + Math.random() * 9000);
-        document.getElementById('voucherCode').innerText = randomCode;
-      } else {
-        rewardBox.classList.remove('active');
+      for (let i = 1; i <= 8; i++) {
+        if (i === 8) {
+          const isFree = stamps >= 8;
+          grid.innerHTML += `
+            <div class="stamp-item free-reward ${isFree ? 'active' : ''}">
+              ${isFree ? '🎁' : 'БЕСПЛАТНО'}
+            </div>`;
+        } else {
+          const isActive = i <= stamps;
+          grid.innerHTML += `
+            <div class="stamp-item ${isActive ? 'active' : ''}">
+              ${isActive ? '☕' : i}
+            </div>`;
+        }
       }
     }
 
-    function addDemoStamp() {
+    function addStamp() {
       if (stamps < 8) {
         stamps++;
         localStorage.setItem('yuron_stamps', stamps);
         renderStamps();
       } else {
-        alert('У вас уже максимальное количество штампов! Обменяйте их на бесплатный кофе.');
+        alert('Поздравляем! Вы можете получить бесплатный напиток!');
       }
     }
 
@@ -380,7 +353,7 @@
       renderStamps();
     }
 
-    // Cart Drawer Logic
+    // Cart Logic
     const cartDrawer = document.getElementById('cartDrawer');
     const cartOverlay = document.getElementById('cartOverlay');
 
@@ -399,15 +372,6 @@
       cartDrawer.classList.remove('open');
       cartOverlay.classList.remove('open');
     });
-
-    function addToCart(name, price) {
-      const existing = cart.find(item => item.name === name);
-      if (existing) { existing.qty++; } else { cart.push({ name, price, qty: 1 }); }
-      saveCart();
-      renderCart();
-      cartDrawer.classList.add('open');
-      cartOverlay.classList.add('open');
-    }
 
     function saveCart() {
       localStorage.setItem('yuron_cart', JSON.stringify(cart));
@@ -456,12 +420,7 @@
 
     function checkout() {
       if (cart.length === 0) return alert('Корзина пуста!');
-      alert('Заказ успешно оформлен! За покупку начислен +1 штамп.');
-      
-      stamps = Math.min(stamps + 1, 8);
-      localStorage.setItem('yuron_stamps', stamps);
-      renderStamps();
-
+      alert('Заказ оформлен!');
       cart = [];
       saveCart();
       renderCart();
