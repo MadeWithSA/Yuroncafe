@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yuron Cafe — Меню и Заказ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Yuron Cafe — Меню и Каталог</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,61 +19,72 @@
       --accent-green: #3a5a40;
       --border-color: #e5dace;
       --shadow-retro: 4px 4px 0px #2b1e1a;
-      --shadow-soft: 0 10px 25px rgba(43, 30, 26, 0.06);
       --font-heading: 'Playfair Display', Georgia, serif;
       --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: var(--bg-cream); color: var(--text-espresso); font-family: var(--font-body); line-height: 1.6; }
+    body { background-color: var(--bg-cream); color: var(--text-espresso); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; }
     a { color: inherit; text-decoration: none; }
 
-    /* Promo Bar */
+    /* Announcement Bar */
     .promo-bar { background: var(--accent-terracotta); color: #fff; text-align: center; padding: 8px 16px; font-size: 0.88rem; font-weight: 600; }
 
     /* Navbar */
     .navbar { display: flex; justify-content: space-between; align-items: center; padding: 18px 5%; background-color: var(--bg-cream); border-bottom: 2px solid var(--text-espresso); position: sticky; top: 0; z-index: 100; }
     .brand-logo { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 800; color: var(--accent-terracotta); display: flex; align-items: center; gap: 8px; }
     .brand-badge { background: var(--accent-yellow); color: var(--text-espresso); font-size: 0.65rem; font-family: var(--font-body); padding: 3px 8px; border-radius: 12px; border: 1px solid var(--text-espresso); text-transform: uppercase; font-weight: 700; }
+
     .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
     .nav-links a { font-weight: 600; font-size: 0.95rem; }
     .nav-links a.active, .nav-links a:hover { color: var(--accent-terracotta); }
-    .nav-controls { display: flex; align-items: center; gap: 16px; }
+
+    .nav-controls { display: flex; align-items: center; gap: 12px; }
     .lang-switcher { background: #fff; border: 2px solid var(--text-espresso); padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; cursor: pointer; box-shadow: 2px 2px 0px var(--text-espresso); }
+
     .cart-btn { background: var(--accent-yellow); border: 2px solid var(--text-espresso); padding: 8px 16px; border-radius: 25px; font-weight: 700; cursor: pointer; box-shadow: var(--shadow-retro); display: flex; align-items: center; gap: 8px; }
     .cart-badge { background: var(--accent-terracotta); color: #fff; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; }
-
-    /* Page Header */
-    .page-header { text-align: center; padding: 40px 5% 20px; }
-    .page-header h1 { font-family: var(--font-heading); font-size: 3rem; color: var(--text-espresso); }
-    .page-header p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 8px auto 0; }
-
-    /* Search & Category Filter Controls */
-    .controls-wrap { max-width: 1200px; margin: 0 auto 40px; padding: 0 5%; display: flex; flex-direction: column; gap: 20px; align-items: center; }
     
-    .search-box { width: 100%; max-width: 500px; position: relative; }
-    .search-input { width: 100%; padding: 14px 20px; border: 2px solid var(--text-espresso); border-radius: 30px; background: #fff; font-family: var(--font-body); font-size: 1rem; box-shadow: var(--shadow-retro); outline: none; }
+    .hamburger { display: none; font-size: 1.8rem; cursor: pointer; color: var(--text-espresso); background: none; border: none; }
 
-    .category-pills { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-    .pill-btn { background: #fff; border: 2px solid var(--text-espresso); padding: 10px 20px; border-radius: 25px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; box-shadow: 2px 2px 0px var(--text-espresso); font-size: 0.9rem; }
-    .pill-btn.active, .pill-btn:hover { background: var(--accent-terracotta); color: #fff; transform: translateY(-2px); }
+    /* Page Content */
+    .menu-container { max-width: 1200px; margin: 40px auto 80px; padding: 0 5%; }
+    .page-title { font-family: var(--font-heading); font-size: 2.8rem; text-align: center; margin-bottom: 8px; }
+    .page-subtitle { text-align: center; color: var(--text-muted); font-size: 1.1rem; margin-bottom: 30px; }
+
+    /* Filters */
+    .categories { display: flex; gap: 10px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; }
+    .category-btn { background: #fff; border: 2px solid var(--text-espresso); padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 0.9rem; cursor: pointer; box-shadow: 2px 2px 0px var(--text-espresso); transition: all 0.2s; }
+    .category-btn.active { background: var(--accent-terracotta); color: #fff; }
 
     /* Products Grid */
-    .menu-section { max-width: 1200px; margin: 0 auto 80px; padding: 0 5%; }
-    .grid-products { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 28px; }
-    
-    .prod-card { background: #fff; border: 2px solid var(--text-espresso); border-radius: 18px; padding: 18px; box-shadow: var(--shadow-retro); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.2s ease; }
-    .prod-card:hover { transform: translateY(-4px); }
-    
-    .prod-img { width: 100%; height: 190px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 14px; }
-    .prod-tag { font-size: 0.75rem; font-weight: 800; color: var(--accent-terracotta); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-    .prod-title { font-size: 1.25rem; font-weight: 700; line-height: 1.3; margin-bottom: 6px; }
-    .prod-desc { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px; flex-grow: 1; }
-    .prod-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; border-top: 1px dashed var(--border-color); padding-top: 12px; }
-    .prod-price { font-size: 1.15rem; font-weight: 800; color: var(--text-espresso); }
-    
-    .add-btn { background: var(--accent-yellow); border: 2px solid var(--text-espresso); padding: 8px 16px; border-radius: 12px; font-weight: 800; cursor: pointer; box-shadow: 2px 2px 0px var(--text-espresso); transition: transform 0.1s ease; }
-    .add-btn:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0px var(--text-espresso); }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
+    .product-card { background: #fff; border: 2px solid var(--text-espresso); border-radius: 18px; padding: 20px; box-shadow: var(--shadow-retro); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.2s; }
+    .product-card:hover { transform: translateY(-4px); }
+    .product-img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 12px; }
+    .product-tag { font-size: 0.75rem; font-weight: 800; color: var(--accent-terracotta); text-transform: uppercase; margin-bottom: 4px; }
+    .product-title { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; }
+    .product-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 14px; flex-grow: 1; }
+    .product-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--border-color); padding-top: 12px; }
+    .product-price { font-size: 1.1rem; font-weight: 800; color: var(--text-espresso); }
+    .btn-add { background: var(--accent-yellow); border: 2px solid var(--text-espresso); padding: 8px 14px; border-radius: 12px; font-weight: 800; cursor: pointer; box-shadow: 2px 2px 0px var(--text-espresso); transition: 0.1s; }
+    .btn-add:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0px var(--text-espresso); }
+
+    /* Cart Drawer */
+    .cart-drawer { position: fixed; top: 0; right: -100%; width: 100%; max-width: 420px; height: 100vh; background: var(--bg-cream); border-left: 3px solid var(--text-espresso); z-index: 1000; box-shadow: -10px 0 30px rgba(0,0,0,0.15); transition: right 0.3s ease; display: flex; flex-direction: column; padding: 24px; }
+    .cart-drawer.open { right: 0; }
+    .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(43, 30, 26, 0.4); z-index: 999; display: none; }
+    .cart-overlay.open { display: block; }
+    .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--text-espresso); padding-bottom: 16px; margin-bottom: 20px; }
+    .cart-items { flex: 1; overflow-y: auto; padding-right: 4px; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; background: #fff; border: 1px solid var(--text-espresso); padding: 12px; border-radius: 12px; margin-bottom: 12px; }
+    .cart-qty-btn { padding: 2px 8px; border: 1px solid var(--text-espresso); background: var(--bg-cream); border-radius: 6px; cursor: pointer; font-weight: bold; }
+
+    /* Promo code block inside cart */
+    .promo-box { display: flex; gap: 8px; margin: 15px 0; }
+    .promo-input { flex: 1; padding: 10px; border: 2px solid var(--text-espresso); border-radius: 10px; font-family: var(--font-body); outline: none; font-size: 0.9rem; }
+    .promo-btn { background: var(--text-espresso); color: #fff; border: none; padding: 0 14px; border-radius: 10px; font-weight: 700; cursor: pointer; }
+    .promo-msg { font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; display: none; }
 
     /* Footer */
     footer { background: var(--text-espresso); color: var(--bg-cream); padding: 50px 5% 20px; margin-top: 80px; }
@@ -82,34 +93,38 @@
     .footer-col p, .footer-col li { font-size: 0.9rem; opacity: 0.85; margin-bottom: 8px; list-style: none; }
     .footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; font-size: 0.85rem; opacity: 0.6; }
 
-    /* Cart Drawer */
-    .cart-drawer { position: fixed; top: 0; right: -420px; width: 100%; max-width: 400px; height: 100vh; background: var(--bg-cream); border-left: 3px solid var(--text-espresso); z-index: 1000; box-shadow: -10px 0 30px rgba(0,0,0,0.15); transition: right 0.3s ease; display: flex; flex-direction: column; padding: 24px; }
-    .cart-drawer.open { right: 0; }
-    .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(43, 30, 26, 0.4); z-index: 999; display: none; }
-    .cart-overlay.open { display: block; }
-    .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--text-espresso); padding-bottom: 16px; margin-bottom: 20px; }
-    .cart-items { flex: 1; overflow-y: auto; }
-    .cart-item { display: flex; justify-content: space-between; align-items: center; background: #fff; border: 1px solid var(--text-espresso); padding: 12px; border-radius: 12px; margin-bottom: 12px; }
-
     @media (max-width: 768px) {
-      .nav-links { display: none; }
+      .navbar { padding: 12px 5%; justify-content: space-between; }
+      .brand-logo { font-size: 1.4rem; }
+      .hamburger { display: block; }
+      .cart-btn span[data-i18n="cart"] { display: none; }
+      
+      .nav-links { display: none; flex-direction: column; width: 100%; position: absolute; top: 100%; left: 0; background: var(--bg-cream); padding: 0; border-bottom: 2px solid var(--text-espresso); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+      .nav-links.open { display: flex; }
+      .nav-links li { width: 100%; text-align: center; border-top: 1px solid rgba(0,0,0,0.05); }
+      .nav-links a { display: block; padding: 16px; font-size: 1.1rem; }
+
+      .page-title { font-size: 2.2rem; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .product-card { padding: 14px; }
+      .product-img { height: 120px; }
+      .product-title { font-size: 1rem; }
+      .product-price { font-size: 0.95rem; }
+      .btn-add { padding: 6px 10px; font-size: 0.8rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Announcement Bar -->
-  <div class="promo-bar">
-    ☕ Каждый 8-й кофе или выпечка БЕСПЛАТНО! Забирай карту в разделе "Акции".
-  </div>
+  <div class="promo-bar" data-i18n="promo_bar">☕ Каждый 8-й кофе или выпечка БЕСПЛАТНО! Забирай карту в разделе "Акции".</div>
 
-  <!-- Header / Navigation -->
+  <!-- Navbar -->
   <nav class="navbar">
     <a href="index.html" class="brand-logo">
-      Yuron Cafe <span class="brand-badge">Ташкент</span>
+      Yuron Cafe <span class="brand-badge" data-i18n="brand_badge">Ташкент</span>
     </a>
 
-    <ul class="nav-links">
+    <ul class="nav-links" id="navMenu">
       <li><a href="index.html" data-i18n="nav_home">Главная</a></li>
       <li><a href="product.html" class="active" data-i18n="nav_menu">Меню</a></li>
       <li><a href="offer.html" data-i18n="nav_offers">Акции & Штампы</a></li>
@@ -123,51 +138,52 @@
         🛒 <span data-i18n="cart">Корзина</span>
         <span class="cart-badge" id="cartCount">0</span>
       </button>
+      <button class="hamburger" id="hamburgerBtn">☰</button>
     </div>
   </nav>
 
-  <!-- Page Header -->
-  <div class="page-header">
-    <h1 data-i18n="menu_header">Наше Меню</h1>
-    <p data-i18n="menu_sub">Свежая выпечка каждое утро, авторский кофе, сытные завтраки и легкие салаты в узбекских сумах (UZS).</p>
-  </div>
+  <!-- Content -->
+  <main class="menu-container">
+    <h1 class="page-title" data-i18n="menu_title">Наше Меню</h1>
+    <p class="page-subtitle" data-i18n="menu_sub">Завтраки, кофе, свежая выпечка, соки и салаты</p>
 
-  <!-- Controls: Search & Categories -->
-  <div class="controls-wrap">
-    <div class="search-box">
-      <input type="text" id="searchInput" class="search-input" placeholder="🔍 Найти блюдо или напиток..." onkeyup="filterProducts()">
+    <!-- Category Filters -->
+    <div class="categories" id="categoryFilters">
+      <button class="category-btn active" data-cat="all" data-i18n="cat_all">Все</button>
+      <button class="category-btn" data-cat="breakfast" data-i18n="cat_breakfast">Завтраки</button>
+      <button class="category-btn" data-cat="coffee" data-i18n="cat_coffee">Кофе</button>
+      <button class="category-btn" data-cat="bakery" data-i18n="cat_bakery">Выпечка</button>
+      <button class="category-btn" data-cat="juice" data-i18n="cat_juice">Соки</button>
+      <button class="category-btn" data-cat="salad" data-i18n="cat_salad">Салаты</button>
     </div>
 
-    <div class="category-pills">
-      <button class="pill-btn active" onclick="setCategory('all')" data-i18n="cat_all">Все позиции</button>
-      <button class="pill-btn" onclick="setCategory('coffee')" data-i18n="cat_coffee">Кофе & Напитки</button>
-      <button class="pill-btn" onclick="setCategory('bakery')" data-i18n="cat_bakery">Свежая Выпечка</button>
-      <button class="pill-btn" onclick="setCategory('breakfast')" data-i18n="cat_breakfast">Завтраки</button>
-      <button class="pill-btn" onclick="setCategory('salads')" data-i18n="cat_salads">Салаты & Сэндвичи</button>
-    </div>
-  </div>
-
-  <!-- Products Section -->
-  <main class="menu-section">
-    <div class="grid-products" id="productsGrid">
-      <!-- Products generated dynamically via Javascript -->
-    </div>
+    <!-- Products Grid -->
+    <div class="products-grid" id="productsGrid"></div>
   </main>
 
-  <!-- Cart Drawer Component -->
+  <!-- Cart Drawer -->
   <div class="cart-overlay" id="cartOverlay"></div>
   <div class="cart-drawer" id="cartDrawer">
     <div class="cart-header">
-      <h3 style="font-family: var(--font-heading);" data-i18n="cart_title">Ваша корзина</h3>
+      <h3 style="font-family: var(--font-heading);" data-i18n="cart_title">Корзина</h3>
       <button id="closeCart" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
     </div>
+    
     <div class="cart-items" id="cartItemsList"></div>
+
     <div style="border-top:2px solid var(--text-espresso); padding-top:16px;">
+      <!-- Promo Code Input -->
+      <div class="promo-box">
+        <input type="text" id="promoInput" class="promo-input" data-i18n-ph="promo_ph" placeholder="Промокод (напр. YURON10)">
+        <button class="promo-btn" onclick="applyPromo()" data-i18n="btn_apply">ОК</button>
+      </div>
+      <div class="promo-msg" id="promoMsg"></div>
+
       <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.2rem; margin-bottom:16px;">
         <span data-i18n="total">Итого:</span>
         <span id="cartTotal">0 UZS</span>
       </div>
-      <button class="add-btn" style="width:100%; padding:12px; border-radius:30px; background:var(--accent-terracotta); color:#fff;" onclick="checkout()" data-i18n="btn_checkout">Оформить заказ</button>
+      <button class="btn-add" style="width:100%; background:var(--accent-terracotta); color:#fff; border-radius:30px; padding:12px; font-size:1rem;" onclick="checkout()" data-i18n="btn_checkout">Оформить заказ</button>
     </div>
   </div>
 
@@ -175,23 +191,23 @@
   <footer>
     <div class="footer-grid">
       <div class="footer-col">
-        <h4 class="brand-logo" style="color:var(--accent-yellow);">Yuron Cafe</h4>
-        <p>Уютное место с душой в Ташкенте. Свежий кофе, вкуснейшие завтраки и выпечка каждый день.</p>
+        <h4 style="color:var(--accent-yellow);">Yuron Cafe</h4>
+        <p data-i18n="footer_about">Уютное место в Ташкенте. Свежий кофе, завтраки и выпечка каждый день.</p>
       </div>
       <div class="footer-col">
-        <h4>Навигация</h4>
+        <h4 data-i18n="footer_nav">Навигация</h4>
         <li><a href="index.html">Главная</a></li>
         <li><a href="product.html">Меню</a></li>
         <li><a href="offer.html">Акции</a></li>
         <li><a href="about.html">Локации</a></li>
       </div>
       <div class="footer-col">
-        <h4>Часы работы</h4>
+        <h4 data-i18n="footer_hours">Часы работы</h4>
         <p>Пн - Пт: 08:00 - 22:00</p>
         <p>Сб - Вс: 09:00 - 23:00</p>
       </div>
       <div class="footer-col">
-        <h4>Контакты</h4>
+        <h4 data-i18n="footer_contact">Контакты</h4>
         <p>📍 г. Ташкент, ул. Мирабадская, 12</p>
         <p>📞 +998 (90) 123-45-67</p>
       </div>
@@ -200,56 +216,85 @@
   </footer>
 
   <script>
-    // Product Database in UZS
-    const products = [
-      // Coffee & Drinks
-      { id: 1, category: 'coffee', tag: 'Кофе', name: 'Капучино Classic', desc: 'Эспрессо из 100% Арабики с нежной молочной пенкой (250мл)', price: 28000, img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80' },
-      { id: 2, category: 'coffee', tag: 'Кофе', name: 'Флэт Уайт (Flat White)', desc: 'Двойной эспрессо с бархатистым взбитым молоком (200мл)', price: 32000, img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80' },
-      { id: 3, category: 'coffee', tag: 'Кофе', name: 'Фирменный Раф Ваниль', desc: 'Сливочно-кофейный напиток с натуральной ванилью', price: 36000, img: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=500&q=80' },
-      { id: 4, category: 'coffee', tag: 'Напитки', name: 'Матча Латте на миндальном', desc: 'Японский зелёный чай матча на органическом миндальном молоке', price: 38000, img: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=500&q=80' },
-      
-      // Bakery
-      { id: 5, category: 'bakery', tag: 'Выпечка', name: 'Миндальный Круассан', desc: 'Классический француский круассан с миндальным кремом и франжипаном', price: 28000, img: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=500&q=80' },
-      { id: 6, category: 'bakery', tag: 'Выпечка', name: 'Улитка с корицей & глазурью', desc: 'Теплая ароматная синнабон-булочка со сливочной глазурью', price: 25000, img: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=500&q=80' },
-      { id: 7, category: 'bakery', tag: 'Выпечка', name: 'Шоколадный Брауни', desc: 'Насыщенный десерт из темного бельгийского шоколада с орехами', price: 30000, img: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80' },
-      
-      // Breakfast
-      { id: 8, category: 'breakfast', tag: 'Завтрак', name: 'Авокадо Тост пашот', desc: 'Ремесленный тартин с авокадо, яйцом пашот, семечками и черри', price: 48000, img: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=500&q=80' },
-      { id: 9, category: 'breakfast', tag: 'Завтрак', name: 'Сырники со сметаной и ягодами', desc: 'Нежные домашние сырники из фермерского творога со свежими ягодами', price: 42000, img: 'https://images.unsplash.com/photo-1588137378633-dea1336ce1e2?auto=format&fit=crop&w=500&q=80' },
-      { id: 10, category: 'breakfast', tag: 'Завтрак', name: 'Английский завтрак Yuron', desc: 'Яичница глазунья, колбаски, бекон, фасоль, томаты и хрустящий тост', price: 65000, img: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80' },
+    // База из 20 товаров с категориями и переводами
+    const productsDB = [
+      // Завтраки
+      { id: 1, cat: "breakfast", tag_ru: "Завтраки", tag_uz: "Nonushta", name_ru: "Авокадо тост с пашотом", name_uz: "Avokado tost va pashot", desc_ru: "На зерновом хлебе с яйцом пашот", desc_uz: "Donli non va tuxum pashot bilan", price: 48000, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=500&q=80" },
+      { id: 2, cat: "breakfast", tag_ru: "Завтраки", tag_uz: "Nonushta", name_ru: "Нежные сырники", name_uz: "Nozik sirlar (sırnik)", desc_ru: "С фермерской сметаной и ягодным соусом", desc_uz: "Smetana va mevali sous bilan", price: 42000, img: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=500&q=80" },
+      { id: 3, cat: "breakfast", tag_ru: "Завтраки", tag_uz: "Nonushta", name_ru: "Английский завтрак", name_uz: "Inglizcha nonushta", desc_ru: "Яйца, сосиски, фасоль, бекон и томаты", desc_uz: "Tuxum, sosiskalar, loviya va bekon", price: 65000, img: "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80" },
+      { id: 4, cat: "breakfast", tag_ru: "Завтраки", tag_uz: "Nonushta", name_ru: "Овсяная каша с ягодами", name_uz: "Mevali suli yormasi", desc_ru: "На кокосовом молоке с медом и орехами", desc_uz: "Kokos suti, asal va yong'oq bilan", price: 32000, img: "https://images.unsplash.com/photo-1584776296944-ab6fb57b0bdd?auto=format&fit=crop&w=500&q=80" },
 
-      // Salads & Sandwiches
-      { id: 11, category: 'salads', tag: 'Салат', name: 'Цезарь с сочной курицей', desc: 'Хрустящий ромен, запеченная грудка, пармезан, сухарики и соус', price: 55000, img: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=500&q=80' },
-      { id: 12, category: 'salads', tag: 'Сэндвич', name: 'Сэндвич с лососем и фришезе', desc: 'Слабосоленый лосось, сливочный сыр, огурец и зелень в чиабатте', price: 62000, img: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=500&q=80' }
+      // Кофе
+      { id: 5, cat: "coffee", tag_ru: "Кофе", tag_uz: "Kofe", name_ru: "Капучино Classic", name_uz: "Kappuchino Classic", desc_ru: "Эспрессо с нежной молочной пенкой", desc_uz: "Nozik sut ko'pikli espresso", price: 28000, img: "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80" },
+      { id: 6, cat: "coffee", tag_ru: "Кофе", tag_uz: "Kofe", name_ru: "Флэт Уайт", name_uz: "Flat White", desc_ru: "Двойной эспрессо с бархатистым молоком", desc_uz: "Ikki martaba espresso va sut", price: 32000, img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80" },
+      { id: 7, cat: "coffee", tag_ru: "Кофе", tag_uz: "Kofe", name_ru: "Раф Кофе Лаванда", name_uz: "Lavanda Raf kofesi", desc_ru: "Сливки, эспрессо и лавандовый сироп", desc_uz: "Qaymoq, espresso va lavanda siropi", price: 38000, img: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=500&q=80" },
+      { id: 8, cat: "coffee", tag_ru: "Кофе", tag_uz: "Kofe", name_ru: "Латте Макиато", name_uz: "Latte Makiato", desc_ru: "Слоистый кофе с молоком и пеной", desc_uz: "Sut va ko'pikli qatlamli kofe", price: 32000, img: "https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?auto=format&fit=crop&w=500&q=80" },
+      { id: 9, cat: "coffee", tag_ru: "Кофе", tag_uz: "Kofe", name_ru: "Американо", name_uz: "Amerikano", desc_ru: "Классический черный кофе", desc_uz: "Klassik qora kofe", price: 22000, img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80" },
+
+      // Выпечка
+      { id: 10, cat: "bakery", tag_ru: "Выпечка", tag_uz: "Pishiriq", name_ru: "Миндальный круассан", name_uz: "Bodomli kruassan", desc_ru: "С франжипаном и миндальными хлопьями", desc_uz: "Frangipan va bodom bo'laklari bilan", price: 28000, img: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=500&q=80" },
+      { id: 11, cat: "bakery", tag_ru: "Выпечка", tag_uz: "Pishiriq", name_ru: "Улитка с корицей", name_uz: "Sinnabon", desc_ru: "Ароматная булочка со сливочной глазурью", desc_uz: "Krem glazurli xushbo'y bulochka", price: 25000, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=500&q=80" },
+      { id: 12, cat: "bakery", tag_ru: "Выпечка", tag_uz: "Pishiriq", name_ru: "Круассан классический", name_uz: "Klassik kruassan", desc_ru: "Хрустящий французский круассан на масле", desc_uz: "Qarsildoq fransuz kruassan", price: 20000, img: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=500&q=80" },
+      { id: 13, cat: "bakery", tag_ru: "Выпечка", tag_uz: "Pishiriq", name_ru: "Маффин шоколадный", name_uz: "Shokoladli maffin", desc_ru: "С жидкой шоколадной начинкой внутри", desc_uz: "Ichida shokoladli nachinkasi bor", price: 22000, img: "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&fit=crop&w=500&q=80" },
+      { id: 14, cat: "bakery", tag_ru: "Выпечка", tag_uz: "Pishiriq", name_ru: "Булка с малиной", name_uz: "Malinali bulochka", desc_ru: "Слоеные ягоды и заварной крем", desc_uz: "Pishiriq rezavorlar va krem bilan", price: 27000, img: "https://media.ovkuse.ru/images/recipes/d93bca0f-dcbd-412c-8195-92f2eb22b317/d93bca0f-dcbd-412c-8195-92f2eb22b317_420_420.webp" },
+
+      // Соки
+      { id: 15, cat: "juice", tag_ru: "Соки", tag_uz: "Sharbatlar", name_ru: "Апельсиновый фреш", name_uz: "Apelsin freshi", desc_ru: "Свежевыжатый сок из спелых апельсинов", desc_uz: "Yangi siqilgan apelsin sharbati", price: 35000, img: "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=500&q=80" },
+      { id: 16, cat: "juice", tag_ru: "Соки", tag_uz: "Sharbatlar", name_ru: "Яблочно-морковный фреш", name_uz: "Olma-sabzi freshi", desc_ru: "Витаминный натуральный фреш", desc_uz: "Vitaminli tabiiy fresh", price: 30000, img: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&w=500&q=80" },
+      { id: 17, cat: "juice", tag_ru: "Соки", tag_uz: "Sharbatlar", name_ru: "Лимонад Мята-Маракуйя", name_uz: "Yalpiz-marakuyya limonadi", desc_ru: "Освежающий авторский холодный напиток", desc_uz: "Tetiklantiruvchi sovuq ichimlik", price: 32000, img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80" },
+
+      // Салаты
+      { id: 18, cat: "salad", tag_ru: "Салаты", tag_uz: "Salatlar", name_ru: "Цезарь с курицей", name_uz: "Tovuqli Sezar", desc_ru: "Хрустящий салат с куриной грудкой и пармезаном", desc_uz: "Tovuq go'shti va pishloqli salat", price: 55000, img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=500&q=80" },
+      { id: 19, cat: "salad", tag_ru: "Салаты", tag_uz: "Salatlar", name_ru: "Греческий салат", name_uz: "Grek salati", desc_ru: "Свежие овощи, сыр фета и оливки", desc_uz: "Yangi sabzavotlar, feta pishlog'i va zaytun", price: 42000, img: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=500&q=80" },
+      { id: 20, cat: "salad", tag_ru: "Салаты", tag_uz: "Salatlar", name_ru: "Боул с лососем и киноа", name_uz: "Losos va kinoali boul", desc_ru: "Свежий лосось, авокадо и киноа", desc_uz: "Yangi losos, avokado va kinoa", price: 68000, img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=500&q=80" }
     ];
 
     const i18n = {
       ru: {
-        nav_home: "Главная", nav_menu: "Меню", nav_offers: "Акции & Штампы", nav_about: "О нас & Локации", nav_profile: "Профиль",
-        cart: "Корзина", menu_header: "Наше Меню",
-        menu_sub: "Свежая выпечка каждое утро, авторский кофе, сытные завтраки и легкие салаты в узбекских сумах (UZS).",
-        cat_all: "Все позиции", cat_coffee: "Кофе & Напитки", cat_bakery: "Свежая Выпечка", cat_breakfast: "Завтраки", cat_salads: "Салаты & Сэндвичи",
-        cart_title: "Ваша корзина", total: "Итого:", btn_checkout: "Оформить заказ"
+        brand_badge: "Ташкент", nav_home: "Главная", nav_menu: "Меню", nav_offers: "Акции & Штампы", nav_about: "О нас & Локации", nav_profile: "Профиль",
+        cart: "Корзина", promo_bar: "☕ Каждый 8-й кофе или выпечка БЕСПЛАТНО! Забирай карту в разделе \"Акции\".",
+        menu_title: "Наше Меню", menu_sub: "Завтраки, кофе, свежая выпечка, соки и салаты",
+        cat_all: "Все", cat_breakfast: "Завтраки", cat_coffee: "Кофе", cat_bakery: "Выпечка", cat_juice: "Соки", cat_salad: "Салаты",
+        cart_title: "Корзина", total: "Итого:", btn_checkout: "Оформить заказ", btn_add: "В корзину +",
+        promo_ph: "Промокод (напр. YURON10)", btn_apply: "ОК",
+        footer_about: "Уютное место в Ташкенте. Свежий кофе, завтраки и выпечка каждый день.",
+        footer_nav: "Навигация", footer_hours: "Часы работы", footer_contact: "Контакты",
+        alert_success: "Заказ успешно оформлен! Отслеживайте готовность в Профиле."
       },
       uz: {
-        nav_home: "Bosh sahifa", nav_menu: "Menyu", nav_offers: "Aktsiyalar & Shtamplar", nav_about: "Biz haqimizda & Joylashuv", nav_profile: "Profil",
-        cart: "Savat", menu_header: "Bizning Menyu",
-        menu_sub: "Har kuni ertalab yangi pishiriqlar, mualliflik kofesi, to'yimli noshtalar va saladlar so'mda (UZS).",
-        cat_all: "Barchasi", cat_coffee: "Kofe & Ichimliklar", cat_bakery: "Yangi Pishiriqlar", cat_breakfast: "Noshtalar", cat_salads: "Saladlar & Sendvichlar",
-        cart_title: "Sizning savatingiz", total: "Jami:", btn_checkout: "Buyurtma berish"
+        brand_badge: "Toshkent", nav_home: "Bosh sahifa", nav_menu: "Menyu", nav_offers: "Aktsiyalar & Shtamplar", nav_about: "Biz haqimizda & Joylashuv", nav_profile: "Profil",
+        cart: "Savat", promo_bar: "☕ Har 8-kofe yoki pishiriq BEPUL! 'Aktsiyalar' bo'limidan kartani oling.",
+        menu_title: "Bizning Menyu", menu_sub: "Nonushta, kofe, yangi pishiriqlar, sharbatlar va salatlar",
+        cat_all: "Barchasi", cat_breakfast: "Nonushta", cat_coffee: "Kofe", cat_bakery: "Pishiriqlar", cat_juice: "Sharbatlar", cat_salad: "Salatlar",
+        cart_title: "Savat", total: "Jami:", btn_checkout: "Buyurtma berish", btn_add: "Savatga +",
+        promo_ph: "Promokod (masalan, YURON10)", btn_apply: "OK",
+        footer_about: "Toshkentdagi shinam maskan. Har kuni yangi kofe va mazali pishiriqlar.",
+        footer_nav: "Navigatsiya", footer_hours: "Ish vaqti", footer_contact: "Kontaktlar",
+        alert_success: "Buyurtma muvaffaqiyatli rasmiylashtirildi! Profil bo'limida kuzatishingiz mumkin."
       }
     };
 
     let currentLang = localStorage.getItem('yuron_lang') || 'ru';
     let cart = JSON.parse(localStorage.getItem('yuron_cart')) || [];
-    let selectedCategory = 'all';
+    let activeCategory = 'all';
+    let discountPercent = 0;
+
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const navMenu = document.getElementById('navMenu');
+    hamburgerBtn.addEventListener('click', () => { navMenu.classList.toggle('open'); });
 
     function updateLanguage() {
       document.getElementById('langToggle').innerText = currentLang === 'ru' ? 'UZ' : 'RU';
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (i18n[currentLang][key]) el.innerText = i18n[currentLang][key];
+        if (i18n[currentLang][key]) el.innerHTML = i18n[currentLang][key];
       });
+      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const key = el.getAttribute('data-i18n-ph');
+        if (i18n[currentLang][key]) el.placeholder = i18n[currentLang][key];
+      });
+      renderProducts();
+      renderCart();
     }
 
     document.getElementById('langToggle').addEventListener('click', () => {
@@ -258,113 +303,96 @@
       updateLanguage();
     });
 
-    function setCategory(cat) {
-      selectedCategory = cat;
-      document.querySelectorAll('.pill-btn').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
-      filterProducts();
-    }
-
-    function filterProducts() {
-      const searchVal = document.getElementById('searchInput').value.toLowerCase();
-      const filtered = products.filter(p => {
-        const matchCat = selectedCategory === 'all' || p.category === selectedCategory;
-        const matchSearch = p.name.toLowerCase().includes(searchVal) || p.desc.toLowerCase().includes(searchVal);
-        return matchCat && matchSearch;
-      });
-      renderProducts(filtered);
-    }
-
-    function renderProducts(items) {
+    function renderProducts() {
       const grid = document.getElementById('productsGrid');
       grid.innerHTML = '';
-      if (items.length === 0) {
-        grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding:40px; color:var(--text-muted);">Ничего не найдено 😔</p>';
-        return;
-      }
+      const filtered = activeCategory === 'all' ? productsDB : productsDB.filter(p => p.cat === activeCategory);
 
-      items.forEach(p => {
+      filtered.forEach(p => {
+        const name = currentLang === 'ru' ? p.name_ru : p.name_uz;
+        const tag = currentLang === 'ru' ? p.tag_ru : p.tag_uz;
+        const desc = currentLang === 'ru' ? p.desc_ru : p.desc_uz;
+        const btnText = i18n[currentLang].btn_add;
+
         grid.innerHTML += `
-          <div class="prod-card">
+          <div class="product-card">
             <div>
-              <img src="${p.img}" alt="${p.name}" class="prod-img">
-              <div class="prod-tag">${p.tag}</div>
-              <div class="prod-title">${p.name}</div>
-              <div class="prod-desc">${p.desc}</div>
+              <img src="${p.img}" alt="${name}" class="product-img">
+              <div class="product-tag">${tag}</div>
+              <div class="product-title">${name}</div>
+              <div class="product-desc">${desc}</div>
             </div>
-            <div class="prod-footer">
-              <span class="prod-price">${p.price.toLocaleString()} UZS</span>
-              <button class="add-btn" onclick="addToCart('${p.name}', ${p.price})">+ В корзину</button>
+            <div class="product-footer">
+              <span class="product-price">${p.price.toLocaleString()} UZS</span>
+              <button class="btn-add" onclick="addToCart(${p.id})">${btnText}</button>
             </div>
           </div>
         `;
       });
     }
 
-    // Cart Logic
+    document.getElementById('categoryFilters').addEventListener('click', (e) => {
+      if(e.target.tagName === 'BUTTON') {
+        document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+        activeCategory = e.target.getAttribute('data-cat');
+        renderProducts();
+      }
+    });
+
     const cartDrawer = document.getElementById('cartDrawer');
     const cartOverlay = document.getElementById('cartOverlay');
 
     document.getElementById('openCart').addEventListener('click', () => {
-      cartDrawer.classList.add('open');
-      cartOverlay.classList.add('open');
-      renderCart();
+      cartDrawer.classList.add('open'); cartOverlay.classList.add('open'); navMenu.classList.remove('open'); renderCart();
     });
+    document.getElementById('closeCart').addEventListener('click', () => { cartDrawer.classList.remove('open'); cartOverlay.classList.remove('open'); });
+    cartOverlay.addEventListener('click', () => { cartDrawer.classList.remove('open'); cartOverlay.classList.remove('open'); });
 
-    document.getElementById('closeCart').addEventListener('click', () => {
-      cartDrawer.classList.remove('open');
-      cartOverlay.classList.remove('open');
-    });
-
-    cartOverlay.addEventListener('click', () => {
-      cartDrawer.classList.remove('open');
-      cartOverlay.classList.remove('open');
-    });
-
-    function addToCart(name, price) {
-      const existing = cart.find(item => item.name === name);
-      if (existing) { existing.qty++; } else { cart.push({ name, price, qty: 1 }); }
+    function addToCart(id) {
+      const existing = cart.find(i => i.id === id);
+      if (existing) { existing.qty++; } else { cart.push({ id: id, qty: 1 }); }
       saveCart();
-      renderCart();
-      cartDrawer.classList.add('open');
-      cartOverlay.classList.add('open');
+      cartDrawer.classList.add('open'); cartOverlay.classList.add('open');
     }
 
-    function saveCart() {
-      localStorage.setItem('yuron_cart', JSON.stringify(cart));
-      updateCartCount();
-    }
-
-    function updateCartCount() {
-      const count = cart.reduce((sum, item) => sum + item.qty, 0);
-      document.getElementById('cartCount').innerText = count;
-    }
+    function saveCart() { localStorage.setItem('yuron_cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
+    function updateCartCount() { document.getElementById('cartCount').innerText = cart.reduce((s, i) => s + i.qty, 0); }
 
     function renderCart() {
       const container = document.getElementById('cartItemsList');
       container.innerHTML = '';
-      let total = 0;
+      let subtotal = 0;
 
       if (cart.length === 0) {
-        container.innerHTML = '<p style="text-align:center; color:var(--text-muted); margin-top:40px;">Корзина пуста ☕</p>';
+        container.innerHTML = `<p style="text-align:center; color:var(--text-muted); margin-top:40px;">${currentLang === 'ru' ? 'Корзина пуста' : 'Savat bo\'sh'} ☕</p>`;
+        discountPercent = 0;
+        document.getElementById('promoMsg').style.display = 'none';
+        document.getElementById('promoInput').value = '';
       } else {
         cart.forEach((item, index) => {
-          total += item.price * item.qty;
+          const product = productsDB.find(p => p.id === item.id);
+          if (!product) return;
+          const name = currentLang === 'ru' ? product.name_ru : product.name_uz;
+          subtotal += product.price * item.qty;
+
           container.innerHTML += `
             <div class="cart-item">
               <div>
-                <strong style="display:block;">${item.name}</strong>
-                <small style="color:var(--text-muted);">${item.price.toLocaleString()} UZS</small>
+                <strong style="display:block; font-size:0.95rem;">${name}</strong>
+                <small style="color:var(--text-muted);">${product.price.toLocaleString()} UZS</small>
               </div>
               <div style="display:flex; align-items:center; gap:8px;">
-                <button onclick="changeQty(${index}, -1)" style="padding:2px 8px; font-weight:bold;">-</button>
+                <button class="cart-qty-btn" onclick="changeQty(${index}, -1)">-</button>
                 <span>${item.qty}</span>
-                <button onclick="changeQty(${index}, 1)" style="padding:2px 8px; font-weight:bold;">+</button>
+                <button class="cart-qty-btn" onclick="changeQty(${index}, 1)">+</button>
               </div>
             </div>
           `;
         });
       }
+
+      let total = subtotal * (1 - discountPercent);
       document.getElementById('cartTotal').innerText = total.toLocaleString() + ' UZS';
     }
 
@@ -372,28 +400,56 @@
       cart[index].qty += change;
       if (cart[index].qty <= 0) cart.splice(index, 1);
       saveCart();
+    }
+
+    function applyPromo() {
+      const code = document.getElementById('promoInput').value.trim().toUpperCase();
+      const msg = document.getElementById('promoMsg');
+      msg.style.display = 'block';
+
+      if (code === 'YURON10') {
+        discountPercent = 0.10;
+        msg.style.color = 'var(--accent-green)';
+        msg.innerText = currentLang === 'ru' ? '🎉 Скидка 10% применена!' : '🎉 10% chegirma qo\'llanildi!';
+      } else {
+        discountPercent = 0;
+        msg.style.color = 'var(--accent-terracotta)';
+        msg.innerText = currentLang === 'ru' ? '❌ Неверный промокод' : '❌ Noto\'g\'ri promokod';
+      }
       renderCart();
     }
 
     function checkout() {
-      if (cart.length === 0) return alert('Корзина пуста!');
-      alert('Заказ оформлен! Ему присвоен статус "Готовится".');
+      if (cart.length === 0) return;
       
+      let orders = JSON.parse(localStorage.getItem('yuron_orders') || '[]');
+      const orderNames = cart.map(item => {
+        const p = productsDB.find(prod => prod.id === item.id);
+        return (currentLang === 'ru' ? p.name_ru : p.name_uz) + ` (${item.qty} шт)`;
+      }).join(', ');
+
+      const newOrder = {
+        items: orderNames,
+        date: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        status: currentLang === 'ru' ? '🟡 Готовится (15 мин)' : '🟡 Tayyorlanmoqda (15 daq)',
+        total: document.getElementById('cartTotal').innerText
+      };
+
+      orders.unshift(newOrder);
+      localStorage.setItem('yuron_orders', JSON.stringify(orders));
+
       let stamps = parseInt(localStorage.getItem('yuron_stamps') || '0');
       stamps = Math.min(stamps + 1, 8);
       localStorage.setItem('yuron_stamps', stamps);
 
-      cart = [];
-      saveCart();
-      renderCart();
-      cartDrawer.classList.remove('open');
-      cartOverlay.classList.remove('open');
+      alert(i18n[currentLang].alert_success);
+
+      cart = []; discountPercent = 0; saveCart(); renderCart();
+      cartDrawer.classList.remove('open'); cartOverlay.classList.remove('open');
     }
 
-    // Init
     updateLanguage();
     updateCartCount();
-    renderProducts(products);
   </script>
 </body>
 </html>

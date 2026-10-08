@@ -158,6 +158,15 @@
       font-size: 0.75rem;
     }
 
+    .hamburger {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: var(--text-espresso);
+      background: none;
+      border: none;
+    }
+
     /* Hero Section */
     .hero {
       padding: 60px 5% 80px;
@@ -205,6 +214,8 @@
       box-shadow: var(--shadow-retro);
       cursor: pointer;
       transition: all 0.15s ease;
+      display: inline-block;
+      text-align: center;
     }
 
     .btn-primary:hover {
@@ -221,6 +232,8 @@
       font-size: 1rem;
       box-shadow: var(--shadow-retro);
       cursor: pointer;
+      display: inline-block;
+      text-align: center;
     }
 
     .hero-image-wrap {
@@ -474,6 +487,38 @@
     }
 
     @media (max-width: 768px) {
+      .navbar {
+        padding: 12px 5%;
+        flex-wrap: nowrap;
+      }
+      .hamburger {
+        display: block;
+      }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: var(--bg-cream);
+        padding: 0;
+        border-bottom: 2px solid var(--text-espresso);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+      .nav-links.open {
+        display: flex;
+      }
+      .nav-links li {
+        width: 100%;
+        text-align: center;
+        border-top: 1px solid rgba(0,0,0,0.05);
+      }
+      .nav-links a {
+        display: block;
+        padding: 16px;
+        font-size: 1.1rem;
+      }
       .hero {
         grid-template-columns: 1fr;
         text-align: center;
@@ -484,8 +529,9 @@
       .hero-actions {
         justify-content: center;
       }
-      .nav-links {
-        display: none;
+      .loyalty-container {
+        flex-direction: column;
+        text-align: center;
       }
     }
   </style>
@@ -493,7 +539,7 @@
 <body>
 
   <!-- Announcement Bar -->
-  <div class="promo-bar" id="promoBar">
+  <div class="promo-bar" data-i18n="promo_bar">
     ☕ Каждый 8-й кофе или выпечка БЕСПЛАТНО! Забирай карту в разделе "Акции".
   </div>
 
@@ -503,7 +549,7 @@
       Yuron Cafe <span class="brand-badge">Ташкент</span>
     </a>
 
-    <ul class="nav-links">
+    <ul class="nav-links" id="navMenu">
       <li><a href="index.html" class="active" data-i18n="nav_home">Главная</a></li>
       <li><a href="product.html" data-i18n="nav_menu">Меню</a></li>
       <li><a href="offer.html" data-i18n="nav_offers">Акции & Штампы</a></li>
@@ -517,6 +563,7 @@
         🛒 <span data-i18n="cart">Корзина</span>
         <span class="cart-badge" id="cartCount">0</span>
       </button>
+      <button class="hamburger" id="hamburgerBtn">☰</button>
     </div>
   </nav>
 
@@ -532,7 +579,7 @@
     </div>
     <div class="hero-image-wrap">
       <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80" alt="Кофе Yuron Cafe" class="hero-img">
-      <div class="sticker-badge">100%<br>Арабика</div>
+      <div class="sticker-badge" data-i18n="sticker">100%<br>Арабика</div>
     </div>
   </section>
 
@@ -644,7 +691,6 @@
 
   <!-- Unified Application Script -->
   <script>
-    // Dictionary Translations
     const i18n = {
       ru: {
         nav_home: "Главная",
@@ -653,10 +699,12 @@
         nav_about: "О нас & Локации",
         nav_profile: "Профиль",
         cart: "Корзина",
-        hero_title: "Ваш идеальный кофе и свежий завтрак в Ташкенте",
+        promo_bar: "☕ Каждый 8-й кофе или выпечка БЕСПЛАТНО! Забирай карту в разделе \"Акции\".",
+        hero_title: "Ваш идеальный кофе и <span>свежий завтрак</span> в Ташкенте",
         hero_subtitle: "Крафтовая выпечка каждое утро, авторский спешелти-кофейный бленд и уютная атмосфера в центре города.",
         btn_order_now: "Заказать онлайн",
         btn_loyalty: "Карта лояльности",
+        sticker: "100%<br>Арабика",
         loyalty_title: "8-й кофе бесплатно! 🎟️",
         loyalty_desc: "Покупайте кофе и выпечку, собирайте 8 виртуальных штампов в профиле и получайте бесплатный напиток.",
         btn_open_card: "Открыть карточку",
@@ -677,12 +725,14 @@
         nav_about: "Biz haqimizda & Joylashuv",
         nav_profile: "Profil",
         cart: "Savat",
-        hero_title: "Toshkentdagi mukammal kofe va yangi noshta",
-        hero_subtitle: "Har kuni ertalab qo'lda tayyorlangan pishiriqlar va shahar markazidagi shinam muhit.",
+        promo_bar: "☕ Har 8-kofe yoki pishiriq BEPUL! 'Aktsiyalar' bo'limidan kartani oling.",
+        hero_title: "Toshkentdagi mukammal kofe va <span>yangi nonushta</span>",
+        hero_subtitle: "Har kuni ertalab qo'lda tayyorlangan pishiriqlar, mualliflik kofesi va shahar markazidagi shinam muhit.",
         btn_order_now: "Onlayn buyurtma",
         btn_loyalty: "Sadoqat kartasi",
+        sticker: "100%<br>Arabika",
         loyalty_title: "8-kofe bepul! 🎟️",
-        loyalty_desc: "Kofe va pishiriqlar xarid qiling, 8 ta shtamp yiging va bepul ichimlikka ega bo'ling.",
+        loyalty_desc: "Kofe va pishiriqlar xarid qiling, 8 ta shtamp yig'ing va bepul ichimlikka ega bo'ling.",
         btn_open_card: "Kartani ochish",
         popular_title: "Mashhur menyu",
         btn_add: "Savatga +",
@@ -699,12 +749,18 @@
     let currentLang = localStorage.getItem('yuron_lang') || 'ru';
     let cart = JSON.parse(localStorage.getItem('yuron_cart')) || [];
 
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const navMenu = document.getElementById('navMenu');
+    hamburgerBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('open');
+    });
+
     function updateLanguage() {
       document.getElementById('langToggle').innerText = currentLang === 'ru' ? 'UZ' : 'RU';
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (i18n[currentLang][key]) {
-          el.innerText = i18n[currentLang][key];
+          el.innerHTML = i18n[currentLang][key];
         }
       });
     }
@@ -715,13 +771,13 @@
       updateLanguage();
     });
 
-    // Cart Logic
     const cartDrawer = document.getElementById('cartDrawer');
     const cartOverlay = document.getElementById('cartOverlay');
 
     document.getElementById('openCart').addEventListener('click', () => {
       cartDrawer.classList.add('open');
       cartOverlay.classList.add('open');
+      navMenu.classList.remove('open');
       renderCart();
     });
 
@@ -764,7 +820,7 @@
       let total = 0;
 
       if (cart.length === 0) {
-        container.innerHTML = '<p style="text-align:center; color:var(--text-muted); margin-top:40px;">Корзина пуста ☕</p>';
+        container.innerHTML = `<p style="text-align:center; color:var(--text-muted); margin-top:40px;">${currentLang === 'ru' ? 'Корзина пуста' : 'Savat bo\'sh'} ☕</p>`;
       } else {
         cart.forEach((item, index) => {
           total += item.price * item.qty;
@@ -794,10 +850,9 @@
     }
 
     function checkout() {
-      if (cart.length === 0) return alert('Корзина пуста!');
-      alert('Заказ успешно оформлен! Вы можете отслеживать его в Вашем Профиле.');
+      if (cart.length === 0) return alert(currentLang === 'ru' ? 'Корзина пуста!' : 'Savat bo\'sh!');
+      alert(currentLang === 'ru' ? 'Заказ успешно оформлен! Вы можете отслеживать его в Вашем Профиле.' : 'Buyurtma muvaffaqiyatli rasmiylashtirildi!');
       
-      // Add stamps for purchase
       let stamps = parseInt(localStorage.getItem('yuron_stamps') || '0');
       stamps = Math.min(stamps + 1, 8);
       localStorage.setItem('yuron_stamps', stamps);
@@ -809,7 +864,6 @@
       cartOverlay.classList.remove('open');
     }
 
-    // Init
     updateLanguage();
     updateCartCount();
   </script>
