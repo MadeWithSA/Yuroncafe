@@ -2,12 +2,12 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Yuron Cafe — Меню и Каталог</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yuron Cafe — Доставка</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg-cream: #fbf7f0;
@@ -24,67 +24,120 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: var(--bg-cream); color: var(--text-espresso); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; }
+    body { background-color: var(--bg-cream); color: var(--text-espresso); font-family: var(--font-body); line-height: 1.6; }
     a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; }
+    [hidden] { display: none !important; }
 
-    /* Announcement Bar */
+    /* Promo Bar */
     .promo-bar { background: var(--accent-terracotta); color: #fff; text-align: center; padding: 8px 16px; font-size: 0.88rem; font-weight: 600; }
 
     /* Navbar */
     .navbar { display: flex; justify-content: space-between; align-items: center; padding: 18px 5%; background-color: var(--bg-cream); border-bottom: 2px solid var(--text-espresso); position: sticky; top: 0; z-index: 100; }
     .brand-logo { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 800; color: var(--accent-terracotta); display: flex; align-items: center; gap: 8px; }
     .brand-badge { background: var(--accent-yellow); color: var(--text-espresso); font-size: 0.65rem; font-family: var(--font-body); padding: 3px 8px; border-radius: 12px; border: 1px solid var(--text-espresso); text-transform: uppercase; font-weight: 700; }
-
     .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
     .nav-links a { font-weight: 600; font-size: 0.95rem; }
     .nav-links a.active, .nav-links a:hover { color: var(--accent-terracotta); }
-
-    .nav-controls { display: flex; align-items: center; gap: 12px; }
+    .nav-controls { display: flex; align-items: center; gap: 16px; }
     .lang-switcher { background: #fff; border: 2px solid var(--text-espresso); padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; cursor: pointer; box-shadow: 2px 2px 0px var(--text-espresso); }
-
     .cart-btn { background: var(--accent-yellow); border: 2px solid var(--text-espresso); padding: 8px 16px; border-radius: 25px; font-weight: 700; cursor: pointer; box-shadow: var(--shadow-retro); display: flex; align-items: center; gap: 8px; }
     .cart-badge { background: var(--accent-terracotta); color: #fff; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; }
-    
-    .hamburger { display: none; font-size: 1.8rem; cursor: pointer; color: var(--text-espresso); background: none; border: none; }
 
-    /* Page Content */
-    .menu-container { max-width: 1200px; margin: 40px auto 80px; padding: 0 5%; }
-    .page-title { font-family: var(--font-heading); font-size: 2.8rem; text-align: center; margin-bottom: 8px; }
-    .page-subtitle { text-align: center; color: var(--text-muted); font-size: 1.1rem; margin-bottom: 30px; }
+    /* ===== Delivery page ===== */
+    .dl-wrap { max-width: 1100px; margin: 0 auto; padding: 0 5%; }
+    .dl-hero { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px; align-items: center; padding: 48px 0 28px; }
+    .dl-kicker { display: inline-block; margin-bottom: 12px; padding: 4px 14px; font-size: 0.8rem; font-weight: 800; background: var(--accent-yellow); border: 2px solid var(--text-espresso); border-radius: 20px; }
+    .dl-hero h1 { font-family: var(--font-heading); font-size: 3.1rem; line-height: 1.1; margin-bottom: 14px; }
+    .dl-hero h1 em { color: var(--accent-terracotta); font-style: italic; }
+    .dl-hero p { font-size: 1.08rem; color: var(--text-muted); margin-bottom: 22px; max-width: 520px; }
+    .dl-art { position: relative; aspect-ratio: 1.1; display: flex; align-items: center; justify-content: center; background: var(--accent-yellow); border: 3px solid var(--text-espresso); border-radius: 28px; box-shadow: 8px 8px 0 var(--accent-terracotta), 8px 8px 0 3px var(--text-espresso); overflow: hidden; }
+    .dl-art .road { position: absolute; left: 0; right: 0; bottom: 18%; height: 8px; background: repeating-linear-gradient(90deg, var(--text-espresso) 0 28px, transparent 28px 52px); opacity: 0.35; animation: dlRoad 1.2s linear infinite; }
+    .dl-art .scooter { font-size: 6.2rem; line-height: 1; animation: dlRide 2.4s ease-in-out infinite; }
+    .dl-art .bag { position: absolute; top: 14%; right: 14%; font-size: 2.2rem; animation: dlRide 2.4s ease-in-out infinite reverse; }
+    @keyframes dlRoad { to { background-position: -52px 0; } }
+    @keyframes dlRide { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-8px) rotate(2deg); } }
 
-    /* Filters */
-    .categories { display: flex; gap: 10px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; }
-    .category-btn { background: #fff; border: 2px solid var(--text-espresso); padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 0.9rem; cursor: pointer; box-shadow: 2px 2px 0px var(--text-espresso); transition: all 0.2s; }
-    .category-btn.active { background: var(--accent-terracotta); color: #fff; }
+    .dl-facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 52px; }
+    .dl-fact { padding: 18px 16px; text-align: center; background: #fff; border: 2px solid var(--text-espresso); border-radius: 18px; box-shadow: 3px 3px 0 var(--text-espresso); }
+    .dl-fact .ic { display: block; font-size: 1.8rem; margin-bottom: 4px; }
+    .dl-fact b { display: block; font-family: var(--font-heading); font-size: 1.35rem; line-height: 1.2; }
+    .dl-fact span { display: block; font-size: 0.82rem; color: var(--text-muted); font-weight: 600; }
 
-    /* Products Grid */
-    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
-    .product-card { background: #fff; border: 2px solid var(--text-espresso); border-radius: 18px; padding: 20px; box-shadow: var(--shadow-retro); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.2s; }
-    .product-card:hover { transform: translateY(-4px); }
-    .product-img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 12px; }
-    .product-tag { font-size: 0.75rem; font-weight: 800; color: var(--accent-terracotta); text-transform: uppercase; margin-bottom: 4px; }
-    .product-title { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; }
-    .product-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 14px; flex-grow: 1; }
-    .product-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--border-color); padding-top: 12px; }
-    .product-price { font-size: 1.1rem; font-weight: 800; color: var(--text-espresso); }
-    .btn-add { background: var(--accent-yellow); border: 2px solid var(--text-espresso); padding: 8px 14px; border-radius: 12px; font-weight: 800; cursor: pointer; box-shadow: 2px 2px 0px var(--text-espresso); transition: 0.1s; }
-    .btn-add:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0px var(--text-espresso); }
+    .dl-title { font-family: var(--font-heading); font-size: 2rem; margin-bottom: 6px; }
+    .dl-sub { color: var(--text-muted); margin-bottom: 22px; }
+    .dl-section { margin-bottom: 56px; }
 
-    /* Cart Drawer */
-    .cart-drawer { position: fixed; top: 0; right: -100%; width: 100%; max-width: 420px; height: 100vh; background: var(--bg-cream); border-left: 3px solid var(--text-espresso); z-index: 1000; box-shadow: -10px 0 30px rgba(0,0,0,0.15); transition: right 0.3s ease; display: flex; flex-direction: column; padding: 24px; }
-    .cart-drawer.open { right: 0; }
-    .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(43, 30, 26, 0.4); z-index: 999; display: none; }
-    .cart-overlay.open { display: block; }
-    .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--text-espresso); padding-bottom: 16px; margin-bottom: 20px; }
-    .cart-items { flex: 1; overflow-y: auto; padding-right: 4px; }
-    .cart-item { display: flex; justify-content: space-between; align-items: center; background: #fff; border: 1px solid var(--text-espresso); padding: 12px; border-radius: 12px; margin-bottom: 12px; }
-    .cart-qty-btn { padding: 2px 8px; border: 1px solid var(--text-espresso); background: var(--bg-cream); border-radius: 6px; cursor: pointer; font-weight: bold; }
+    .dl-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; counter-reset: st; }
+    .dl-step { position: relative; padding: 20px 16px 16px; background: #fff; border: 2px solid var(--text-espresso); border-radius: 18px; }
+    .dl-step::before { counter-increment: st; content: counter(st); position: absolute; top: -14px; left: 14px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #fff; background: var(--accent-terracotta); border: 2px solid var(--text-espresso); border-radius: 50%; }
+    .dl-step b { display: block; margin-bottom: 4px; }
+    .dl-step span { font-size: 0.88rem; color: var(--text-muted); }
 
-    /* Promo code block inside cart */
-    .promo-box { display: flex; gap: 8px; margin: 15px 0; }
-    .promo-input { flex: 1; padding: 10px; border: 2px solid var(--text-espresso); border-radius: 10px; font-family: var(--font-body); outline: none; font-size: 0.9rem; }
-    .promo-btn { background: var(--text-espresso); color: #fff; border: none; padding: 0 14px; border-radius: 10px; font-weight: 700; cursor: pointer; }
-    .promo-msg { font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; display: none; }
+    .dl-zones { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(210px, 100%), 1fr)); gap: 12px; }
+    .dl-zone { padding: 14px; text-align: left; cursor: pointer; background: #fff; border: 2px solid var(--text-espresso); border-radius: 16px; transition: transform 0.12s ease, background 0.15s ease; }
+    .dl-zone:hover { transform: translateY(-2px); background: var(--bg-cream); }
+    .dl-zone.sel { background: var(--accent-yellow); box-shadow: 3px 3px 0 var(--text-espresso); }
+    .dl-zone b { display: block; font-size: 1rem; }
+    .dl-zone span { display: block; font-size: 0.82rem; color: var(--text-muted); font-weight: 600; }
+    .dl-zone.sel span { color: var(--text-espresso); }
+    .dl-zone .fee { margin-top: 6px; font-weight: 800; color: var(--accent-terracotta); font-size: 0.95rem; }
+    .dl-zone.sel .fee { color: var(--text-espresso); }
+
+    .dl-order { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 24px; align-items: start; }
+    .dl-box { padding: 24px; background: #fff; border: 2px solid var(--text-espresso); border-radius: 22px; box-shadow: var(--shadow-retro); }
+    .dl-box h3 { font-family: var(--font-heading); font-size: 1.35rem; margin-bottom: 14px; }
+    .dl-sum { position: sticky; top: calc(var(--nav-h, 70px) + 16px); }
+
+    .dl-login { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 14px; margin-bottom: 18px; padding: 12px 14px; font-size: 0.9rem; font-weight: 700; background: rgba(242, 169, 59, 0.25); border: 1.5px solid var(--text-espresso); border-radius: 14px; }
+    .fg { margin-bottom: 14px; }
+    .fg label, .fg legend { display: block; margin-bottom: 5px; font-size: 0.85rem; font-weight: 700; }
+    .fg input, .fg select, .fg textarea { width: 100%; min-height: 48px; padding: 11px 12px; font: 500 1rem var(--font-body); color: var(--text-espresso); background: #fff; border: 2px solid var(--text-espresso); border-radius: 12px; outline: none; }
+    .fg textarea { min-height: 76px; resize: vertical; }
+    .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--accent-terracotta); box-shadow: 0 0 0 3px rgba(217, 83, 56, 0.18); }
+    .fg .err { display: none; margin-top: 5px; font-size: 0.8rem; font-weight: 700; color: var(--accent-terracotta); }
+    .fg.bad .err { display: block; }
+    .fg.bad input, .fg.bad select { border-color: var(--accent-terracotta); }
+    .fg fieldset { border: 0; }
+    .row-4 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .dl-phone { display: flex; border: 2px solid var(--text-espresso); border-radius: 12px; overflow: hidden; background: #fff; }
+    .dl-phone:focus-within { border-color: var(--accent-terracotta); box-shadow: 0 0 0 3px rgba(217, 83, 56, 0.18); }
+    .dl-phone span { display: flex; align-items: center; padding: 0 10px; font-weight: 800; background: var(--bg-cream); border-right: 2px solid var(--text-espresso); }
+    .dl-phone input { border: 0; border-radius: 0; box-shadow: none !important; }
+    .pay { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .pay label { display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 10px 12px; margin: 0; font-weight: 700; cursor: pointer; background: #fff; border: 2px solid var(--text-espresso); border-radius: 12px; }
+    .pay input { width: 18px; height: 18px; min-height: 0; accent-color: var(--accent-terracotta); }
+    .pay label:has(input:checked) { background: var(--accent-yellow); box-shadow: 2px 2px 0 var(--text-espresso); }
+
+    .sum-lines { list-style: none; margin-bottom: 12px; }
+    .sum-lines li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--border-color); font-size: 0.92rem; }
+    .sum-lines .nm { min-width: 0; overflow-wrap: anywhere; }
+    .sum-lines .nm small { display: block; color: var(--text-muted); }
+    .sum-lines .qty { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .qbtn { width: 32px; height: 32px; cursor: pointer; font-weight: 800; background: var(--bg-cream); border: 1.5px solid var(--text-espresso); border-radius: 8px; }
+    .sum-row { display: flex; justify-content: space-between; gap: 10px; padding: 4px 0; font-size: 0.95rem; }
+    .sum-row.total { margin-top: 8px; padding-top: 12px; border-top: 2px solid var(--text-espresso); font-size: 1.2rem; font-weight: 800; }
+    .sum-row .free { color: var(--accent-green); font-weight: 800; }
+    .free-bar { margin: 12px 0; font-size: 0.82rem; font-weight: 700; }
+    .free-bar .bar { height: 10px; margin-top: 5px; background: var(--bg-cream); border: 1.5px solid var(--text-espresso); border-radius: 8px; overflow: hidden; }
+    .free-bar .bar i { display: block; height: 100%; background: var(--accent-yellow); border-right: 1.5px solid var(--text-espresso); transition: width 0.4s ease; }
+    .sum-eta { display: flex; align-items: center; gap: 10px; margin: 12px 0; padding: 10px 12px; font-size: 0.9rem; font-weight: 700; background: var(--bg-cream); border: 2px dashed var(--border-color); border-radius: 12px; }
+    .sum-warn { margin: 8px 0 12px; padding: 10px 12px; font-size: 0.85rem; font-weight: 700; color: var(--accent-terracotta); background: #fff3ef; border: 1.5px solid var(--accent-terracotta); border-radius: 12px; }
+    .btn { display: block; width: 100%; min-height: 50px; padding: 12px 20px; text-align: center; font-weight: 800; font-size: 1rem; color: #fff; cursor: pointer; background: var(--accent-terracotta); border: 2px solid var(--text-espresso); border-radius: 30px; box-shadow: var(--shadow-retro); }
+    .btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--text-espresso); }
+    .btn.light { background: #fff; color: var(--text-espresso); }
+    .btn.inline { display: inline-block; width: auto; padding: 10px 24px; }
+    .btn.sm { display: inline-block; width: auto; min-height: 40px; padding: 6px 16px; font-size: 0.88rem; color: var(--text-espresso); background: var(--accent-yellow); border-radius: 12px; box-shadow: 2px 2px 0 var(--text-espresso); }
+    .empty { text-align: center; padding: 26px 8px; }
+    .empty .em-ic { display: block; font-size: 2.4rem; }
+    .empty p { margin: 6px 0 14px; color: var(--text-muted); font-size: 0.92rem; }
+
+    .faq details { margin-bottom: 10px; background: #fff; border: 2px solid var(--text-espresso); border-radius: 14px; }
+    .faq summary { padding: 14px 16px; font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 10px; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; font-weight: 800; font-size: 1.2rem; line-height: 1; }
+    .faq details[open] summary::after { content: "–"; }
+    .faq details p { padding: 0 16px 14px; color: var(--text-muted); font-size: 0.92rem; }
 
     /* Footer */
     footer { background: var(--text-espresso); color: var(--bg-cream); padding: 50px 5% 20px; margin-top: 80px; }
@@ -93,25 +146,39 @@
     .footer-col p, .footer-col li { font-size: 0.9rem; opacity: 0.85; margin-bottom: 8px; list-style: none; }
     .footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; font-size: 0.85rem; opacity: 0.6; }
 
-    @media (max-width: 768px) {
-      .navbar { padding: 12px 5%; justify-content: space-between; }
-      .brand-logo { font-size: 1.4rem; }
-      .hamburger { display: block; }
-      .cart-btn span[data-i18n="cart"] { display: none; }
-      
-      .nav-links { display: none; flex-direction: column; width: 100%; position: absolute; top: 100%; left: 0; background: var(--bg-cream); padding: 0; border-bottom: 2px solid var(--text-espresso); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-      .nav-links.open { display: flex; }
-      .nav-links li { width: 100%; text-align: center; border-top: 1px solid rgba(0,0,0,0.05); }
-      .nav-links a { display: block; padding: 16px; font-size: 1.1rem; }
+    /* Cart Drawer */
+    .cart-drawer { position: fixed; top: 0; right: -420px; width: 100%; max-width: 400px; height: 100vh; height: 100dvh; background: var(--bg-cream); border-left: 3px solid var(--text-espresso); z-index: 1000; box-shadow: -10px 0 30px rgba(0,0,0,0.15); transition: right 0.3s ease; display: flex; flex-direction: column; padding: 24px; }
+    .cart-drawer.open { right: 0; }
+    .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(43, 30, 26, 0.4); z-index: 999; display: none; }
+    .cart-overlay.open { display: block; }
+    .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--text-espresso); padding-bottom: 16px; margin-bottom: 20px; }
+    .cart-items { flex: 1; overflow-y: auto; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; background: #fff; border: 1px solid var(--text-espresso); padding: 12px; border-radius: 12px; margin-bottom: 12px; }
+    .cart-qty-btn { min-width: 34px; min-height: 34px; border: 1px solid var(--text-espresso); background: var(--bg-cream); border-radius: 8px; cursor: pointer; font-weight: bold; }
 
-      .page-title { font-size: 2.2rem; }
-      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-      .product-card { padding: 14px; }
-      .product-img { height: 120px; }
-      .product-title { font-size: 1rem; }
-      .product-price { font-size: 0.95rem; }
-      .btn-add { padding: 6px 10px; font-size: 0.8rem; }
+    @media (max-width: 900px) {
+      .dl-facts, .dl-steps { grid-template-columns: repeat(2, 1fr); }
+      .dl-order { grid-template-columns: 1fr; }
+      .dl-sum { position: static; }
     }
+    @media (max-width: 768px) {
+      .dl-hero { grid-template-columns: 1fr; gap: 26px; padding: 28px 0 20px; }
+      .dl-hero h1 { font-size: 2.2rem; }
+      .dl-hero p { font-size: 1rem; }
+      .dl-art { max-width: 340px; margin: 0 auto; width: 100%; box-shadow: 6px 6px 0 var(--accent-terracotta), 6px 6px 0 3px var(--text-espresso); }
+      .dl-art .scooter { font-size: 5rem; }
+      .dl-facts { gap: 10px; margin-bottom: 40px; }
+      .dl-fact { padding: 14px 8px; }
+      .dl-fact b { font-size: 1.1rem; }
+      .dl-title { font-size: 1.6rem; }
+      .dl-section { margin-bottom: 44px; }
+      .dl-box { padding: 18px 16px; }
+      .dl-steps { gap: 20px 10px; }
+      .row-4 { grid-template-columns: 1fr 1fr; }
+      .pay { grid-template-columns: 1fr; }
+      .btn.inline { display: block; width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) { .dl-art .road, .dl-art .scooter, .dl-art .bag { animation: none; } }
   </style>
   <style>
 /* ===== Yuron: мобильная вёрстка, меню справа, аккаунт, анимация заказа ===== */
@@ -547,77 +614,149 @@ body.ym-lock { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .ya-card, .ya-big, .ya-code.shake { animation: none !important; } }
   </style>
 </head>
-<body>
+<body data-page="delivery">
 
-  <div class="promo-bar" data-i18n="promo_bar">☕ Каждый 8-й кофе или выпечка БЕСПЛАТНО! Забирай карту в разделе "Акции".</div>
+  <div class="promo-bar" data-yt="promo">🛵 Доставляем по Ташкенту: бесплатно от 150 000 UZS!</div>
 
-  <!-- Navbar -->
   <nav class="navbar">
     <a href="index.html" class="brand-logo">
-      Yuron Cafe <span class="brand-badge" data-i18n="brand_badge">Ташкент</span>
+      Yuron Cafe <span class="brand-badge">Ташкент</span>
     </a>
 
-    <ul class="nav-links" id="navMenu">
-      <li><a href="index.html" data-i18n="nav_home">Главная</a></li>
-      <li><a href="product.html" class="active" data-i18n="nav_menu">Меню</a></li>
-      <li><a href="offer.html" data-i18n="nav_offers">Акции & Штампы</a></li>
-      <li><a href="delivery.html" data-yt="m_delivery">Доставка</a></li>
-      <li><a href="about.html" data-i18n="nav_about">О нас & Локации</a></li>
-      <li><a href="profile.html" data-i18n="nav_profile">Профиль</a></li>
+    <ul class="nav-links">
+      <li><a href="index.html" data-yt="m_home">Главная</a></li>
+      <li><a href="product.html" data-yt="m_menu">Меню</a></li>
+      <li><a href="offer.html" data-yt="m_offers">Акции и штампы</a></li>
+      <li><a href="delivery.html" class="active" data-yt="m_delivery">Доставка</a></li>
+      <li><a href="about.html" data-yt="m_about">О нас и локации</a></li>
+      <li><a href="profile.html" data-yt="m_profile">Профиль</a></li>
     </ul>
 
     <div class="nav-controls">
       <button class="lang-switcher" id="langToggle">UZ</button>
       <button class="cart-btn" id="openCart">
-        🛒 <span data-i18n="cart">Корзина</span>
+        🛒 <span data-yt="cart">Корзина</span>
         <span class="cart-badge" id="cartCount">0</span>
       </button>
-      <button class="hamburger" id="hamburgerBtn">☰</button>
     </div>
   </nav>
 
-  <!-- Content -->
-  <main class="menu-container">
-    <h1 class="page-title" data-i18n="menu_title">Наше Меню</h1>
-    <p class="page-subtitle" data-i18n="menu_sub">Завтраки, кофе, свежая выпечка, соки и салаты</p>
+  <main class="dl-wrap">
 
-    <!-- Category Filters -->
-    <div class="categories" id="categoryFilters">
-      <button class="category-btn active" data-cat="all" data-i18n="cat_all">Все</button>
-      <button class="category-btn" data-cat="breakfast" data-i18n="cat_breakfast">Завтраки</button>
-      <button class="category-btn" data-cat="coffee" data-i18n="cat_coffee">Кофе</button>
-      <button class="category-btn" data-cat="bakery" data-i18n="cat_bakery">Выпечка</button>
-      <button class="category-btn" data-cat="juice" data-i18n="cat_juice">Соки</button>
-      <button class="category-btn" data-cat="salad" data-i18n="cat_salad">Салаты</button>
-    </div>
+    <!-- Hero -->
+    <section class="dl-hero">
+      <div>
+        <span class="dl-kicker" data-yt="dl_kicker">🛵 Новая услуга</span>
+        <h1><span data-yt="dl_h1a">Доставим ваш</span> <em data-yt="dl_h1b">заказ</em></h1>
+        <p data-yt="dl_lead">Свежий кофе и тёплая выпечка из Yuron Cafe прямо к двери: домой, в офис или на встречу. Выберите район, оставьте адрес, и курьер уже в пути.</p>
+        <a class="btn inline" href="#order" data-yt="dl_cta">Оформить доставку</a>
+      </div>
+      <div class="dl-art" aria-hidden="true"><div class="road"></div><span class="bag">☕</span><span class="scooter">🛵</span></div>
+    </section>
 
-    <!-- Products Grid -->
-    <div class="products-grid" id="productsGrid"></div>
+    <!-- Факты -->
+    <section class="dl-facts">
+      <div class="dl-fact"><span class="ic">⏱️</span><b id="factTime">30–50</b><span data-yt="dl_f_time">минут до двери</span></div>
+      <div class="dl-fact"><span class="ic">💸</span><b id="factFee">от 10 000</b><span data-yt="dl_f_fee">UZS за доставку</span></div>
+      <div class="dl-fact"><span class="ic">🎁</span><b id="factFree">150 000</b><span data-yt="dl_f_free">UZS: доставка бесплатно</span></div>
+      <div class="dl-fact"><span class="ic">🧾</span><b id="factMin">50 000</b><span data-yt="dl_f_min">UZS минимальный заказ</span></div>
+    </section>
+
+    <!-- Как это работает -->
+    <section class="dl-section">
+      <h2 class="dl-title" data-yt="dl_how_t">Как это работает</h2>
+      <p class="dl-sub" data-yt="dl_how_s">Четыре простых шага.</p>
+      <div class="dl-steps">
+        <div class="dl-step"><b data-yt="dl_s1_t">Соберите корзину</b><span data-yt="dl_s1_d">Выберите кофе и выпечку в меню.</span></div>
+        <div class="dl-step"><b data-yt="dl_s2_t">Укажите адрес</b><span data-yt="dl_s2_d">Район, улица, дом и подъезд.</span></div>
+        <div class="dl-step"><b data-yt="dl_s3_t">Мы готовим</b><span data-yt="dl_s3_d">Бариста собирает заказ, вы видите таймер в профиле.</span></div>
+        <div class="dl-step"><b data-yt="dl_s4_t">Курьер привозит</b><span data-yt="dl_s4_d">Оплата наличными или картой курьеру.</span></div>
+      </div>
+    </section>
+
+    <!-- Зоны -->
+    <section class="dl-section">
+      <h2 class="dl-title" data-yt="dl_zones_t">Районы и стоимость</h2>
+      <p class="dl-sub" data-yt="dl_zones_s">Нажмите на свой район: он подставится в заказ.</p>
+      <div class="dl-zones" id="zones"></div>
+    </section>
+
+    <!-- Оформление -->
+    <section class="dl-section" id="order">
+      <h2 class="dl-title" data-yt="dl_order_t">Оформить доставку</h2>
+      <p class="dl-sub" data-yt="dl_order_s">Заполните адрес, остальное мы посчитаем сами.</p>
+
+      <div class="dl-order">
+        <form class="dl-box" id="dlForm" novalidate>
+          <div class="dl-login" id="dlLogin" hidden>
+            <span data-yt="dl_need_login">Войдите или создайте аккаунт, чтобы оформить доставку.</span>
+            <button type="button" class="btn sm" id="dlLoginBtn" data-yt="a_go">Войти / Регистрация</button>
+          </div>
+
+          <h3 data-yt="dl_addr_t">Куда привезти</h3>
+          <div class="fg" id="gZone">
+            <label for="fZone" data-yt="dl_district">Район</label>
+            <select id="fZone"></select>
+            <div class="err" data-yt="dl_e_zone">Выберите район</div>
+          </div>
+          <div class="fg" id="gAddr">
+            <label for="fAddr" data-yt="dl_street">Улица и дом</label>
+            <input id="fAddr" type="text" autocomplete="street-address" maxlength="90" data-yt-ph="dl_street_ph">
+            <div class="err" data-yt="dl_e_addr">Укажите улицу и номер дома (минимум 5 символов)</div>
+          </div>
+          <div class="row-4">
+            <div class="fg"><label for="fApt" data-yt="dl_apt">Квартира / офис</label><input id="fApt" type="text" maxlength="10"></div>
+            <div class="fg"><label for="fEnt" data-yt="dl_ent">Подъезд</label><input id="fEnt" type="text" maxlength="6"></div>
+            <div class="fg"><label for="fFloor" data-yt="dl_floor">Этаж</label><input id="fFloor" type="text" maxlength="4"></div>
+          </div>
+
+          <h3 style="margin-top:8px;" data-yt="dl_contact_t">Контакты и оплата</h3>
+          <div class="fg" id="gPhone">
+            <label for="fPhone" data-yt="a_phone">Номер телефона</label>
+            <div class="dl-phone"><span>+998</span><input id="fPhone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="90 123 45 67" maxlength="12"></div>
+            <div class="err" data-yt="a_e_phone">Введите номер полностью</div>
+          </div>
+          <fieldset class="fg">
+            <legend data-yt="dl_pay">Оплата курьеру</legend>
+            <div class="pay">
+              <label><input type="radio" name="pay" value="cash" checked> <span data-yt="dl_pay_cash">💵 Наличными</span></label>
+              <label><input type="radio" name="pay" value="card"> <span data-yt="dl_pay_card">💳 Картой</span></label>
+            </div>
+          </fieldset>
+          <div class="fg">
+            <label for="fNote" data-yt="dl_note">Комментарий курьеру (необязательно)</label>
+            <textarea id="fNote" maxlength="200" data-yt-ph="dl_note_ph"></textarea>
+          </div>
+        </form>
+
+        <aside class="dl-box dl-sum" id="dlSum"></aside>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="dl-section faq">
+      <h2 class="dl-title" data-yt="dl_faq_t">Частые вопросы</h2>
+      <details><summary data-yt="dl_q1">Как оплатить заказ?</summary><p data-yt="dl_a1">Деньги вы передаёте курьеру при получении: наличными или картой через терминал.</p></details>
+      <details><summary data-yt="dl_q2">Где посмотреть, куда едет заказ?</summary><p data-yt="dl_a2">В профиле, во вкладке «Заказ»: там таймер, шаги «Принят → Готовится → В пути» и адрес доставки. Плашка со временем есть и внизу экрана на любой странице.</p></details>
+      <details><summary data-yt="dl_q3">Можно ли изменить адрес после заказа?</summary><p data-yt="dl_a3">Позвоните нам по телефону из подвала сайта, пока заказ ещё готовится. Когда курьер выехал, адрес изменить нельзя.</p></details>
+      <details><summary data-yt="dl_q4">Начисляются ли штампы за доставку?</summary><p data-yt="dl_a4">Да, один штамп за каждый заказ, как и при самовывозе.</p></details>
+    </section>
   </main>
 
   <!-- Cart Drawer -->
   <div class="cart-overlay" id="cartOverlay"></div>
   <div class="cart-drawer" id="cartDrawer">
     <div class="cart-header">
-      <h3 style="font-family: var(--font-heading);" data-i18n="cart_title">Корзина</h3>
-      <button id="closeCart" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
+      <h3 style="font-family: var(--font-heading);" data-yt="c_title">Ваша корзина</h3>
+      <button id="closeCart" aria-label="Закрыть" style="background:none; border:none; font-size:1.5rem; cursor:pointer; min-width:44px; min-height:44px;">✕</button>
     </div>
-    
     <div class="cart-items" id="cartItemsList"></div>
-
     <div style="border-top:2px solid var(--text-espresso); padding-top:16px;">
-      <!-- Promo Code Input -->
-      <div class="promo-box">
-        <input type="text" id="promoInput" class="promo-input" data-i18n-ph="promo_ph" placeholder="Промокод (напр. YURON10)">
-        <button class="promo-btn" onclick="applyPromo()" data-i18n="btn_apply">ОК</button>
-      </div>
-      <div class="promo-msg" id="promoMsg"></div>
-
       <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.2rem; margin-bottom:16px;">
-        <span data-i18n="total">Итого:</span>
+        <span data-yt="c_total">Итого:</span>
         <span id="cartTotal">0 UZS</span>
       </div>
-      <button class="btn-add" style="width:100%; background:var(--accent-terracotta); color:#fff; border-radius:30px; padding:12px; font-size:1rem;" onclick="checkout()" data-i18n="btn_checkout">Оформить заказ</button>
+      <button class="btn" onclick="checkout()" data-yt="c_checkout">Оформить заказ</button>
     </div>
   </div>
 
@@ -625,11 +764,11 @@ body.ym-lock { overflow: hidden; }
   <footer>
     <div class="footer-grid">
       <div class="footer-col">
-        <h4 style="color:var(--accent-yellow);">Yuron Cafe</h4>
-        <p data-i18n="footer_about">Уютное место в Ташкенте. Свежий кофе, завтраки и выпечка каждый день.</p>
+        <h4 class="brand-logo" style="color:var(--accent-yellow);">Yuron Cafe</h4>
+        <p>Уютное место с душой в Ташкенте. Свежий кофе, вкуснейшие завтраки и выпечка каждый день.</p>
       </div>
       <div class="footer-col">
-        <h4 data-i18n="footer_nav">Навигация</h4>
+        <h4>Навигация</h4>
         <li><a href="index.html">Главная</a></li>
         <li><a href="product.html">Меню</a></li>
         <li><a href="offer.html">Акции</a></li>
@@ -637,12 +776,12 @@ body.ym-lock { overflow: hidden; }
         <li><a href="about.html">Локации</a></li>
       </div>
       <div class="footer-col">
-        <h4 data-i18n="footer_hours">Часы работы</h4>
+        <h4>Часы работы</h4>
         <p>Пн - Пт: 08:00 - 22:00</p>
         <p>Сб - Вс: 09:00 - 23:00</p>
       </div>
       <div class="footer-col">
-        <h4 data-i18n="footer_contact">Контакты</h4>
+        <h4>Контакты</h4>
         <p>📍 г. Ташкент, ул. Мирабадская, 12</p>
         <p>📞 +998 (90) 123-45-67</p>
       </div>
@@ -651,240 +790,277 @@ body.ym-lock { overflow: hidden; }
   </footer>
 
   <script>
-    // База из 20 товаров с категориями и переводами
-    const productsDB = [
-      // Завтраки
-      { id: 1, cat: "breakfast", tag_ru: "Завтраки", tag_uz: "Nonushta", name_ru: "Авокадо тост с пашотом", name_uz: "Avokado tost va pashot", desc_ru: "На зерновом хлебе с яйцом пашот", desc_uz: "Donli non va tuxum pashot bilan", price: 48000, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=500&q=80" },
-      { id: 2, cat: "breakfast", tag_ru: "Завтраки", tag_uz: "Nonushta", name_ru: "Нежные сырники", name_uz: "Nozik sirlar (sırnik)", desc_ru: "С фермерской сметаной и ягодным соусом", desc_uz: "Smetana va mevali sous bilan", price: 42000, img: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=500&q=80" },
-      { id: 3, cat: "breakfast", tag_ru: "Завтраки", tag_uz: "Nonushta", name_ru: "Английский завтрак", name_uz: "Inglizcha nonushta", desc_ru: "Яйца, сосиски, фасоль, бекон и томаты", desc_uz: "Tuxum, sosiskalar, loviya va bekon", price: 65000, img: "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80" },
-      { id: 4, cat: "breakfast", tag_ru: "Завтраки", tag_uz: "Nonushta", name_ru: "Овсяная каша с ягодами", name_uz: "Mevali suli yormasi", desc_ru: "На кокосовом молоке с медом и орехами", desc_uz: "Kokos suti, asal va yong'oq bilan", price: 32000, img: "https://images.unsplash.com/photo-1584776296944-ab6fb57b0bdd?auto=format&fit=crop&w=500&q=80" },
+    /* Настройки доставки. Меняйте цифры и районы здесь. */
+    var DELIVERY = {
+      freeFrom: 150000,     // от этой суммы доставка бесплатная
+      minOrder: 50000,      // минимальная сумма заказа (без доставки)
+      zones: [              // fee: цена доставки (UZS), min: минут в пути
+        { id: 'mirabad',    ru: 'Мирабад',        uz: 'Mirobod',         fee: 10000, min: 20 },
+        { id: 'yakkasaray', ru: 'Яккасарай',      uz: 'Yakkasaroy',      fee: 12000, min: 25 },
+        { id: 'shayhan',    ru: 'Шайхантахур',    uz: 'Shayxontohur',    fee: 12000, min: 30 },
+        { id: 'mirzo',      ru: 'Мирзо-Улугбек',  uz: "Mirzo Ulug'bek",  fee: 15000, min: 35 },
+        { id: 'yunusabad',  ru: 'Юнусабад',       uz: 'Yunusobod',       fee: 15000, min: 35 },
+        { id: 'chilanzar',  ru: 'Чиланзар',       uz: 'Chilonzor',       fee: 15000, min: 40 },
+        { id: 'sergeli',    ru: 'Сергели',        uz: 'Sergeli',         fee: 20000, min: 50 }
+      ]
+    };
 
-      // Кофе
-      { id: 5, cat: "coffee", tag_ru: "Кофе", tag_uz: "Kofe", name_ru: "Капучино Classic", name_uz: "Kappuchino Classic", desc_ru: "Эспрессо с нежной молочной пенкой", desc_uz: "Nozik sut ko'pikli espresso", price: 28000, img: "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80" },
-      { id: 6, cat: "coffee", tag_ru: "Кофе", tag_uz: "Kofe", name_ru: "Флэт Уайт", name_uz: "Flat White", desc_ru: "Двойной эспрессо с бархатистым молоком", desc_uz: "Ikki martaba espresso va sut", price: 32000, img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80" },
-      { id: 7, cat: "coffee", tag_ru: "Кофе", tag_uz: "Kofe", name_ru: "Раф Кофе Лаванда", name_uz: "Lavanda Raf kofesi", desc_ru: "Сливки, эспрессо и лавандовый сироп", desc_uz: "Qaymoq, espresso va lavanda siropi", price: 38000, img: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=500&q=80" },
-      { id: 8, cat: "coffee", tag_ru: "Кофе", tag_uz: "Kofe", name_ru: "Латте Макиато", name_uz: "Latte Makiato", desc_ru: "Слоистый кофе с молоком и пеной", desc_uz: "Sut va ko'pikli qatlamli kofe", price: 32000, img: "https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?auto=format&fit=crop&w=500&q=80" },
-      { id: 9, cat: "coffee", tag_ru: "Кофе", tag_uz: "Kofe", name_ru: "Американо", name_uz: "Amerikano", desc_ru: "Классический черный кофе", desc_uz: "Klassik qora kofe", price: 22000, img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80" },
-
-      // Выпечка
-      { id: 10, cat: "bakery", tag_ru: "Выпечка", tag_uz: "Pishiriq", name_ru: "Миндальный круассан", name_uz: "Bodomli kruassan", desc_ru: "С франжипаном и миндальными хлопьями", desc_uz: "Frangipan va bodom bo'laklari bilan", price: 28000, img: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=500&q=80" },
-      { id: 11, cat: "bakery", tag_ru: "Выпечка", tag_uz: "Pishiriq", name_ru: "Улитка с корицей", name_uz: "Sinnabon", desc_ru: "Ароматная булочка со сливочной глазурью", desc_uz: "Krem glazurli xushbo'y bulochka", price: 25000, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=500&q=80" },
-      { id: 12, cat: "bakery", tag_ru: "Выпечка", tag_uz: "Pishiriq", name_ru: "Круассан классический", name_uz: "Klassik kruassan", desc_ru: "Хрустящий французский круассан на масле", desc_uz: "Qarsildoq fransuz kruassan", price: 20000, img: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=500&q=80" },
-      { id: 13, cat: "bakery", tag_ru: "Выпечка", tag_uz: "Pishiriq", name_ru: "Маффин шоколадный", name_uz: "Shokoladli maffin", desc_ru: "С жидкой шоколадной начинкой внутри", desc_uz: "Ichida shokoladli nachinkasi bor", price: 22000, img: "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&fit=crop&w=500&q=80" },
-      { id: 14, cat: "bakery", tag_ru: "Выпечка", tag_uz: "Pishiriq", name_ru: "Булка с малиной", name_uz: "Malinali bulochka", desc_ru: "Слоеные ягоды и заварной крем", desc_uz: "Pishiriq rezavorlar va krem bilan", price: 27000, img: "https://media.ovkuse.ru/images/recipes/d93bca0f-dcbd-412c-8195-92f2eb22b317/d93bca0f-dcbd-412c-8195-92f2eb22b317_420_420.webp" },
-
-      // Соки
-      { id: 15, cat: "juice", tag_ru: "Соки", tag_uz: "Sharbatlar", name_ru: "Апельсиновый фреш", name_uz: "Apelsin freshi", desc_ru: "Свежевыжатый сок из спелых апельсинов", desc_uz: "Yangi siqilgan apelsin sharbati", price: 35000, img: "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=500&q=80" },
-      { id: 16, cat: "juice", tag_ru: "Соки", tag_uz: "Sharbatlar", name_ru: "Яблочно-морковный фреш", name_uz: "Olma-sabzi freshi", desc_ru: "Витаминный натуральный фреш", desc_uz: "Vitaminli tabiiy fresh", price: 30000, img: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&w=500&q=80" },
-      { id: 17, cat: "juice", tag_ru: "Соки", tag_uz: "Sharbatlar", name_ru: "Лимонад Мята-Маракуйя", name_uz: "Yalpiz-marakuyya limonadi", desc_ru: "Освежающий авторский холодный напиток", desc_uz: "Tetiklantiruvchi sovuq ichimlik", price: 32000, img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80" },
-
-      // Салаты
-      { id: 18, cat: "salad", tag_ru: "Салаты", tag_uz: "Salatlar", name_ru: "Цезарь с курицей", name_uz: "Tovuqli Sezar", desc_ru: "Хрустящий салат с куриной грудкой и пармезаном", desc_uz: "Tovuq go'shti va pishloqli salat", price: 55000, img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=500&q=80" },
-      { id: 19, cat: "salad", tag_ru: "Салаты", tag_uz: "Salatlar", name_ru: "Греческий салат", name_uz: "Grek salati", desc_ru: "Свежие овощи, сыр фета и оливки", desc_uz: "Yangi sabzavotlar, feta pishlog'i va zaytun", price: 42000, img: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=500&q=80" },
-      { id: 20, cat: "salad", tag_ru: "Салаты", tag_uz: "Salatlar", name_ru: "Боул с лососем и киноа", name_uz: "Losos va kinoali boul", desc_ru: "Свежий лосось, авокадо и киноа", desc_uz: "Yangi losos, avokado va kinoa", price: 68000, img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=500&q=80" }
-    ];
-
-    const i18n = {
+    var DELIVERY_I18N = {
       ru: {
-        brand_badge: "Ташкент", nav_home: "Главная", nav_menu: "Меню", nav_offers: "Акции & Штампы", nav_about: "О нас & Локации", nav_profile: "Профиль",
-        cart: "Корзина", promo_bar: "☕ Каждый 8-й кофе или выпечка БЕСПЛАТНО! Забирай карту в разделе \"Акции\".",
-        menu_title: "Наше Меню", menu_sub: "Завтраки, кофе, свежая выпечка, соки и салаты",
-        cat_all: "Все", cat_breakfast: "Завтраки", cat_coffee: "Кофе", cat_bakery: "Выпечка", cat_juice: "Соки", cat_salad: "Салаты",
-        cart_title: "Корзина", total: "Итого:", btn_checkout: "Оформить заказ", btn_add: "В корзину +",
-        promo_ph: "Промокод (напр. YURON10)", btn_apply: "ОК",
-        footer_about: "Уютное место в Ташкенте. Свежий кофе, завтраки и выпечка каждый день.",
-        footer_nav: "Навигация", footer_hours: "Часы работы", footer_contact: "Контакты",
-        alert_success: "Заказ успешно оформлен! Отслеживайте готовность в Профиле."
+        promo: '🛵 Доставляем по Ташкенту: бесплатно от 150 000 UZS!',
+        dl_kicker: '🛵 Новая услуга', dl_h1a: 'Доставим ваш', dl_h1b: 'заказ',
+        dl_lead: 'Свежий кофе и тёплая выпечка из Yuron Cafe прямо к двери: домой, в офис или на встречу. Выберите район, оставьте адрес, и курьер уже в пути.',
+        dl_cta: 'Оформить доставку',
+        dl_f_time: 'минут до двери', dl_f_fee: 'UZS за доставку', dl_f_free: 'UZS: доставка бесплатно', dl_f_min: 'UZS минимальный заказ',
+        dl_how_t: 'Как это работает', dl_how_s: 'Четыре простых шага.',
+        dl_s1_t: 'Соберите корзину', dl_s1_d: 'Выберите кофе и выпечку в меню.',
+        dl_s2_t: 'Укажите адрес', dl_s2_d: 'Район, улица, дом и подъезд.',
+        dl_s3_t: 'Мы готовим', dl_s3_d: 'Бариста собирает заказ, вы видите таймер в профиле.',
+        dl_s4_t: 'Курьер привозит', dl_s4_d: 'Оплата наличными или картой курьеру.',
+        dl_zones_t: 'Районы и стоимость', dl_zones_s: 'Нажмите на свой район: он подставится в заказ.',
+        dl_order_t: 'Оформить доставку', dl_order_s: 'Заполните адрес, остальное мы посчитаем сами.',
+        dl_need_login: 'Войдите или создайте аккаунт, чтобы оформить доставку.',
+        dl_addr_t: 'Куда привезти', dl_district: 'Район', dl_pick_zone: 'Выберите район', dl_e_zone: 'Выберите район',
+        dl_street: 'Улица и дом', dl_street_ph: 'Например: ул. Мирабадская, 12', dl_e_addr: 'Укажите улицу и номер дома (минимум 5 символов)',
+        dl_apt: 'Квартира / офис', dl_ent: 'Подъезд', dl_floor: 'Этаж',
+        dl_contact_t: 'Контакты и оплата', dl_pay: 'Оплата курьеру', dl_pay_cash: '💵 Наличными', dl_pay_card: '💳 Картой',
+        dl_note: 'Комментарий курьеру (необязательно)', dl_note_ph: 'Домофон не работает, позвоните за 5 минут',
+        dl_faq_t: 'Частые вопросы',
+        dl_q1: 'Как оплатить заказ?', dl_a1: 'Деньги вы передаёте курьеру при получении: наличными или картой через терминал.',
+        dl_q2: 'Где посмотреть, куда едет заказ?', dl_a2: 'В профиле, во вкладке «Заказ»: там таймер, шаги «Принят → Готовится → В пути» и адрес доставки. Плашка со временем есть и внизу экрана на любой странице.',
+        dl_q3: 'Можно ли изменить адрес после заказа?', dl_a3: 'Позвоните нам по телефону из подвала сайта, пока заказ ещё готовится. Когда курьер выехал, адрес изменить нельзя.',
+        dl_q4: 'Начисляются ли штампы за доставку?', dl_a4: 'Да, один штамп за каждый заказ, как и при самовывозе.',
+        dl_fee_from: 'от {n}', dl_min_way: '~{n} мин в пути',
+        sum_t: 'Ваш заказ', sum_edit: 'Изменить', sum_items: 'Товары', sum_fee: 'Доставка', sum_free: 'Бесплатно', sum_total: 'Итого к оплате',
+        sum_pick: 'Выберите район', sum_eta: 'Привезём примерно через ~{n} мин',
+        sum_free_more: 'До бесплатной доставки: {n}', sum_free_ok: '🎉 Доставка бесплатная!',
+        sum_min: 'Минимальный заказ {n}. Добавьте ещё на {m}.',
+        sum_empty_t: 'Корзина пуста', sum_empty_d: 'Добавьте в корзину кофе или выпечку, и здесь появится расчёт.', go_menu: 'Открыть меню',
+        sum_btn: 'Заказать доставку · {n}',
+        pay_cash: 'наличными', pay_card: 'картой'
       },
       uz: {
-        brand_badge: "Toshkent", nav_home: "Bosh sahifa", nav_menu: "Menyu", nav_offers: "Aktsiyalar & Shtamplar", nav_about: "Biz haqimizda & Joylashuv", nav_profile: "Profil",
-        cart: "Savat", promo_bar: "☕ Har 8-kofe yoki pishiriq BEPUL! 'Aktsiyalar' bo'limidan kartani oling.",
-        menu_title: "Bizning Menyu", menu_sub: "Nonushta, kofe, yangi pishiriqlar, sharbatlar va salatlar",
-        cat_all: "Barchasi", cat_breakfast: "Nonushta", cat_coffee: "Kofe", cat_bakery: "Pishiriqlar", cat_juice: "Sharbatlar", cat_salad: "Salatlar",
-        cart_title: "Savat", total: "Jami:", btn_checkout: "Buyurtma berish", btn_add: "Savatga +",
-        promo_ph: "Promokod (masalan, YURON10)", btn_apply: "OK",
-        footer_about: "Toshkentdagi shinam maskan. Har kuni yangi kofe va mazali pishiriqlar.",
-        footer_nav: "Navigatsiya", footer_hours: "Ish vaqti", footer_contact: "Kontaktlar",
-        alert_success: "Buyurtma muvaffaqiyatli rasmiylashtirildi! Profil bo'limida kuzatishingiz mumkin."
+        promo: "🛵 Toshkent bo'ylab yetkazamiz: 150 000 UZS dan bepul!",
+        dl_kicker: '🛵 Yangi xizmat', dl_h1a: 'Buyurtmangizni', dl_h1b: 'yetkazamiz',
+        dl_lead: "Yuron Cafe'dan yangi kofe va issiq pishiriqlar to'g'ri eshigingizgacha: uyga, ofisga yoki uchrashuvga. Tumanni tanlang, manzilni qoldiring, kuryer yo'lga chiqadi.",
+        dl_cta: 'Yetkazib berishni rasmiylashtirish',
+        dl_f_time: 'daqiqada eshikkacha', dl_f_fee: "UZS yetkazish uchun", dl_f_free: 'UZS dan yetkazish bepul', dl_f_min: 'UZS minimal buyurtma',
+        dl_how_t: 'Qanday ishlaydi', dl_how_s: 'To\'rtta oddiy qadam.',
+        dl_s1_t: "Savatni to'ldiring", dl_s1_d: 'Menyudan kofe va pishiriq tanlang.',
+        dl_s2_t: 'Manzilni kiriting', dl_s2_d: "Tuman, ko'cha, uy va kirish.",
+        dl_s3_t: 'Biz tayyorlaymiz', dl_s3_d: "Barista buyurtmani yig'adi, taymerni profilda ko'rasiz.",
+        dl_s4_t: 'Kuryer olib keladi', dl_s4_d: "Kuryerga naqd yoki karta bilan to'laysiz.",
+        dl_zones_t: 'Tumanlar va narx', dl_zones_s: "O'z tumaningizni bosing: u buyurtmaga qo'yiladi.",
+        dl_order_t: 'Yetkazib berishni rasmiylashtirish', dl_order_s: "Manzilni to'ldiring, qolganini o'zimiz hisoblaymiz.",
+        dl_need_login: "Yetkazib berish uchun kiring yoki hisob yarating.",
+        dl_addr_t: 'Qayerga olib kelish', dl_district: 'Tuman', dl_pick_zone: 'Tumanni tanlang', dl_e_zone: 'Tumanni tanlang',
+        dl_street: "Ko'cha va uy", dl_street_ph: "Masalan: Mirobod ko'chasi, 12", dl_e_addr: "Ko'cha va uy raqamini kiriting (kamida 5 belgi)",
+        dl_apt: 'Xonadon / ofis', dl_ent: 'Kirish', dl_floor: 'Qavat',
+        dl_contact_t: "Aloqa va to'lov", dl_pay: "Kuryerga to'lov", dl_pay_cash: '💵 Naqd', dl_pay_card: '💳 Karta bilan',
+        dl_note: 'Kuryerga izoh (ixtiyoriy)', dl_note_ph: "Domofon ishlamaydi, 5 daqiqa oldin qo'ng'iroq qiling",
+        dl_faq_t: "Ko'p so'raladigan savollar",
+        dl_q1: "Buyurtma uchun qanday to'lash mumkin?", dl_a1: "Pulni olish paytida kuryerga berasiz: naqd yoki terminal orqali karta bilan.",
+        dl_q2: "Buyurtma qayerga ketayotganini qayerdan ko'rish mumkin?", dl_a2: "Profilda, «Buyurtma» bo'limida: taymer, «Qabul qilindi → Tayyorlanmoqda → Yo'lda» bosqichlari va manzil. Vaqt bilan lavha har bir sahifaning pastida ham bor.",
+        dl_q3: "Buyurtmadan keyin manzilni o'zgartirish mumkinmi?", dl_a3: "Buyurtma tayyorlanayotganda saytning pastidagi telefon raqamiga qo'ng'iroq qiling. Kuryer yo'lga chiqqach, manzilni o'zgartirib bo'lmaydi.",
+        dl_q4: 'Yetkazib berish uchun shtamp beriladimi?', dl_a4: "Ha, har bir buyurtma uchun bitta shtamp, o'zi olib ketishdagi kabi.",
+        dl_fee_from: '{n} dan', dl_min_way: "~{n} daq yo'lda",
+        sum_t: 'Sizning buyurtmangiz', sum_edit: "O'zgartirish", sum_items: 'Mahsulotlar', sum_fee: 'Yetkazish', sum_free: 'Bepul', sum_total: "To'lov uchun jami",
+        sum_pick: 'Tumanni tanlang', sum_eta: 'Taxminan ~{n} daqiqada olib boramiz',
+        sum_free_more: 'Bepul yetkazishgacha: {n}', sum_free_ok: '🎉 Yetkazish bepul!',
+        sum_min: "Minimal buyurtma {n}. Yana {m} ga qo'shing.",
+        sum_empty_t: "Savat bo'sh", sum_empty_d: "Savatga kofe yoki pishiriq qo'shing, shu yerda hisob-kitob paydo bo'ladi.", go_menu: 'Menyuni ochish',
+        sum_btn: 'Yetkazib berishni buyurtma qilish · {n}',
+        pay_cash: 'naqd', pay_card: 'karta bilan'
       }
     };
 
-    let currentLang = localStorage.getItem('yuron_lang') || 'ru';
-    let cart = JSON.parse(localStorage.getItem('yuron_cart')) || [];
-    let activeCategory = 'all';
-    let discountPercent = 0;
+    var currentLang = localStorage.getItem('yuron_lang') || 'ru';
+    var cart = JSON.parse(localStorage.getItem('yuron_cart') || '[]');
 
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const navMenu = document.getElementById('navMenu');
-    hamburgerBtn.addEventListener('click', () => { navMenu.classList.toggle('open'); });
+    /* ---------- Корзина ---------- */
+    var cartDrawer = document.getElementById('cartDrawer');
+    var cartOverlay = document.getElementById('cartOverlay');
+    document.getElementById('openCart').addEventListener('click', function () { cartDrawer.classList.add('open'); cartOverlay.classList.add('open'); renderCart(); });
+    document.getElementById('closeCart').addEventListener('click', function () { cartDrawer.classList.remove('open'); cartOverlay.classList.remove('open'); });
+    cartOverlay.addEventListener('click', function () { cartDrawer.classList.remove('open'); cartOverlay.classList.remove('open'); });
 
-    function updateLanguage() {
-      document.getElementById('langToggle').innerText = currentLang === 'ru' ? 'UZ' : 'RU';
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (i18n[currentLang][key]) el.innerHTML = i18n[currentLang][key];
-      });
-      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
-        const key = el.getAttribute('data-i18n-ph');
-        if (i18n[currentLang][key]) el.placeholder = i18n[currentLang][key];
-      });
-      renderProducts();
-      renderCart();
-    }
-
-    document.getElementById('langToggle').addEventListener('click', () => {
-      currentLang = currentLang === 'ru' ? 'uz' : 'ru';
-      localStorage.setItem('yuron_lang', currentLang);
-      updateLanguage();
-    });
-
-    function renderProducts() {
-      const grid = document.getElementById('productsGrid');
-      grid.innerHTML = '';
-      const filtered = activeCategory === 'all' ? productsDB : productsDB.filter(p => p.cat === activeCategory);
-
-      filtered.forEach(p => {
-        const name = currentLang === 'ru' ? p.name_ru : p.name_uz;
-        const tag = currentLang === 'ru' ? p.tag_ru : p.tag_uz;
-        const desc = currentLang === 'ru' ? p.desc_ru : p.desc_uz;
-        const btnText = i18n[currentLang].btn_add;
-
-        grid.innerHTML += `
-          <div class="product-card">
-            <div>
-              <img src="${p.img}" alt="${name}" class="product-img">
-              <div class="product-tag">${tag}</div>
-              <div class="product-title">${name}</div>
-              <div class="product-desc">${desc}</div>
-            </div>
-            <div class="product-footer">
-              <span class="product-price">${p.price.toLocaleString()} UZS</span>
-              <button class="btn-add" onclick="addToCart(${p.id})">${btnText}</button>
-            </div>
-          </div>
-        `;
-      });
-    }
-
-    document.getElementById('categoryFilters').addEventListener('click', (e) => {
-      if(e.target.tagName === 'BUTTON') {
-        document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-        e.target.classList.add('active');
-        activeCategory = e.target.getAttribute('data-cat');
-        renderProducts();
-      }
-    });
-
-    const cartDrawer = document.getElementById('cartDrawer');
-    const cartOverlay = document.getElementById('cartOverlay');
-
-    document.getElementById('openCart').addEventListener('click', () => {
-      cartDrawer.classList.add('open'); cartOverlay.classList.add('open'); navMenu.classList.remove('open'); renderCart();
-    });
-    document.getElementById('closeCart').addEventListener('click', () => { cartDrawer.classList.remove('open'); cartOverlay.classList.remove('open'); });
-    cartOverlay.addEventListener('click', () => { cartDrawer.classList.remove('open'); cartOverlay.classList.remove('open'); });
-
-    function addToCart(id) {
-      const existing = cart.find(i => i.id === id);
-      if (existing) { existing.qty++; } else { { const p = productsDB.find(x => x.id === id); cart.push({ id: id, qty: 1, name: p.name_ru, name_uz: p.name_uz, price: p.price }); } }
-      saveCart();
-      cartDrawer.classList.add('open'); cartOverlay.classList.add('open');
-    }
-
-    function saveCart() { localStorage.setItem('yuron_cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
-    function updateCartCount() { document.getElementById('cartCount').innerText = cart.reduce((s, i) => s + i.qty, 0); }
-
+    function saveCart() { localStorage.setItem('yuron_cart', JSON.stringify(cart)); updateCartCount(); }
+    function updateCartCount() { document.getElementById('cartCount').textContent = cart.reduce(function (s, i) { return s + i.qty; }, 0); }
     function renderCart() {
-      const container = document.getElementById('cartItemsList');
-      container.innerHTML = '';
-      let subtotal = 0;
-
-      if (cart.length === 0) {
-        container.innerHTML = `<p style="text-align:center; color:var(--text-muted); margin-top:40px;">${currentLang === 'ru' ? 'Корзина пуста' : 'Savat bo\'sh'} ☕</p>`;
-        discountPercent = 0;
-        document.getElementById('promoMsg').style.display = 'none';
-        document.getElementById('promoInput').value = '';
+      var Y = window.Yuron, box = document.getElementById('cartItemsList'), total = 0;
+      if (!cart.length) {
+        box.innerHTML = '<p style="text-align:center; color:var(--text-muted); margin-top:40px;">' + Y.esc(Y.t('c_empty')) + ' ☕</p>';
       } else {
-        cart.forEach((item, index) => {
-          const product = productsDB.find(p => p.id === item.id);
-          if (!product) return;
-          const name = currentLang === 'ru' ? product.name_ru : product.name_uz;
-          subtotal += product.price * item.qty;
-
-          container.innerHTML += `
-            <div class="cart-item">
-              <div>
-                <strong style="display:block; font-size:0.95rem;">${name}</strong>
-                <small style="color:var(--text-muted);">${product.price.toLocaleString()} UZS</small>
-              </div>
-              <div style="display:flex; align-items:center; gap:8px;">
-                <button class="cart-qty-btn" onclick="changeQty(${index}, -1)">-</button>
-                <span>${item.qty}</span>
-                <button class="cart-qty-btn" onclick="changeQty(${index}, 1)">+</button>
-              </div>
-            </div>
-          `;
-        });
+        box.innerHTML = cart.map(function (item, index) {
+          total += item.price * item.qty;
+          return '<div class="cart-item"><div><strong style="display:block;">' + Y.esc(Y.itemName(item)) + '</strong>' +
+                 '<small style="color:var(--text-muted);">' + item.price.toLocaleString() + ' UZS</small></div>' +
+                 '<div style="display:flex; align-items:center; gap:8px;">' +
+                 '<button class="cart-qty-btn" onclick="changeQty(' + index + ', -1)">-</button><span>' + item.qty + '</span>' +
+                 '<button class="cart-qty-btn" onclick="changeQty(' + index + ', 1)">+</button></div></div>';
+        }).join('');
       }
-
-      let total = subtotal * (1 - discountPercent);
-      document.getElementById('cartTotal').innerText = total.toLocaleString() + ' UZS';
+      document.getElementById('cartTotal').textContent = total.toLocaleString() + ' UZS';
+      if (typeof renderSummary === 'function') renderSummary();
     }
-
     function changeQty(index, change) {
       cart[index].qty += change;
       if (cart[index].qty <= 0) cart.splice(index, 1);
-      saveCart();
+      saveCart(); renderCart();
     }
+    // checkout() подставляет yuron.js (самовывоз). Доставка оформляется формой ниже.
 
-    function applyPromo() {
-      const code = document.getElementById('promoInput').value.trim().toUpperCase();
-      const msg = document.getElementById('promoMsg');
-      msg.style.display = 'block';
+    /* ---------- Страница доставки ---------- */
+    function initDelivery() {
+      var Y = window.Yuron;
+      Y.extend(DELIVERY_I18N);
+      var t = Y.t, esc = Y.esc;
+      var $ = function (id) { return document.getElementById(id); };
+      var zoneId = '';
 
-      if (code === 'YURON10') {
-        discountPercent = 0.10;
-        msg.style.color = 'var(--accent-green)';
-        msg.innerText = currentLang === 'ru' ? '🎉 Скидка 10% применена!' : '🎉 10% chegirma qo\'llanildi!';
-      } else {
-        discountPercent = 0;
-        msg.style.color = 'var(--accent-terracotta)';
-        msg.innerText = currentLang === 'ru' ? '❌ Неверный промокод' : '❌ Noto\'g\'ri promokod';
+      function zoneName(z) { return Y.lang() === 'uz' ? z.uz : z.ru; }
+      function findZone(id) { return DELIVERY.zones.filter(function (z) { return z.id === id; })[0]; }
+
+      function applyLang() {
+        currentLang = Y.lang();
+        document.documentElement.lang = currentLang;
+        $('langToggle').textContent = currentLang === 'ru' ? 'UZ' : 'RU';
+        Y.applyStatic(document);
+        $('factFee').textContent = t('dl_fee_from', { n: Math.min.apply(null, DELIVERY.zones.map(function (z) { return z.fee; })).toLocaleString('ru-RU') });
+        $('factFree').textContent = DELIVERY.freeFrom.toLocaleString('ru-RU');
+        $('factMin').textContent = DELIVERY.minOrder.toLocaleString('ru-RU');
+        var mins = DELIVERY.zones.map(function (z) { return z.min; });
+        $('factTime').textContent = (Math.min.apply(null, mins) + 10) + '–' + (Math.max.apply(null, mins) + 10);
       }
+
+      function renderZones() {
+        $('zones').innerHTML = DELIVERY.zones.map(function (z) {
+          return '<button type="button" class="dl-zone' + (z.id === zoneId ? ' sel' : '') + '" data-zone="' + z.id + '"><b>' + esc(zoneName(z)) + '</b>' +
+                 '<span>' + esc(t('dl_min_way', { n: z.min })) + '</span><div class="fee">' + Y.money(z.fee) + '</div></button>';
+        }).join('');
+        var sel = $('fZone'), keep = zoneId;
+        sel.innerHTML = '<option value="">' + esc(t('dl_pick_zone')) + '</option>' + DELIVERY.zones.map(function (z) {
+          return '<option value="' + z.id + '"' + (z.id === keep ? ' selected' : '') + '>' + esc(zoneName(z)) + ' · ' + Y.money(z.fee) + '</option>';
+        }).join('');
+      }
+      function setZone(id) { zoneId = id; renderZones(); renderSummary(); }
+      $('zones').addEventListener('click', function (e) {
+        var b = e.target.closest('[data-zone]');
+        if (!b) return;
+        setZone(b.getAttribute('data-zone'));
+        $('order').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      $('fZone').addEventListener('change', function () { setZone($('fZone').value); $('gZone').classList.remove('bad'); });
+
+      /* --- расчёт --- */
+      function calc() {
+        var tot = Y.cartTotals(), z = findZone(zoneId);
+        var fee = !z ? 0 : (tot.total >= DELIVERY.freeFrom ? 0 : z.fee);
+        var prep = Math.min(25, 7 + tot.count * 2);
+        return { tot: tot, z: z, fee: fee, total: tot.total + fee, prep: prep, eta: z ? prep + z.min : 0 };
+      }
+
+      /* --- сводка справа --- */
+      window.renderSummary = function () {
+        var box = $('dlSum');
+        if (!cart.length) {
+          box.innerHTML = '<div class="empty"><span class="em-ic" aria-hidden="true">🛒</span><h3>' + esc(t('sum_empty_t')) + '</h3><p>' + esc(t('sum_empty_d')) +
+                          '</p><a class="btn inline" href="product.html">' + esc(t('go_menu')) + '</a></div>';
+          return;
+        }
+        var c = calc(), under = c.tot.total < DELIVERY.minOrder;
+        var lines = cart.map(function (it, i) {
+          return '<li><div class="nm">' + esc(Y.itemName(it)) + '<small>' + Y.money(it.price) + '</small></div>' +
+                 '<div class="qty"><button type="button" class="qbtn" data-q="' + i + ':-1" aria-label="-">−</button><b>' + it.qty + '</b>' +
+                 '<button type="button" class="qbtn" data-q="' + i + ':1" aria-label="+">+</button></div></li>';
+        }).join('');
+        var left = DELIVERY.freeFrom - c.tot.total;
+        var freeBar = c.tot.total >= DELIVERY.freeFrom
+          ? '<div class="free-bar">' + esc(t('sum_free_ok')) + '</div>'
+          : '<div class="free-bar">' + esc(t('sum_free_more', { n: Y.money(left) })) + '<div class="bar"><i style="width:' + Math.min(100, c.tot.total / DELIVERY.freeFrom * 100).toFixed(0) + '%"></i></div></div>';
+        box.innerHTML =
+          '<h3>' + esc(t('sum_t')) + '</h3><ul class="sum-lines">' + lines + '</ul>' +
+          '<div class="sum-row"><span>' + esc(t('sum_items')) + '</span><span>' + Y.money(c.tot.total) + '</span></div>' +
+          '<div class="sum-row"><span>' + esc(t('sum_fee')) + '</span>' + (c.z ? (c.fee ? '<span>' + Y.money(c.fee) + '</span>' : '<span class="free">' + esc(t('sum_free')) + '</span>') : '<span>' + esc(t('sum_pick')) + '</span>') + '</div>' +
+          freeBar +
+          '<div class="sum-row total"><span>' + esc(t('sum_total')) + '</span><span>' + Y.money(c.total) + '</span></div>' +
+          (c.z ? '<div class="sum-eta">🛵 ' + esc(t('sum_eta', { n: c.eta })) + '</div>' : '') +
+          (under ? '<div class="sum-warn">' + esc(t('sum_min', { n: Y.money(DELIVERY.minOrder), m: Y.money(DELIVERY.minOrder - c.tot.total) })) + '</div>' : '') +
+          '<button type="button" class="btn" id="dlSubmit">' + esc(t('sum_btn', { n: Y.money(c.total) })) + '</button>';
+      };
+      $('dlSum').addEventListener('click', function (e) {
+        var q = e.target.closest('[data-q]');
+        if (q) { var p = q.getAttribute('data-q').split(':'); changeQty(parseInt(p[0], 10), parseInt(p[1], 10)); return; }
+        if (e.target.id === 'dlSubmit') submitOrder();
+      });
+
+      /* --- отправка --- */
+      function validate() {
+        var ok = true;
+        var addr = $('fAddr').value.trim(), phone = Y.phoneLocal($('fPhone').value);
+        $('gZone').classList.toggle('bad', !zoneId); if (!zoneId) ok = false;
+        $('gAddr').classList.toggle('bad', addr.length < 5); if (addr.length < 5) ok = false;
+        $('gPhone').classList.toggle('bad', phone.length !== 9); if (phone.length !== 9) ok = false;
+        return ok;
+      }
+      function submitOrder() {
+        if (!cart.length) return;
+        if (!Y.user()) { Y.openAuth('login', { reason: 'a_reason_delivery', after: submitOrder }); return; }
+        if (!validate()) {
+          var bad = document.querySelector('.fg.bad');
+          if (bad) bad.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+        var c = calc();
+        if (c.tot.total < DELIVERY.minOrder) { Y.toast(t('sum_min', { n: Y.money(DELIVERY.minOrder), m: Y.money(DELIVERY.minOrder - c.tot.total) })); return; }
+        var addr = $('fAddr').value.trim(), apt = $('fApt').value.trim(), ent = $('fEnt').value.trim(), floor = $('fFloor').value.trim();
+        var parts = [c.z.ru + ', ' + addr];
+        if (apt) parts.push('кв. ' + apt); if (ent) parts.push('подъезд ' + ent); if (floor) parts.push('этаж ' + floor);
+        var pay = document.querySelector('input[name="pay"]:checked').value;
+        var order = Y.placeOrder({
+          type: 'delivery', travelMin: c.z.min, fee: c.fee,
+          delivery: {
+            zone: c.z.id, district: c.z.ru, district_uz: c.z.uz, addr: parts.join(', '),
+            phone: '998' + Y.phoneLocal($('fPhone').value), payment: pay, comment: $('fNote').value.trim()
+          }
+        });
+        if (order) {
+          Y.updateUser({ address: { zone: c.z.id, addr: addr, apt: apt, ent: ent, floor: floor, phone: Y.phoneLocal($('fPhone').value) } });
+          $('fNote').value = '';
+        }
+      }
+      $('dlForm').addEventListener('submit', function (e) { e.preventDefault(); submitOrder(); });
+      $('fPhone').addEventListener('input', function () { this.value = Y.phoneFmt(Y.phoneLocal(this.value)); $('gPhone').classList.remove('bad'); });
+      $('fAddr').addEventListener('input', function () { $('gAddr').classList.remove('bad'); });
+      $('dlLoginBtn').addEventListener('click', function () { Y.openAuth('login', { reason: 'a_reason_delivery' }); });
+
+      /* --- данные аккаунта подставляем в форму --- */
+      function prefill() {
+        var u = Y.user();
+        $('dlLogin').hidden = !!u;
+        if (!u) return;
+        var a = u.address || {};
+        if (a.zone && !zoneId && findZone(a.zone)) zoneId = a.zone;
+        if (!$('fAddr').value) $('fAddr').value = a.addr || '';
+        if (!$('fApt').value) $('fApt').value = a.apt || '';
+        if (!$('fEnt').value) $('fEnt').value = a.ent || '';
+        if (!$('fFloor').value) $('fFloor').value = a.floor || '';
+        if (!$('fPhone').value) $('fPhone').value = Y.phoneFmt(a.phone || u.phone.slice(3));
+      }
+
+      $('langToggle').addEventListener('click', function () {
+        currentLang = Y.lang() === 'ru' ? 'uz' : 'ru';
+        localStorage.setItem('yuron_lang', currentLang);
+        applyLang(); renderZones(); renderSummary(); renderCart();
+      });
+      window.addEventListener('yuron:auth', function () { prefill(); renderZones(); renderSummary(); });
+
+      applyLang();
+      prefill();
+      renderZones();
+      updateCartCount();
       renderCart();
     }
-
-    function checkout() {
-      if (cart.length === 0) return;
-      
-      let orders = JSON.parse(localStorage.getItem('yuron_orders') || '[]');
-      const orderNames = cart.map(item => {
-        const p = productsDB.find(prod => prod.id === item.id);
-        return (currentLang === 'ru' ? p.name_ru : p.name_uz) + ` (${item.qty} шт)`;
-      }).join(', ');
-
-      const newOrder = {
-        items: orderNames,
-        date: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        status: currentLang === 'ru' ? '🟡 Готовится (15 мин)' : '🟡 Tayyorlanmoqda (15 daq)',
-        total: document.getElementById('cartTotal').innerText
-      };
-
-      orders.unshift(newOrder);
-      localStorage.setItem('yuron_orders', JSON.stringify(orders));
-
-      let stamps = parseInt(localStorage.getItem('yuron_stamps') || '0');
-      stamps = Math.min(stamps + 1, 8);
-      localStorage.setItem('yuron_stamps', stamps);
-
-      alert(i18n[currentLang].alert_success);
-
-      cart = []; discountPercent = 0; saveCart(); renderCart();
-      cartDrawer.classList.remove('open'); cartOverlay.classList.remove('open');
-    }
-
-    updateLanguage();
-    updateCartCount();
   </script>
   <script>
 /* =====================================================================
@@ -1874,5 +2050,6 @@ body.ym-lock { overflow: hidden; }
 
 })();
   </script>
+  <script>initDelivery();</script>
 </body>
 </html>

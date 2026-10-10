@@ -102,7 +102,7 @@
     }
   </style>
   <style>
-/* ===== Yuron: мобильная вёрстка, меню справа, анимация заказа ===== */
+/* ===== Yuron: мобильная вёрстка, меню справа, аккаунт, анимация заказа ===== */
 /* =====================================================================
    yuron.css — общий слой для всех страниц Yuron Cafe
    Подключается ПОСЛЕ встроенных <style>, поэтому переопределяет их.
@@ -445,6 +445,94 @@ body.ym-lock { overflow: hidden; }
   .yo-burst { display: none; }
 }
 
+/* =====================================================================
+   Аккаунт: кнопка в шапке, окно входа/регистрации, блок в меню
+   ===================================================================== */
+.ya-btn {
+  display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 4px 14px;
+  font: 700 .85rem var(--font-body, system-ui, sans-serif); cursor: pointer; white-space: nowrap;
+  color: var(--text-espresso, #2b1e1a); background: #fff;
+  border: 2px solid var(--text-espresso, #2b1e1a); border-radius: 20px;
+  box-shadow: 2px 2px 0 var(--text-espresso, #2b1e1a);
+}
+.ya-btn.in { background: var(--bg-cream, #fbf7f0); }
+@media (max-width: 768px) { .ya-btn { display: none; } }
+@media (max-width: 1100px) and (min-width: 769px) {
+  .nav-links { gap: 16px !important; }
+  .nav-links a { font-size: .86rem !important; }
+}
+.ym-panel.open .ym-link:nth-child(6) { transition-delay: .26s; }
+
+.ym-acc { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; padding: 12px; background: #fff; border: 2px solid var(--text-espresso, #2b1e1a); border-radius: 16px; box-shadow: 3px 3px 0 var(--text-espresso, #2b1e1a); color: inherit; }
+.ym-acc.guest { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 0; background: none; border: 0; box-shadow: none; }
+.ym-acc.guest .yo-btn { min-height: 44px; padding: 8px 6px; font-size: .9rem; }
+.ym-ava { flex: 0 0 44px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; background: var(--accent-yellow, #f2a93b); border: 2px solid var(--text-espresso, #2b1e1a); border-radius: 50%; }
+.ym-acc b { display: block; line-height: 1.2; overflow-wrap: anywhere; }
+.ym-acc small { display: block; color: var(--text-muted, #6e5d57); font-weight: 600; }
+.ym-logout { width: 100%; min-height: 44px; margin-top: 14px; background: #fff; color: var(--accent-terracotta, #d95338); border: 2px solid var(--accent-terracotta, #d95338); border-radius: 12px; font: 800 .95rem var(--font-body, system-ui, sans-serif); cursor: pointer; }
+
+.ya-deliv { display: block; margin-top: 10px; padding: 12px; text-align: center; font-weight: 800; font-size: .95rem; color: var(--text-espresso, #2b1e1a); background: #fff; border: 2px solid var(--text-espresso, #2b1e1a); border-radius: 30px; box-shadow: 3px 3px 0 var(--text-espresso, #2b1e1a); }
+
+.ys-hint { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 14px; margin: 14px 0 0; padding: 10px 14px; font-size: .88rem; font-weight: 600; background: #fff; border: 1.5px dashed var(--text-espresso, #2b1e1a); border-radius: 12px; }
+.ys-hint b { color: var(--accent-terracotta, #d95338); }
+.ys-go { min-height: 40px; padding: 6px 16px; font: 800 .88rem var(--font-body, system-ui, sans-serif); cursor: pointer; background: var(--accent-yellow, #f2a93b); border: 2px solid var(--text-espresso, #2b1e1a); border-radius: 12px; box-shadow: 2px 2px 0 var(--text-espresso, #2b1e1a); }
+
+.yo-addr { margin: 0 0 10px; font-size: .85rem; font-weight: 700; color: var(--text-muted, #6e5d57); overflow-wrap: anywhere; }
+
+/* окно входа / регистрации */
+.ya { position: fixed; inset: 0; z-index: 3200; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(43, 30, 26, .62); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+.ya.open { display: flex; animation: yoFade .2s ease both; }
+.ya-card {
+  position: relative; width: 100%; max-width: 420px; max-height: calc(100dvh - 32px); overflow-y: auto;
+  padding: 26px 22px 20px; background: #fff; color: var(--text-espresso, #2b1e1a);
+  border: 3px solid var(--text-espresso, #2b1e1a); border-radius: 24px;
+  box-shadow: 8px 8px 0 var(--accent-yellow, #f2a93b), 8px 8px 0 3px var(--text-espresso, #2b1e1a);
+  animation: yoPop .45s cubic-bezier(.2, 1.3, .4, 1) both;
+}
+.ya-card h2 { margin: 0 36px 4px 0; font-family: var(--font-heading, Georgia, serif); font-size: 1.6rem; line-height: 1.2; }
+.ya-sub { margin: 0 0 14px; font-size: .9rem; color: var(--text-muted, #6e5d57); }
+.ya-x { position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; font-size: 1.1rem; cursor: pointer; background: var(--bg-cream, #fbf7f0); border: 2px solid var(--text-espresso, #2b1e1a); border-radius: 12px; }
+.ya-reason { margin: 0 0 14px; padding: 10px 12px; font-size: .85rem; font-weight: 700; background: rgba(242, 169, 59, .25); border: 1.5px solid var(--text-espresso, #2b1e1a); border-radius: 12px; }
+.ya-f { margin-bottom: 12px; }
+.ya-f > label:not(.ya-chk) { display: block; margin-bottom: 5px; font-size: .85rem; font-weight: 700; }
+.ya-f input:not([type="checkbox"]), .ya-in { width: 100%; min-height: 48px; padding: 10px 12px; font: 500 1rem var(--font-body, system-ui, sans-serif); background: #fff; border: 2px solid var(--text-espresso, #2b1e1a); border-radius: 12px; outline: none; }
+.ya-f input:focus { border-color: var(--accent-terracotta, #d95338); box-shadow: 0 0 0 3px rgba(217, 83, 56, .18); }
+.ya-phone, .ya-pw { display: flex; align-items: stretch; border: 2px solid var(--text-espresso, #2b1e1a); border-radius: 12px; overflow: hidden; background: #fff; }
+.ya-phone:focus-within, .ya-pw:focus-within { border-color: var(--accent-terracotta, #d95338); box-shadow: 0 0 0 3px rgba(217, 83, 56, .18); }
+.ya-phone span { display: flex; align-items: center; padding: 0 10px; font-weight: 800; background: var(--bg-cream, #fbf7f0); border-right: 2px solid var(--text-espresso, #2b1e1a); }
+.ya-phone input, .ya-pw input { border: 0 !important; border-radius: 0 !important; box-shadow: none !important; min-width: 0; flex: 1; }
+.ya-eye { flex: 0 0 48px; border: 0; border-left: 2px solid var(--text-espresso, #2b1e1a); background: var(--bg-cream, #fbf7f0); cursor: pointer; font-size: 1.05rem; }
+.ya-err { display: none; margin-top: 5px; font-size: .8rem; font-weight: 700; color: var(--accent-terracotta, #d95338); }
+.ya-f.bad .ya-err, .ya-err.bad { display: block; }
+.ya-f.bad .ya-phone, .ya-f.bad .ya-pw, .ya-f.bad .ya-in, .ya-f.bad > input { border-color: var(--accent-terracotta, #d95338); }
+.ya-gerr { margin: 0 0 10px; text-align: center; }
+.ya-chk { display: flex; align-items: flex-start; gap: 8px; font-size: .85rem; font-weight: 600; cursor: pointer; }
+.ya-chk input { width: 20px; height: 20px; flex: 0 0 20px; margin-top: 1px; accent-color: var(--accent-terracotta, #d95338); }
+.ya-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin-bottom: 12px; }
+.ya-link { padding: 4px 2px; font: 800 .85rem var(--font-body, system-ui, sans-serif); color: var(--accent-terracotta, #d95338); background: none; border: 0; text-decoration: underline; cursor: pointer; }
+.ya-link:disabled { color: var(--text-muted, #6e5d57); text-decoration: none; cursor: default; }
+.ya-alt { margin: 14px 0 0; text-align: center; font-size: .88rem; font-weight: 600; }
+.ya-meter { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4px 10px; margin: -4px 0 12px; }
+.ya-meter[hidden] { display: none; }
+.ya-meter i { display: block; height: 6px; width: 0; border-radius: 4px; background: var(--accent-terracotta, #d95338); transition: width .25s ease, background .25s ease; }
+.ya-meter[data-lv="2"] i { background: var(--accent-yellow, #f2a93b); }
+.ya-meter[data-lv="3"] i { background: var(--accent-green, #3a5a40); }
+.ya-meter span { font-size: .75rem; font-weight: 700; color: var(--text-muted, #6e5d57); }
+.ya-demo { margin: 0 0 14px; padding: 10px 12px; text-align: center; background: var(--bg-cream, #fbf7f0); border: 2px dashed var(--text-espresso, #2b1e1a); border-radius: 14px; }
+.ya-demo small { display: block; font-size: .75rem; color: var(--text-muted, #6e5d57); font-weight: 600; }
+.ya-demo b { font-family: var(--font-heading, Georgia, serif); font-size: 1.9rem; letter-spacing: .3em; color: var(--accent-terracotta, #d95338); }
+.ya-code { display: flex; justify-content: center; gap: 10px; margin-bottom: 8px; }
+.ya-code input { width: 56px; height: 64px; padding: 0; text-align: center; font: 800 1.6rem var(--font-heading, Georgia, serif); border: 2px solid var(--text-espresso, #2b1e1a); border-radius: 14px; outline: none; background: #fff; }
+.ya-code input:focus { border-color: var(--accent-terracotta, #d95338); box-shadow: 0 0 0 3px rgba(217, 83, 56, .18); }
+.ya-code.shake { animation: yaShake .4s ease; }
+@keyframes yaShake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+.ya-resend { display: block; margin: 4px auto 0; }
+.ya-welcome { text-align: center; padding-top: 8px; }
+.ya-welcome p { margin: 10px 0 18px; font-size: .92rem; color: var(--text-muted, #6e5d57); }
+.ya-big { width: 84px; height: 84px; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 2.6rem; background: var(--accent-yellow, #f2a93b); border: 3px solid var(--text-espresso, #2b1e1a); border-radius: 50%; box-shadow: 3px 3px 0 var(--text-espresso, #2b1e1a); animation: yoPop .6s cubic-bezier(.2, 1.4, .4, 1) both; }
+.ya .yo-btn { margin-top: 4px; }
+@media (max-width: 420px) { .ya-code input { width: 52px; height: 60px; } .ya-card { padding: 22px 16px 16px; } }
+@media (prefers-reduced-motion: reduce) { .ya-card, .ya-big, .ya-code.shake { animation: none !important; } }
   </style>
 </head>
 <body>
@@ -464,6 +552,7 @@ body.ym-lock { overflow: hidden; }
       <li><a href="index.html" data-i18n="nav_home">Главная</a></li>
       <li><a href="product.html" data-i18n="nav_menu">Меню</a></li>
       <li><a href="offer.html" data-i18n="nav_offers">Акции & Штампы</a></li>
+      <li><a href="delivery.html" data-yt="m_delivery">Доставка</a></li>
       <li><a href="about.html" class="active" data-i18n="nav_about">О нас & Локации</a></li>
       <li><a href="profile.html" data-i18n="nav_profile">Профиль</a></li>
     </ul>
@@ -594,6 +683,7 @@ body.ym-lock { overflow: hidden; }
         <li><a href="index.html">Главная</a></li>
         <li><a href="product.html">Меню</a></li>
         <li><a href="offer.html">Акции</a></li>
+        <li><a href="delivery.html">Доставка</a></li>
         <li><a href="about.html">Локации</a></li>
       </div>
       <div class="footer-col">
@@ -740,16 +830,18 @@ body.ym-lock { overflow: hidden; }
   </script>
   <script>
 /* =====================================================================
-   yuron.js — общий скрипт для всех страниц Yuron Cafe.
-   Подключается ПОСЛЕ встроенного <script> страницы.
+   yuron.js — общий скрипт для всех страниц Yuron Cafe (встроен в каждую).
    Делает:
-     1) меню справа по «3 полоскам» (на телефоне)
-     2) единое оформление заказа: сохраняет заказ, ставит штамп,
-        показывает анимацию с временем готовности
-     3) плашку «Заказ готовится · 7:42» на всех страницах
-     4) window.Yuron — общие функции (используются в profile.html)
-   Для проверки таймера: localStorage.setItem('yuron_speed','30') —
-   время идёт в 30 раз быстрее (вернуть: removeItem('yuron_speed')).
+     1) аккаунты: регистрация (с кодом из SMS), вход, восстановление пароля
+     2) штампы и заказы привязаны к аккаунту (одинаково на всех страницах)
+     3) оформление заказа (самовывоз и доставка) с анимацией и таймером
+     4) меню справа по «3 полоскам» на телефоне
+     5) плашку «Заказ готовится · 7:42» и window.Yuron для profile/delivery
+   ВАЖНО: сервера у сайта нет, поэтому аккаунты и заказы хранятся в
+   браузере (localStorage), а SMS-код показывается на экране (демо).
+   Для настоящих аккаунтов нужен бэкенд и SMS-провайдер.
+   Проверка таймера: localStorage.setItem('yuron_speed','30') — время
+   идёт в 30 раз быстрее (вернуть: removeItem('yuron_speed')).
    ===================================================================== */
 (function () {
   'use strict';
@@ -760,31 +852,88 @@ body.ym-lock { overflow: hidden; }
     set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
     del: function (k) { try { localStorage.removeItem(k); } catch (e) {} }
   };
+  var sstore = {
+    get: function (k) { try { return sessionStorage.getItem(k) || ''; } catch (e) { return ''; } },
+    set: function (k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} },
+    del: function (k) { try { sessionStorage.removeItem(k); } catch (e) {} }
+  };
   var SPEED = Number(store.get('yuron_speed', 1)) || 1;
 
   /* ---------- переводы ---------- */
   var D = {
     ru: {
-      m_home: 'Главная', m_menu: 'Меню', m_offers: 'Акции и штампы', m_about: 'О нас и локации', m_profile: 'Профиль',
+      m_home: 'Главная', m_menu: 'Меню', m_offers: 'Акции и штампы', m_about: 'О нас и локации', m_delivery: 'Доставка', m_profile: 'Профиль',
       m_lang: 'Язык', m_open: 'Открыть меню', m_close: 'Закрыть меню', m_hours: 'Ежедневно 08:00–22:00',
-      cart: 'Корзина', c_title: 'Ваша корзина', c_total: 'Итого:', c_checkout: 'Оформить заказ',
+      cart: 'Корзина', c_title: 'Ваша корзина', c_total: 'Итого:', c_checkout: 'Оформить заказ', c_delivery: '🛵 Заказать с доставкой',
       c_empty: 'Корзина пуста', c_empty_toast: 'Корзина пуста. Добавьте что-нибудь вкусное',
       o_sending: 'Отправляем заказ бариста', o_ok: 'Заказ принят!', o_num: 'Заказ № {n}',
-      o_eta: 'Будет готов примерно через', o_min: 'мин', o_by: 'к {time}',
+      o_eta: 'Будет готов примерно через', o_eta_d: 'Привезём примерно через', o_min: 'мин', o_by: 'к {time}',
       o_track: 'Следить за заказом', o_more: 'Продолжить покупки',
-      st_accepted: 'Принят', st_preparing: 'Готовится', st_ready: 'Готов', st_done: 'Выдан',
-      pill_accepted: 'Заказ принят', pill_preparing: 'Готовится', pill_ready: 'Заказ готов, забирайте!'
+      st_accepted: 'Принят', st_preparing: 'Готовится', st_ready: 'Готов', st_done: 'Выдан', st_onway: 'В пути', st_delivered: 'Доставлен',
+      pill_accepted: 'Заказ принят', pill_preparing: 'Готовится', pill_ready: 'Заказ готов, забирайте!', pill_onway: 'Курьер в пути',
+      acc_login: 'Войти', acc_register: 'Регистрация', acc_logout: 'Выйти', acc_hello: 'Здравствуйте',
+      a_login_t: 'Вход в аккаунт', a_login_s: 'Войдите, чтобы копить штампы и следить за заказами.',
+      a_reg_t: 'Создать аккаунт', a_reg_s: 'Это займёт минуту. Подтвердим номер кодом из SMS.',
+      a_reason_checkout: 'Чтобы оформить заказ, войдите или создайте аккаунт. Корзина сохранится.',
+      a_reason_delivery: 'Для заказа с доставкой нужен аккаунт: так мы свяжемся с вами и покажем статус курьера.',
+      a_name: 'Имя', a_phone: 'Номер телефона', a_pass: 'Пароль', a_pass2: 'Повторите пароль', a_remember: 'Запомнить меня',
+      a_forgot: 'Забыли пароль?', a_login_btn: 'Войти', a_reg_btn: 'Получить код', a_no_acc: 'Нет аккаунта?', a_has_acc: 'Уже есть аккаунт?',
+      a_terms: 'Я согласен(на) на обработку данных и с правилами кафе',
+      a_show: 'Показать пароль',
+      a_e_name: 'Введите имя (минимум 2 буквы)', a_e_phone: 'Введите номер полностью: 9 цифр после +998',
+      a_e_pass_empty: 'Введите пароль', a_e_pass_rule: 'Минимум 6 символов, с буквой и цифрой', a_e_pass_match: 'Пароли не совпадают',
+      a_e_terms: 'Нужно согласие, чтобы создать аккаунт', a_e_exists: 'Этот номер уже зарегистрирован. Нажмите «Войти».',
+      a_e_bad: 'Неверный номер или пароль', a_e_left: 'Осталось попыток: {n}', a_e_lock: 'Слишком много попыток. Повторите через {s} с',
+      a_str_weak: 'Слабый', a_str_mid: 'Средний', a_str_strong: 'Надёжный',
+      a_code_t: 'Введите код из SMS', a_code_s: 'Мы отправили 4-значный код на {phone}',
+      a_demo: 'Демо-режим: SMS не отправляются. Ваш код:', a_resend: 'Отправить код ещё раз', a_resend_in: 'Повторная отправка через {s} с',
+      a_change_phone: 'Изменить номер', a_e_code: 'Неверный код. Осталось попыток: {n}', a_e_code_dead: 'Попытки закончились. Запросите новый код.',
+      a_e_code_exp: 'Срок действия кода истёк. Запросите новый.', a_code_sent: 'Новый код отправлен',
+      a_forgot_t: 'Восстановление пароля', a_forgot_s: 'Введите номер, на который зарегистрирован аккаунт. Пришлём код.',
+      a_e_nouser: 'Аккаунт с таким номером не найден', a_send_code: 'Получить код', a_back: '← Назад ко входу',
+      a_new_t: 'Новый пароль', a_new_s: 'Придумайте пароль, которого нет на других сайтах.', a_new_btn: 'Сохранить пароль', a_pass_new: 'Новый пароль',
+      a_pass_changed: 'Пароль обновлён. Войдите с новым паролем',
+      a_welcome_t: 'Добро пожаловать, {name}!', a_welcome_s: 'Аккаунт создан. Штампы за заказы будут копиться здесь, а статус заказа виден в профиле.',
+      a_continue: 'Продолжить', a_welcome_back: 'С возвращением, {name}!', a_logged_out: 'Вы вышли из аккаунта',
+      a_close: 'Закрыть', stamps_guest: 'Войдите, чтобы копить штампы за заказы.', stamps_auto: 'Штамп начисляется автоматически за каждый заказ.',
+      stamps_have: 'У вас {n} из 8', a_go: 'Войти / Регистрация'
     },
     uz: {
-      m_home: 'Bosh sahifa', m_menu: 'Menyu', m_offers: 'Aktsiyalar va shtamplar', m_about: 'Biz haqimizda va joylashuv', m_profile: 'Profil',
+      m_home: 'Bosh sahifa', m_menu: 'Menyu', m_offers: 'Aktsiyalar va shtamplar', m_about: 'Biz haqimizda va joylashuv', m_delivery: 'Yetkazib berish', m_profile: 'Profil',
       m_lang: 'Til', m_open: 'Menyuni ochish', m_close: 'Menyuni yopish', m_hours: 'Har kuni 08:00–22:00',
-      cart: 'Savat', c_title: 'Sizning savatingiz', c_total: 'Jami:', c_checkout: 'Buyurtma berish',
-      c_empty: 'Savat bo\'sh', c_empty_toast: 'Savat bo\'sh. Mazali biror narsa qo\'shing',
+      cart: 'Savat', c_title: 'Sizning savatingiz', c_total: 'Jami:', c_checkout: 'Buyurtma berish', c_delivery: '🛵 Yetkazib berish bilan buyurtma',
+      c_empty: "Savat bo'sh", c_empty_toast: "Savat bo'sh. Mazali biror narsa qo'shing",
       o_sending: 'Buyurtma baristaga yuborilmoqda', o_ok: 'Buyurtma qabul qilindi!', o_num: 'Buyurtma № {n}',
-      o_eta: 'Taxminan tayyor bo\'ladi', o_min: 'daq', o_by: '{time} ga',
+      o_eta: "Taxminan tayyor bo'ladi", o_eta_d: 'Taxminan olib boramiz', o_min: 'daq', o_by: '{time} ga',
       o_track: 'Buyurtmani kuzatish', o_more: 'Xaridni davom ettirish',
-      st_accepted: 'Qabul qilindi', st_preparing: 'Tayyorlanmoqda', st_ready: 'Tayyor', st_done: 'Topshirildi',
-      pill_accepted: 'Buyurtma qabul qilindi', pill_preparing: 'Tayyorlanmoqda', pill_ready: 'Buyurtma tayyor, olib keting!'
+      st_accepted: 'Qabul qilindi', st_preparing: 'Tayyorlanmoqda', st_ready: 'Tayyor', st_done: 'Topshirildi', st_onway: "Yo'lda", st_delivered: 'Yetkazildi',
+      pill_accepted: 'Buyurtma qabul qilindi', pill_preparing: 'Tayyorlanmoqda', pill_ready: 'Buyurtma tayyor, olib keting!', pill_onway: "Kuryer yo'lda",
+      acc_login: 'Kirish', acc_register: "Ro'yxatdan o'tish", acc_logout: 'Chiqish', acc_hello: 'Salom',
+      a_login_t: 'Hisobga kirish', a_login_s: "Shtamplar yig'ish va buyurtmalarni kuzatish uchun kiring.",
+      a_reg_t: 'Hisob yaratish', a_reg_s: "Bir daqiqa vaqt oladi. Raqamni SMS kod bilan tasdiqlaymiz.",
+      a_reason_checkout: "Buyurtma berish uchun kiring yoki hisob yarating. Savat saqlanadi.",
+      a_reason_delivery: "Yetkazib berish uchun hisob kerak: shunda biz siz bilan bog'lanamiz va kuryer holatini ko'rsatamiz.",
+      a_name: 'Ism', a_phone: 'Telefon raqami', a_pass: 'Parol', a_pass2: 'Parolni takrorlang', a_remember: 'Meni eslab qol',
+      a_forgot: 'Parolni unutdingizmi?', a_login_btn: 'Kirish', a_reg_btn: 'Kod olish', a_no_acc: "Hisobingiz yo'qmi?", a_has_acc: 'Hisobingiz bormi?',
+      a_terms: "Ma'lumotlarni qayta ishlashga va kafe qoidalariga roziman",
+      a_show: "Parolni ko'rsatish",
+      a_e_name: 'Ismni kiriting (kamida 2 harf)', a_e_phone: "Raqamni to'liq kiriting: +998 dan keyin 9 ta raqam",
+      a_e_pass_empty: 'Parolni kiriting', a_e_pass_rule: 'Kamida 6 belgi, harf va raqam bilan', a_e_pass_match: 'Parollar mos kelmadi',
+      a_e_terms: 'Hisob yaratish uchun rozilik kerak', a_e_exists: "Bu raqam allaqachon ro'yxatdan o'tgan. «Kirish» tugmasini bosing.",
+      a_e_bad: "Raqam yoki parol noto'g'ri", a_e_left: 'Qolgan urinishlar: {n}', a_e_lock: "Juda ko'p urinish. {s} soniyadan keyin qayta urining",
+      a_str_weak: 'Kuchsiz', a_str_mid: "O'rtacha", a_str_strong: 'Ishonchli',
+      a_code_t: 'SMS kodni kiriting', a_code_s: '{phone} raqamiga 4 xonali kod yubordik',
+      a_demo: "Demo rejim: SMS yuborilmaydi. Sizning kodingiz:", a_resend: 'Kodni qayta yuborish', a_resend_in: 'Qayta yuborish {s} soniyadan keyin',
+      a_change_phone: "Raqamni o'zgartirish", a_e_code: "Kod noto'g'ri. Qolgan urinishlar: {n}", a_e_code_dead: "Urinishlar tugadi. Yangi kod so'rang.",
+      a_e_code_exp: "Kod muddati tugadi. Yangisini so'rang.", a_code_sent: 'Yangi kod yuborildi',
+      a_forgot_t: 'Parolni tiklash', a_forgot_s: "Hisob ro'yxatdan o'tgan raqamni kiriting. Kod yuboramiz.",
+      a_e_nouser: 'Bunday raqamli hisob topilmadi', a_send_code: 'Kod olish', a_back: '← Kirishga qaytish',
+      a_new_t: 'Yangi parol', a_new_s: "Boshqa saytlarda ishlatilmagan parol o'ylab toping.", a_new_btn: 'Parolni saqlash', a_pass_new: 'Yangi parol',
+      a_pass_changed: 'Parol yangilandi. Yangi parol bilan kiring',
+      a_welcome_t: 'Xush kelibsiz, {name}!', a_welcome_s: "Hisob yaratildi. Buyurtmalar uchun shtamplar shu yerda yig'iladi, buyurtma holati profilda ko'rinadi.",
+      a_continue: 'Davom etish', a_welcome_back: 'Qaytganingiz bilan, {name}!', a_logged_out: 'Siz hisobdan chiqdingiz',
+      a_close: 'Yopish', stamps_guest: "Buyurtmalar uchun shtamp yig'ish uchun kiring.", stamps_auto: "Har bir buyurtma uchun shtamp avtomatik qo'shiladi.",
+      stamps_have: '8 tadan {n} tasi sizda', a_go: "Kirish / Ro'yxatdan o'tish"
     }
   };
   function lang() { return store.get('yuron_lang', 'ru') === 'uz' ? 'uz' : 'ru'; }
@@ -792,7 +941,7 @@ body.ym-lock { overflow: hidden; }
     var s = (D[lang()] && D[lang()][key]);
     if (s === undefined) s = D.ru[key];
     if (s === undefined) s = key;
-    if (vars) for (var k in vars) s = s.split('{' + k + '}').join(vars[k]);
+    if (vars && typeof s === 'string') for (var k in vars) s = s.split('{' + k + '}').join(vars[k]);
     return s;
   }
   function extend(add) {
@@ -817,8 +966,8 @@ body.ym-lock { overflow: hidden; }
   function money(n) { return (Number(n) || 0).toLocaleString('ru-RU') + ' UZS'; }
   function pad(n) { return (n < 10 ? '0' : '') + n; }
   function clock(ts) { var d = new Date(ts); return pad(d.getHours()) + ':' + pad(d.getMinutes()); }
-  function mmss(sec) { sec = Math.max(0, sec); return Math.floor(sec / 60) + ':' + pad(sec % 60); }
-  function plural(n, forms) { // forms: [1, 2-4, 5+]; для uz передавать один вариант
+  function mmss(sec) { sec = Math.max(0, sec); return Math.floor(sec / 60) + ':' + pad(Math.floor(sec % 60)); }
+  function plural(n, forms) {
     if (lang() === 'uz' || forms.length === 1) return forms[0];
     var a = Math.abs(n) % 100, b = a % 10;
     if (a > 10 && a < 20) return forms[2];
@@ -827,6 +976,7 @@ body.ym-lock { overflow: hidden; }
     return forms[2];
   }
   function itemName(it) { return (lang() === 'uz' && it.name_uz) ? it.name_uz : it.name; }
+  function emit(name) { window.dispatchEvent(new CustomEvent(name)); }
 
   var toastTimer;
   function toast(msg) {
@@ -840,54 +990,164 @@ body.ym-lock { overflow: hidden; }
     void el.offsetWidth;
     el.classList.add('show');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2600);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2800);
   }
 
-  /* ---------- заказы ---------- */
-  function normalizeOrder(o, i) {
-    if (o && Array.isArray(o.items) && o.createdAt) return o;
-    // старый формат (из прежнего product.html): items — строка, без времени
-    var items = [];
-    if (o && Array.isArray(o.items)) items = o.items;
-    else if (o && typeof o.items === 'string' && o.items) items = [{ name: o.items, name_uz: o.items, price: 0, qty: 1, text: true }];
-    return {
-      id: (o && o.id) || ('Y-' + (900 + i)),
-      createdAt: 0, legacy: true, prepMin: 0, items: items,
-      total: parseInt(String((o && o.total) || '0').replace(/\D/g, ''), 10) || 0,
-      dateText: (o && o.date) || ''
-    };
+  /* ---------- телефон ---------- */
+  function phoneLocal(v) {                 // «+998 90 123 45 67» → «901234567»
+    var d = String(v || '').replace(/\D/g, '');
+    if (d.indexOf('998') === 0 && d.length > 9) d = d.slice(3);
+    return d.slice(0, 9);
   }
-  function loadOrders() {
+  function phoneFmt(d) {
+    var o = d.slice(0, 2);
+    if (d.length > 2) o += ' ' + d.slice(2, 5);
+    if (d.length > 5) o += ' ' + d.slice(5, 7);
+    if (d.length > 7) o += ' ' + d.slice(7, 9);
+    return o;
+  }
+  function phoneShow(id) { return '+998 ' + phoneFmt(String(id).slice(3)); }
+  function phoneMasked(id) { var l = String(id).slice(3); return '+998 ' + l.slice(0, 2) + ' *** ** ' + l.slice(7, 9); }
+
+  /* ---------- аккаунты ---------- */
+  function users() { try { var u = JSON.parse(store.get('yuron_users', '{}')); return (u && typeof u === 'object') ? u : {}; } catch (e) { return {}; } }
+  function saveUsers(u) { store.set('yuron_users', JSON.stringify(u)); }
+  function sessionId() { return store.get('yuron_session', '') || sstore.get('yuron_session'); }
+  function user() {
+    var id = sessionId();
+    if (!id) return null;
+    var u = users()[id];
+    if (!u) { store.del('yuron_session'); sstore.del('yuron_session'); return null; }
+    return u;
+  }
+  function setSession(id, remember) {
+    store.del('yuron_session'); sstore.del('yuron_session');
+    if (remember) store.set('yuron_session', id); else sstore.set('yuron_session', id);
+  }
+  function updateUser(patch) {
+    var id = sessionId(), all = users();
+    if (!id || !all[id]) return null;
+    for (var k in patch) all[id][k] = patch[k];
+    saveUsers(all);
+    return all[id];
+  }
+  function logout() {
+    store.del('yuron_session'); sstore.del('yuron_session');
+    emit('yuron:auth');
+    toast(t('a_logged_out'));
+  }
+  function rand(len) {
+    var out = '', a = new Uint8Array(len);
+    if (window.crypto && crypto.getRandomValues) { crypto.getRandomValues(a); for (var i = 0; i < len; i++) out += (a[i] % 16).toString(16); }
+    else for (var j = 0; j < len; j++) out += Math.floor(Math.random() * 16).toString(16);
+    return out;
+  }
+  function hex(buf) { return Array.prototype.map.call(new Uint8Array(buf), function (b) { return (b < 16 ? '0' : '') + b.toString(16); }).join(''); }
+  function hashPass(pass, salt) {          // пароль в открытом виде нигде не хранится
+    try {
+      if (window.crypto && crypto.subtle && window.TextEncoder) {
+        var enc = new TextEncoder();
+        return crypto.subtle.importKey('raw', enc.encode(pass), 'PBKDF2', false, ['deriveBits'])
+          .then(function (k) { return crypto.subtle.deriveBits({ name: 'PBKDF2', salt: enc.encode(salt), iterations: 100000, hash: 'SHA-256' }, k, 256); })
+          .then(hex);
+      }
+    } catch (e) {}
+    var h = 5381, s = salt + pass;
+    for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+    return Promise.resolve('x' + (h >>> 0).toString(16));
+  }
+  function verifyPassword(id, pass) {
+    var u = users()[id];
+    if (!u) return Promise.resolve(false);
+    return hashPass(pass, u.salt).then(function (h) { return h === u.hash; });
+  }
+  function changePassword(oldPass, newPass) {
+    var u = user();
+    if (!u) return Promise.resolve(false);
+    return verifyPassword(u.phone, oldPass).then(function (ok) {
+      if (!ok) return false;
+      var salt = rand(16);
+      return hashPass(newPass, salt).then(function (h) { updateUser({ salt: salt, hash: h }); return true; });
+    });
+  }
+  function passOk(p) { return p.length >= 6 && /[A-Za-zА-Яа-яЁё]/.test(p) && /\d/.test(p); }
+  function passScore(p) {
+    var s = 0;
+    if (p.length >= 8) s++;
+    if (/[a-zа-я]/.test(p) && /[A-ZА-Я]/.test(p)) s++;
+    if (/\d/.test(p)) s++;
+    if (/[^A-Za-zА-Яа-я0-9]/.test(p)) s++;
+    return s;
+  }
+
+  /* ---------- штампы (на аккаунт, одинаково на всех страницах) ---------- */
+  function getStamps() { var u = user(); var n = u ? parseInt(u.stamps, 10) : 0; return isNaN(n) ? 0 : Math.max(0, Math.min(8, n)); }
+  function setStamps(n) { updateUser({ stamps: Math.max(0, Math.min(8, n)) }); refreshStamps(); }
+  function refreshStamps() {
+    var n = getStamps(), box = document.getElementById('stampPreview');
+    if (box) {                                // главная
+      var dots = box.querySelectorAll('.stamp-dot');
+      for (var i = 0; i < dots.length; i++) {
+        var on = i < 7 ? i < n : n >= 8;
+        if (on) dots[i].classList.add('active'); else dots[i].classList.remove('active');
+      }
+    }
+    var grid = document.getElementById('stampsGrid');
+    if (grid) {                               // акции
+      if (typeof renderStamps === 'function') renderStamps();
+      var hint = document.getElementById('yStampHint');
+      if (!hint) {
+        hint = document.createElement('div');
+        hint.id = 'yStampHint'; hint.className = 'ys-hint';
+        grid.parentNode.insertBefore(hint, grid.nextSibling);
+        hint.addEventListener('click', function (e) { if (e.target.closest('[data-act="go-auth"]')) openAuth('login'); });
+      }
+      hint.innerHTML = user()
+        ? '<span>' + esc(t('stamps_auto')) + '</span><b>' + esc(t('stamps_have', { n: n })) + '</b>'
+        : '<span>' + esc(t('stamps_guest')) + '</span><button type="button" class="ys-go" data-act="go-auth">' + esc(t('a_go')) + '</button>';
+    }
+  }
+
+  /* ---------- заказы (у каждого аккаунта свои) ---------- */
+  function allOrders() {
     var raw;
     try { raw = JSON.parse(store.get('yuron_orders', '[]')); } catch (e) { raw = []; }
-    if (!Array.isArray(raw)) raw = [];
-    return raw.map(normalizeOrder);
+    if (!Array.isArray(raw)) return [];
+    return raw.filter(function (o) { return o && Array.isArray(o.items) && o.createdAt && o.user; });
   }
-  function saveOrders(list) { store.set('yuron_orders', JSON.stringify(list.slice(0, 60))); }
-
-  // статус заказа по времени: принят → готовится → готов (20 мин на выдачу) → выдан
+  function loadOrders() {
+    var id = sessionId();
+    if (!id) return [];
+    return allOrders().filter(function (o) { return o.user === id; });
+  }
+  function addOrder(o) {
+    var list = allOrders(); list.unshift(o);
+    store.set('yuron_orders', JSON.stringify(list.slice(0, 200)));
+  }
+  function clearMyOrders() {
+    var id = sessionId();
+    store.set('yuron_orders', JSON.stringify(allOrders().filter(function (o) { return o.user !== id; })));
+  }
+  // самовывоз: принят → готовится → готов (20 мин на выдачу) → выдан
+  // доставка:  принят → готовится → в пути → доставлен
   function orderState(o, now) {
-    if (o.legacy || !o.createdAt) return { key: 'done', active: false, remainingSec: 0, progress: 100, elapsedSec: 0 };
     var el = ((now || Date.now()) - o.createdAt) / 1000 * SPEED;
-    var prep = o.prepMin * 60, key;
+    var prep = o.prepMin * 60, trav = (o.travelMin || 0) * 60, total = prep + trav, key;
     if (el < 45) key = 'accepted';
     else if (el < prep) key = 'preparing';
-    else if (el < prep + 20 * 60) key = 'ready';
-    else key = 'done';
+    else if (o.type === 'delivery') key = el < total ? 'onway' : 'done';
+    else key = el < prep + 20 * 60 ? 'ready' : 'done';
     return {
-      key: key, active: key !== 'done', elapsedSec: el,
-      remainingSec: Math.max(0, Math.ceil(prep - el)),
-      progress: Math.max(0, Math.min(100, el / prep * 100))
+      key: key, active: key !== 'done', elapsedSec: el, totalSec: total,
+      remainingSec: Math.max(0, Math.ceil(total - el)),
+      progress: Math.max(0, Math.min(100, el / total * 100))
     };
   }
-  function etaTime(o) { return o.createdAt + o.prepMin * 60000 / SPEED; }
-  function activeOrders() {
-    return loadOrders().filter(function (o) { return orderState(o).active; });
-  }
+  function etaTime(o) { return o.createdAt + (o.prepMin + (o.travelMin || 0)) * 60000 / SPEED; }
+  function statusLabel(o, key) { return t(key === 'done' && o.type === 'delivery' ? 'st_delivered' : 'st_' + key); }
+  function activeOrders() { return loadOrders().filter(function (o) { return orderState(o).active; }); }
 
-  function getStamps() { var n = parseInt(store.get('yuron_stamps', '3'), 10); return isNaN(n) ? 3 : Math.max(0, Math.min(8, n)); }
-
-  /* ---------- корзина (формат у всех страниц теперь одинаковый) ---------- */
+  /* ---------- корзина (формат у всех страниц одинаковый) ---------- */
   function cartRef() {
     try { return (typeof cart !== 'undefined' && Array.isArray(cart)) ? cart : null; } catch (e) { return null; }
   }
@@ -897,7 +1157,7 @@ body.ym-lock { overflow: hidden; }
     var changed = false;
     for (var i = c.length - 1; i >= 0; i--) {
       var it = c[i];
-      if (it && !it.price && typeof productsDB !== 'undefined') {       // старый формат {id, qty}
+      if (it && !it.price && typeof productsDB !== 'undefined') {
         var p = productsDB.filter(function (x) { return x.id === it.id; })[0];
         if (p) { it.name = p.name_ru; it.name_uz = p.name_uz; it.price = p.price; changed = true; }
       }
@@ -908,6 +1168,12 @@ body.ym-lock { overflow: hidden; }
       if (typeof renderCart === 'function') renderCart();
     }
   }
+  function cartTotals() {
+    var c = cartRef() || [], count = 0, sum = 0;
+    c.forEach(function (it) { count += it.qty; sum += it.price * it.qty; });
+    var disc = (typeof discountPercent === 'number') ? discountPercent : 0;
+    return { count: count, sum: sum, disc: disc, total: Math.round(sum * (1 - disc)) };
+  }
   function closeCartDrawer() {
     var d = document.getElementById('cartDrawer'), o = document.getElementById('cartOverlay');
     if (d) d.classList.remove('open');
@@ -915,31 +1181,30 @@ body.ym-lock { overflow: hidden; }
   }
 
   /* ---------- оформление заказа ---------- */
-  function checkout() {
+  // extra: { type:'delivery', travelMin, fee, delivery:{…} }. Возвращает заказ или null.
+  function placeOrder(extra) {
     var c = cartRef();
-    if (!c || !c.length) { toast(t('c_empty_toast')); return; }
-
-    var count = 0, sum = 0;
+    if (!c || !c.length) { toast(t('c_empty_toast')); return null; }
+    var u = user();
+    if (!u) return null;
+    extra = extra || {};
+    var tot = cartTotals();
     var items = c.map(function (it) {
-      count += it.qty; sum += it.price * it.qty;
       return { id: it.id || null, name: it.name, name_uz: it.name_uz || it.name, price: it.price, qty: it.qty };
     });
-    var disc = (typeof discountPercent === 'number') ? discountPercent : 0;
     var seq = (parseInt(store.get('yuron_order_seq', '1000'), 10) || 1000) + 1;
     store.set('yuron_order_seq', String(seq));
-
+    var fee = extra.fee || 0;
     var order = {
-      id: 'Y-' + seq,
+      id: 'Y-' + seq, user: u.phone, type: extra.type === 'delivery' ? 'delivery' : 'pickup',
       createdAt: Date.now(),
-      prepMin: Math.min(25, 7 + count * 2),          // 1 позиция ≈ 9 мин, 2 ≈ 11 мин… максимум 25
-      items: items,
-      total: Math.round(sum * (1 - disc))
+      prepMin: Math.min(25, 7 + tot.count * 2),
+      travelMin: extra.type === 'delivery' ? (extra.travelMin || 25) : 0,
+      items: items, subtotal: tot.total, fee: fee, total: tot.total + fee
     };
-    var list = loadOrders();
-    list.unshift(order);
-    saveOrders(list);
-
-    store.set('yuron_stamps', String(Math.min(8, getStamps() + 1)));
+    if (extra.delivery) order.delivery = extra.delivery;
+    addOrder(order);
+    setStamps(getStamps() + 1);
 
     c.length = 0;
     try { if (typeof discountPercent === 'number') discountPercent = 0; } catch (e) {}
@@ -953,7 +1218,14 @@ body.ym-lock { overflow: hidden; }
 
     showOrderOverlay(order);
     tick();
-    window.dispatchEvent(new CustomEvent('yuron:orders'));
+    emit('yuron:orders');
+    return order;
+  }
+  function checkout() {
+    var c = cartRef();
+    if (!c || !c.length) { toast(t('c_empty_toast')); return; }
+    if (!user()) { openAuth('login', { reason: 'a_reason_checkout', after: checkout }); return; }
+    placeOrder({ type: 'pickup' });
   }
   window.checkout = checkout;   // перекрывает checkout() из встроенного скрипта страницы
 
@@ -984,6 +1256,7 @@ body.ym-lock { overflow: hidden; }
           '</svg>' +
           '<h2 data-r="ok"></h2>' +
           '<span class="yo-num" data-r="num"></span>' +
+          '<p class="yo-addr" data-r="addr"></p>' +
           '<div class="yo-eta"><small data-r="eta"></small><span class="big" data-r="min"></span><span class="unit" data-r="unit"></span><small data-r="by"></small></div>' +
           '<div class="yo-steps"><span class="on" data-r="s1"></span><span data-r="s2"></span><span data-r="s3"></span></div>' +
           '<div class="yo-actions">' +
@@ -1003,27 +1276,29 @@ body.ym-lock { overflow: hidden; }
     var el = document.getElementById('yoOverlay');
     if (el) el.classList.remove('open');
     clearTimeout(overlayTimer);
-    document.body.classList.remove('ym-lock');
+    if (!document.getElementById('yaModal') || !document.getElementById('yaModal').classList.contains('open')) document.body.classList.remove('ym-lock');
   }
   function showOrderOverlay(order) {
     var el = document.getElementById('yoOverlay') || buildOverlay();
     var card = el.querySelector('.yo-card');
+    var del = order.type === 'delivery';
     function r(n) { return el.querySelector('[data-r="' + n + '"]'); }
 
     r('sending').textContent = t('o_sending');
     r('ok').textContent = t('o_ok');
     r('num').textContent = t('o_num', { n: order.id });
-    r('eta').textContent = t('o_eta');
-    r('min').textContent = '~' + order.prepMin;
+    r('addr').textContent = del && order.delivery ? '📍 ' + order.delivery.addr : '';
+    r('addr').style.display = del ? '' : 'none';
+    r('eta').textContent = t(del ? 'o_eta_d' : 'o_eta');
+    r('min').textContent = '~' + (order.prepMin + (order.travelMin || 0));
     r('unit').textContent = t('o_min');
     r('by').textContent = t('o_by', { time: clock(etaTime(order)) });
     r('s1').textContent = t('st_accepted');
     r('s2').textContent = t('st_preparing');
-    r('s3').textContent = t('st_ready');
+    r('s3').textContent = t(del ? 'st_onway' : 'st_ready');
     r('track').textContent = t('o_track');
     r('more').textContent = t('o_more');
 
-    // свежая анимация при каждом заказе
     var fresh = card.cloneNode(true);
     card.parentNode.replaceChild(fresh, card);
     card = fresh;
@@ -1055,10 +1330,310 @@ body.ym-lock { overflow: hidden; }
     }
   }
 
-  /* ---------- меню справа (3 полоски) ---------- */
+  /* =====================================================================
+     Окно входа / регистрации
+     ===================================================================== */
+  var A = null;          // состояние текущего сеанса окна
+  var modal, aCard;
+  function fieldHTML(name, label, inner) {
+    return '<div class="ya-f" data-f="' + name + '"><label>' + esc(label) + '</label>' + inner + '<div class="ya-err" role="alert"></div></div>';
+  }
+  function phoneField(val) {
+    return fieldHTML('phone', t('a_phone'),
+      '<div class="ya-phone"><span>+998</span><input name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="90 123 45 67" maxlength="12" value="' + esc(phoneFmt(val || '')) + '"></div>');
+  }
+  function passField(name, label, auto) {
+    return fieldHTML(name, label,
+      '<div class="ya-pw"><input name="' + name + '" type="password" autocomplete="' + auto + '">' +
+      '<button type="button" class="ya-eye" data-act="eye" aria-label="' + esc(t('a_show')) + '">👁</button></div>');
+  }
+  function shell(title, sub, body, extra) {
+    var reason = (A.reason && A.view === 'login') ? '<div class="ya-reason">' + esc(t(A.reason)) + '</div>' : '';
+    return '<button type="button" class="ya-x" data-act="close" aria-label="' + esc(t('a_close')) + '">✕</button>' +
+           '<h2>' + esc(title) + '</h2>' + (sub ? '<p class="ya-sub">' + esc(sub) + '</p>' : '') + reason + body + (extra || '');
+  }
+  function viewHTML() {
+    var v = A.view;
+    if (v === 'login') {
+      return shell(t('a_login_t'), t('a_login_s'),
+        '<form class="ya-form" data-form="login" novalidate>' +
+          phoneField(A.phone) + passField('pass', t('a_pass'), 'current-password') +
+          '<div class="ya-row"><label class="ya-chk"><input type="checkbox" name="remember" checked><span>' + esc(t('a_remember')) + '</span></label>' +
+          '<button type="button" class="ya-link" data-act="forgot">' + esc(t('a_forgot')) + '</button></div>' +
+          '<div class="ya-err ya-gerr" data-f="form" role="alert"></div>' +
+          '<button class="yo-btn primary" type="submit">' + esc(t('a_login_btn')) + '</button></form>',
+        '<p class="ya-alt">' + esc(t('a_no_acc')) + ' <button type="button" class="ya-link" data-act="to-register">' + esc(t('acc_register')) + '</button></p>');
+    }
+    if (v === 'register') {
+      return shell(t('a_reg_t'), t('a_reg_s'),
+        '<form class="ya-form" data-form="register" novalidate>' +
+          fieldHTML('name', t('a_name'), '<input class="ya-in" name="name" type="text" autocomplete="given-name" maxlength="30" value="' + esc(A.name || '') + '">') +
+          phoneField(A.phone) + passField('pass', t('a_pass'), 'new-password') +
+          '<div class="ya-meter" hidden><i></i><span></span></div>' +
+          passField('pass2', t('a_pass2'), 'new-password') +
+          '<div class="ya-f" data-f="terms"><label class="ya-chk"><input type="checkbox" name="terms"><span>' + esc(t('a_terms')) + '</span></label><div class="ya-err" role="alert"></div></div>' +
+          '<div class="ya-err ya-gerr" data-f="form" role="alert"></div>' +
+          '<button class="yo-btn primary" type="submit">' + esc(t('a_reg_btn')) + '</button></form>',
+        '<p class="ya-alt">' + esc(t('a_has_acc')) + ' <button type="button" class="ya-link" data-act="to-login">' + esc(t('acc_login')) + '</button></p>');
+    }
+    if (v === 'forgot') {
+      return shell(t('a_forgot_t'), t('a_forgot_s'),
+        '<form class="ya-form" data-form="forgot" novalidate>' + phoneField(A.phone) +
+        '<div class="ya-err ya-gerr" data-f="form" role="alert"></div>' +
+        '<button class="yo-btn primary" type="submit">' + esc(t('a_send_code')) + '</button></form>',
+        '<p class="ya-alt"><button type="button" class="ya-link" data-act="to-login">' + esc(t('a_back')) + '</button></p>');
+    }
+    if (v === 'code') {
+      return shell(t('a_code_t'), t('a_code_s', { phone: phoneMasked(A.id) }),
+        '<div class="ya-demo"><small>' + esc(t('a_demo')) + '</small><b>' + esc(A.code) + '</b></div>' +
+        '<div class="ya-code" role="group">' +
+          '<input inputmode="numeric" maxlength="1" autocomplete="one-time-code" aria-label="1"><input inputmode="numeric" maxlength="1" aria-label="2">' +
+          '<input inputmode="numeric" maxlength="1" aria-label="3"><input inputmode="numeric" maxlength="1" aria-label="4"></div>' +
+        '<div class="ya-err ya-gerr" data-f="form" role="alert"></div>' +
+        '<button type="button" class="ya-link ya-resend" data-act="resend" data-r="resend" disabled></button>',
+        '<p class="ya-alt"><button type="button" class="ya-link" data-act="change-phone">' + esc(t('a_change_phone')) + '</button></p>');
+    }
+    if (v === 'reset') {
+      return shell(t('a_new_t'), t('a_new_s'),
+        '<form class="ya-form" data-form="reset" novalidate>' +
+          passField('pass', t('a_pass_new'), 'new-password') + '<div class="ya-meter" hidden><i></i><span></span></div>' +
+          passField('pass2', t('a_pass2'), 'new-password') +
+          '<div class="ya-err ya-gerr" data-f="form" role="alert"></div>' +
+          '<button class="yo-btn primary" type="submit">' + esc(t('a_new_btn')) + '</button></form>');
+    }
+    // welcome
+    return shell(t('a_welcome_t', { name: A.name }), '',
+      '<div class="ya-welcome"><div class="ya-big" aria-hidden="true">☕</div><p>' + esc(t('a_welcome_s')) + '</p>' +
+      '<button type="button" class="yo-btn primary" data-act="done">' + esc(t('a_continue')) + '</button></div>');
+  }
+  function renderAuth() {
+    clearInterval(A.timer);
+    aCard.innerHTML = viewHTML();
+    aCard.scrollTop = 0;
+    if (A.view === 'code') { A.timer = setInterval(updateResend, 1000); updateResend(); }
+    var first = aCard.querySelector('.ya-code input, input:not([type="checkbox"])');
+    if (first && A.view !== 'welcome') setTimeout(function () { try { first.focus(); } catch (e) {} }, 60);
+  }
+  function setErr(field, msg) {
+    var f = aCard.querySelector('[data-f="' + field + '"]');
+    if (!f) return;
+    var e = f.classList && f.classList.contains('ya-err') ? f : f.querySelector('.ya-err');
+    if (e) e.textContent = msg || '';
+    if (f.classList.contains('ya-f')) { if (msg) f.classList.add('bad'); else f.classList.remove('bad'); }
+    else if (e) { if (msg) e.classList.add('bad'); else e.classList.remove('bad'); }
+  }
+  function clearErrs() { var els = aCard.querySelectorAll('.ya-f.bad'); for (var i = 0; i < els.length; i++) els[i].classList.remove('bad'); setErr('form', ''); }
+  function val(name) { var el = aCard.querySelector('[name="' + name + '"]'); return el ? el.value : ''; }
+
+  function openAuth(view, opts) {
+    opts = opts || {};
+    if (!modal) buildAuth();
+    clearInterval(A && A.timer);
+    A = { view: view || 'login', reason: opts.reason || '', after: opts.after || null, phone: opts.phone || '', name: '' };
+    modal.classList.add('open');
+    document.body.classList.add('ym-lock');
+    renderAuth();
+    if (typeof closeMenu === 'function' && panel) closeMenu(true);
+  }
+  function closeAuth() {
+    if (!modal) return;
+    clearInterval(A && A.timer);
+    modal.classList.remove('open');
+    var ov = document.getElementById('yoOverlay');
+    if (!ov || !ov.classList.contains('open')) document.body.classList.remove('ym-lock');
+  }
+  function finishAuth(msgKey, name) {
+    var cb = A && A.after;
+    closeAuth();
+    emit('yuron:auth');
+    if (msgKey) toast(t(msgKey, { name: name }));
+    if (cb) setTimeout(cb, 250);
+  }
+
+  function lockLeft(id) { var until = parseInt(store.get('yuron_lock_' + id, '0'), 10) || 0; return Math.max(0, Math.ceil((until - Date.now()) / 1000)); }
+
+  function sendCode(purpose) {
+    A.purpose = purpose;
+    A.code = String(1000 + Math.floor(Math.random() * 9000));
+    A.codeExp = Date.now() + 5 * 60 * 1000;
+    A.tries = 0;
+    A.resendAt = Date.now() + 60 * 1000;
+    A.view = 'code';
+    renderAuth();
+  }
+  function updateResend() {
+    var b = aCard.querySelector('[data-r="resend"]');
+    if (!b) return;
+    var left = Math.ceil((A.resendAt - Date.now()) / 1000);
+    if (left > 0) { b.disabled = true; b.textContent = t('a_resend_in', { s: left }); }
+    else { b.disabled = false; b.textContent = t('a_resend'); }
+  }
+  function codeEntered() {
+    var boxes = aCard.querySelectorAll('.ya-code input'), code = '';
+    for (var i = 0; i < boxes.length; i++) code += boxes[i].value;
+    if (code.length < 4) return;
+    var fail = function (msg) {
+      setErr('form', msg);
+      for (var j = 0; j < boxes.length; j++) boxes[j].value = '';
+      boxes[0].focus();
+      aCard.querySelector('.ya-code').classList.remove('shake'); void aCard.offsetWidth; aCard.querySelector('.ya-code').classList.add('shake');
+    };
+    if (Date.now() > A.codeExp) return fail(t('a_e_code_exp'));
+    if (A.tries >= 3) return fail(t('a_e_code_dead'));
+    if (code !== A.code) {
+      A.tries++;
+      return fail(A.tries >= 3 ? t('a_e_code_dead') : t('a_e_code', { n: 3 - A.tries }));
+    }
+    if (A.purpose === 'register') {
+      var all = users();
+      if (all[A.id]) { A.view = 'login'; A.phone = A.id.slice(3); renderAuth(); setErr('form', t('a_e_exists')); return; }
+      all[A.id] = { name: A.name, phone: A.id, salt: A.salt, hash: A.hash, createdAt: Date.now(), stamps: 0 };
+      saveUsers(all);
+      setSession(A.id, true);
+      A.view = 'welcome';
+      emit('yuron:auth');
+      renderAuth();
+    } else {
+      A.view = 'reset'; renderAuth();
+    }
+  }
+
+  function submitForm(form) {
+    var kind = form.getAttribute('data-form');
+    clearErrs();
+    var local = phoneLocal(val('phone')), id = '998' + local;
+
+    if (kind === 'login') {
+      var ok = true, pass = val('pass');
+      if (local.length !== 9) { setErr('phone', t('a_e_phone')); ok = false; }
+      if (!pass) { setErr('pass', t('a_e_pass_empty')); ok = false; }
+      if (!ok) return;
+      var left = lockLeft(id);
+      if (left > 0) return setErr('form', t('a_e_lock', { s: left }));
+      var remember = !!aCard.querySelector('[name="remember"]').checked;
+      verifyPassword(id, pass).then(function (good) {
+        if (!good) {
+          var n = (parseInt(store.get('yuron_fail_' + id, '0'), 10) || 0) + 1;
+          if (n >= 5) { store.set('yuron_lock_' + id, String(Date.now() + 60000)); store.set('yuron_fail_' + id, '0'); return setErr('form', t('a_e_lock', { s: 60 })); }
+          store.set('yuron_fail_' + id, String(n));
+          return setErr('form', t('a_e_bad') + (n >= 3 ? '. ' + t('a_e_left', { n: 5 - n }) : ''));
+        }
+        store.del('yuron_fail_' + id);
+        setSession(id, remember);
+        var u = users()[id];
+        finishAuth('a_welcome_back', u.name);
+      });
+      return;
+    }
+
+    if (kind === 'register') {
+      var good = true, name = val('name').trim(), p1 = val('pass'), p2 = val('pass2');
+      if (name.replace(/[^A-Za-zА-Яа-яЁёЎўҚқҒғҲҳ'’]/g, '').length < 2) { setErr('name', t('a_e_name')); good = false; }
+      if (local.length !== 9) { setErr('phone', t('a_e_phone')); good = false; }
+      else if (users()[id]) { setErr('phone', t('a_e_exists')); good = false; }
+      if (!passOk(p1)) { setErr('pass', t('a_e_pass_rule')); good = false; }
+      if (p1 !== p2) { setErr('pass2', t('a_e_pass_match')); good = false; }
+      if (!aCard.querySelector('[name="terms"]').checked) { setErr('terms', t('a_e_terms')); good = false; }
+      if (!good) return;
+      A.name = name; A.id = id; A.phone = local; A.salt = rand(16);
+      hashPass(p1, A.salt).then(function (h) { A.hash = h; sendCode('register'); });
+      return;
+    }
+
+    if (kind === 'forgot') {
+      if (local.length !== 9) return setErr('phone', t('a_e_phone'));
+      if (!users()[id]) return setErr('phone', t('a_e_nouser'));
+      A.id = id; A.phone = local; sendCode('reset');
+      return;
+    }
+
+    if (kind === 'reset') {
+      var q1 = val('pass'), q2 = val('pass2'), bad = false;
+      if (!passOk(q1)) { setErr('pass', t('a_e_pass_rule')); bad = true; }
+      if (q1 !== q2) { setErr('pass2', t('a_e_pass_match')); bad = true; }
+      if (bad) return;
+      var salt = rand(16);
+      hashPass(q1, salt).then(function (h) {
+        var all = users();
+        if (all[A.id]) { all[A.id].salt = salt; all[A.id].hash = h; saveUsers(all); }
+        store.del('yuron_fail_' + A.id); store.del('yuron_lock_' + A.id);
+        A.view = 'login'; A.reason = ''; renderAuth();
+        toast(t('a_pass_changed'));
+      });
+    }
+  }
+
+  function buildAuth() {
+    modal = document.createElement('div');
+    modal.className = 'ya'; modal.id = 'yaModal';
+    modal.setAttribute('role', 'dialog'); modal.setAttribute('aria-modal', 'true');
+    aCard = document.createElement('div');
+    aCard.className = 'ya-card';
+    modal.appendChild(aCard);
+    document.body.appendChild(modal);
+    A = A || { view: 'login' };
+
+    modal.addEventListener('mousedown', function (e) { if (e.target === modal) closeAuth(); });
+    aCard.addEventListener('submit', function (e) { e.preventDefault(); submitForm(e.target); });
+    aCard.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('[data-act]');
+      if (!b) return;
+      var act = b.getAttribute('data-act');
+      if (act === 'close') closeAuth();
+      else if (act === 'to-register') { A.view = 'register'; A.reason = ''; renderAuth(); }
+      else if (act === 'to-login') { A.view = 'login'; renderAuth(); }
+      else if (act === 'forgot') { A.view = 'forgot'; renderAuth(); }
+      else if (act === 'change-phone') { A.view = A.purpose === 'register' ? 'register' : 'forgot'; renderAuth(); }
+      else if (act === 'resend') { sendCode(A.purpose); toast(t('a_code_sent')); }
+      else if (act === 'done') finishAuth();
+      else if (act === 'eye') {
+        var inp = b.parentNode.querySelector('input');
+        inp.type = inp.type === 'password' ? 'text' : 'password';
+      }
+    });
+    aCard.addEventListener('input', function (e) {
+      var el = e.target;
+      if (el.name === 'phone') {
+        var l = phoneLocal(el.value); el.value = phoneFmt(l);
+      } else if (el.name === 'pass' && A.view !== 'login') {
+        var m = aCard.querySelector('.ya-meter');
+        if (m) {
+          m.hidden = !el.value;
+          var sc = passScore(el.value), lv = sc >= 3 ? 3 : (sc === 2 ? 2 : 1);
+          m.setAttribute('data-lv', lv);
+          m.querySelector('i').style.width = (lv * 33.4) + '%';
+          m.querySelector('span').textContent = t(lv === 3 ? 'a_str_strong' : (lv === 2 ? 'a_str_mid' : 'a_str_weak'));
+        }
+      } else if (el.parentNode && el.parentNode.classList.contains('ya-code')) {
+        el.value = el.value.replace(/\D/g, '').slice(-1);
+        var nx = el.nextElementSibling;
+        if (el.value && nx) nx.focus();
+        codeEntered();
+      }
+      var f = el.closest && el.closest('.ya-f'); if (f) f.classList.remove('bad');
+    });
+    aCard.addEventListener('keydown', function (e) {
+      var el = e.target;
+      if (e.key === 'Backspace' && el.parentNode && el.parentNode.classList.contains('ya-code') && !el.value && el.previousElementSibling) el.previousElementSibling.focus();
+    });
+    aCard.addEventListener('paste', function (e) {
+      var el = e.target;
+      if (!(el.parentNode && el.parentNode.classList.contains('ya-code'))) return;
+      var txt = ((e.clipboardData || window.clipboardData).getData('text') || '').replace(/\D/g, '').slice(0, 4);
+      if (!txt) return;
+      e.preventDefault();
+      var boxes = el.parentNode.querySelectorAll('input');
+      for (var i = 0; i < txt.length; i++) boxes[i].value = txt.charAt(i);
+      codeEntered();
+    });
+  }
+
+  /* =====================================================================
+     Меню справа (3 полоски) и кнопка аккаунта
+     ===================================================================== */
   var LINKS = [
     ['index.html', '🏠', 'm_home'], ['product.html', '🍽️', 'm_menu'], ['offer.html', '🎟️', 'm_offers'],
-    ['about.html', '📍', 'm_about'], ['profile.html', '👤', 'm_profile']
+    ['delivery.html', '🛵', 'm_delivery'], ['about.html', '📍', 'm_about'], ['profile.html', '👤', 'm_profile']
   ];
   function currentFile() {
     var f = location.pathname.split('/').pop() || 'index.html';
@@ -1068,10 +1643,14 @@ body.ym-lock { overflow: hidden; }
   var panel, overlay, burger;
   function renderMenu() {
     if (!panel) return;
-    var cur = currentFile(), l = lang();
+    var cur = currentFile(), l = lang(), u = user();
+    var acc = u
+      ? '<a class="ym-acc" href="profile.html"><span class="ym-ava" aria-hidden="true">☕</span><span><b>' + esc(u.name) + '</b><small>' + esc(phoneShow(u.phone)) + '</small></span></a>'
+      : '<div class="ym-acc guest"><button type="button" class="yo-btn primary" data-act="m-login">' + esc(t('acc_login')) + '</button>' +
+        '<button type="button" class="yo-btn" data-act="m-register">' + esc(t('acc_register')) + '</button></div>';
     panel.innerHTML =
       '<div class="ym-head"><span class="ym-logo">Yuron Cafe</span>' +
-      '<button type="button" class="ym-close" aria-label="' + esc(t('m_close')) + '">✕</button></div>' +
+      '<button type="button" class="ym-close" aria-label="' + esc(t('m_close')) + '">✕</button></div>' + acc +
       '<nav class="ym-links">' + LINKS.map(function (x) {
         return '<a class="ym-link' + (x[0] === cur ? ' active' : '') + '" href="' + x[0] + '"' + (x[0] === cur ? ' aria-current="page"' : '') + '>' +
                '<span class="ym-ic" aria-hidden="true">' + x[1] + '</span><span>' + esc(t(x[2])) + '</span></a>';
@@ -1081,8 +1660,9 @@ body.ym-lock { overflow: hidden; }
         '<div class="ym-lang"><button type="button" data-l="ru" aria-pressed="' + (l === 'ru') + '">Русский</button>' +
         '<button type="button" data-l="uz" aria-pressed="' + (l === 'uz') + '">O\'zbekcha</button></div>' +
         '<div class="ym-contact">' + esc(t('m_hours')) + '<br>📞 <a href="tel:+998901234567">+998 (90) 123-45-67</a></div>' +
+        (u ? '<button type="button" class="ym-logout" data-act="m-logout">' + esc(t('acc_logout')) + '</button>' : '') +
       '</div>';
-    burger.setAttribute('aria-label', t('m_open'));
+    if (burger) burger.setAttribute('aria-label', t('m_open'));
   }
   function openMenu() {
     panel.classList.add('open'); overlay.classList.add('open');
@@ -1090,14 +1670,29 @@ body.ym-lock { overflow: hidden; }
     document.body.classList.add('ym-lock');
     var c = panel.querySelector('.ym-close'); if (c) c.focus();
   }
-  function closeMenu() {
+  function closeMenu(keepLock) {
+    if (!panel) return;
     panel.classList.remove('open'); overlay.classList.remove('open');
     burger.setAttribute('aria-expanded', 'false');
-    document.body.classList.remove('ym-lock');
+    if (!keepLock) document.body.classList.remove('ym-lock');
+  }
+  function renderAccountBtn() {
+    var b = document.getElementById('yaBtn');
+    if (!b) return;
+    var u = user();
+    b.innerHTML = u ? '<span aria-hidden="true">👤</span> ' + esc(u.name.split(' ')[0].slice(0, 12)) : esc(t('acc_login'));
+    b.classList.toggle('in', !!u);
   }
   function initMenu() {
     var controls = document.querySelector('.nav-controls');
     if (!controls || document.getElementById('ymBurger')) return;
+
+    // кнопка аккаунта в шапке (на компьютере)
+    var ab = document.createElement('button');
+    ab.type = 'button'; ab.id = 'yaBtn'; ab.className = 'ya-btn';
+    var cartBtn = document.getElementById('openCart');
+    controls.insertBefore(ab, cartBtn || controls.firstChild);
+    ab.addEventListener('click', function () { if (user()) location.href = 'profile.html'; else openAuth('login'); });
 
     burger = document.createElement('button');
     burger.type = 'button'; burger.id = 'ymBurger'; burger.className = 'ym-burger';
@@ -1108,33 +1703,57 @@ body.ym-lock { overflow: hidden; }
     overlay = document.createElement('div'); overlay.className = 'ym-overlay'; overlay.id = 'ymOverlay';
     panel = document.createElement('aside'); panel.className = 'ym-panel'; panel.id = 'ymPanel';
     document.body.appendChild(overlay); document.body.appendChild(panel);
-    renderMenu();
+    renderMenu(); renderAccountBtn();
 
     burger.addEventListener('click', function () {
       var cartDrawer = document.getElementById('cartDrawer');
       if (cartDrawer && cartDrawer.classList.contains('open')) closeCartDrawer();
       panel.classList.contains('open') ? closeMenu() : openMenu();
     });
-    overlay.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', function () { closeMenu(); });
     panel.addEventListener('click', function (e) {
       var tg = e.target;
       if (tg.closest && tg.closest('.ym-close')) return closeMenu();
-      if (tg.closest && tg.closest('.ym-link')) return closeMenu();
+      if (tg.closest && tg.closest('.ym-link, .ym-acc[href]')) return closeMenu();
+      var act = tg.closest && tg.closest('[data-act]');
+      if (act) {
+        var a = act.getAttribute('data-act');
+        if (a === 'm-login') return openAuth('login');
+        if (a === 'm-register') return openAuth('register');
+        if (a === 'm-logout') { closeMenu(); return logout(); }
+      }
       var lb = tg.closest && tg.closest('.ym-lang button');
       if (lb && lb.getAttribute('data-l') !== lang()) {
         var toggle = document.getElementById('langToggle');
-        if (toggle) toggle.click();      // страница сама переведёт свой текст
+        if (toggle) toggle.click();
       }
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { closeMenu(); closeOverlay(); }
+      if (e.key === 'Escape') { closeMenu(); closeOverlay(); closeAuth(); }
     });
     var lt = document.getElementById('langToggle');
-    if (lt) lt.addEventListener('click', function () { setTimeout(function () { renderMenu(); tick(); }, 0); });
-    // при открытии корзины меню закрываем
+    if (lt) lt.addEventListener('click', function () {
+      setTimeout(function () {
+        renderMenu(); renderAccountBtn(); applyStatic(document); refreshStamps(); injectDeliveryLink(); tick();
+        if (modal && modal.classList.contains('open') && A && A.view !== 'code') renderAuth();
+      }, 0);
+    });
     var oc = document.getElementById('openCart');
-    if (oc) oc.addEventListener('click', closeMenu);
+    if (oc) oc.addEventListener('click', function () { closeMenu(); setTimeout(injectDeliveryLink, 0); });
     window.addEventListener('resize', function () { if (window.innerWidth > 768) closeMenu(); });
+  }
+
+  // ссылка «Заказать с доставкой» под кнопкой оформления в корзине
+  function injectDeliveryLink() {
+    var d = document.getElementById('cartDrawer');
+    if (!d) return;
+    var existing = d.querySelector('.ya-deliv');
+    if (existing) { existing.textContent = t('c_delivery'); return; }
+    var btn = d.querySelector('[onclick*="checkout"]');
+    if (!btn || currentFile() === 'delivery.html') return;
+    var a = document.createElement('a');
+    a.className = 'ya-deliv'; a.href = 'delivery.html'; a.textContent = t('c_delivery');
+    btn.parentNode.insertBefore(a, btn.nextSibling);
   }
 
   /* ---------- плашка «Заказ готовится» ---------- */
@@ -1150,7 +1769,7 @@ body.ym-lock { overflow: hidden; }
       }
       if (act.length) {
         var o = act[0], s = orderState(o);
-        var txt = s.key === 'ready' ? t('pill_ready') : (s.key === 'accepted' ? t('pill_accepted') : t('pill_preparing'));
+        var txt = s.key === 'ready' ? t('pill_ready') : (s.key === 'onway' ? t('pill_onway') : (s.key === 'accepted' ? t('pill_accepted') : t('pill_preparing')));
         pill.className = 'yp show' + (s.key === 'ready' ? ' ready' : '');
         pill.innerHTML = '<span class="dot"></span><span>' + esc(txt) + '</span>' +
                          (s.key === 'ready' ? '' : '<b>' + mmss(s.remainingSec) + '</b>');
@@ -1158,7 +1777,7 @@ body.ym-lock { overflow: hidden; }
         pill.className = 'yp';
       }
     }
-    window.dispatchEvent(new CustomEvent('yuron:tick'));
+    emit('yuron:tick');
   }
 
   function setNavHeight() {
@@ -1166,30 +1785,36 @@ body.ym-lock { overflow: hidden; }
     if (nav) document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
   }
 
-  /* ---------- старт ---------- */
-  function init() {
-    initMenu();
-    fixCart();
-    setNavHeight();
-    window.addEventListener('resize', setNavHeight);
-    window.addEventListener('storage', function (e) {
-      if (e.key === 'yuron_orders' || e.key === 'yuron_cart') tick();
-    });
-    tick();
-    setInterval(tick, 1000);
-  }
+  /* ---------- экспорт и старт ---------- */
   window.Yuron = {
     t: t, lang: lang, extend: extend, applyStatic: applyStatic,
     esc: esc, money: money, clock: clock, mmss: mmss, plural: plural, pad: pad, itemName: itemName,
     toast: toast, store: store,
-    loadOrders: loadOrders, saveOrders: saveOrders, orderState: orderState, etaTime: etaTime,
-    getStamps: getStamps, closeCartDrawer: closeCartDrawer, renderMenu: renderMenu
+    user: user, logout: logout, updateUser: updateUser, changePassword: changePassword, openAuth: openAuth,
+    phoneLocal: phoneLocal, phoneFmt: phoneFmt, phoneShow: phoneShow,
+    loadOrders: loadOrders, clearMyOrders: clearMyOrders, orderState: orderState, etaTime: etaTime, statusLabel: statusLabel,
+    placeOrder: placeOrder, cartTotals: cartTotals,
+    getStamps: getStamps, setStamps: setStamps, closeCartDrawer: closeCartDrawer, renderMenu: renderMenu
   };
 
+  function init() {
+    initMenu();
+    injectDeliveryLink();
+    fixCart();
+    setNavHeight();
+    applyStatic(document);
+    refreshStamps();
+    window.addEventListener('resize', setNavHeight);
+    window.addEventListener('storage', function (e) {
+      if (e.key === 'yuron_orders' || e.key === 'yuron_users' || e.key === 'yuron_session') { renderMenu(); renderAccountBtn(); refreshStamps(); tick(); }
+    });
+    window.addEventListener('yuron:auth', function () { renderMenu(); renderAccountBtn(); refreshStamps(); tick(); });
+    tick();
+    setInterval(tick, 1000);
+  }
   init();
 
 })();
-
   </script>
 </body>
 </html>
